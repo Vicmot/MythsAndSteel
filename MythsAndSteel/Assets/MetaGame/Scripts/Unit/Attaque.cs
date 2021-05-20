@@ -340,6 +340,15 @@ public class Attaque : MonoSingleton<Attaque>
         if ((GameManager.Instance.IsPlayerRedTurn && PlayerScript.Instance.RedPlayerInfos.dontTouchThis) ||
         (!GameManager.Instance.IsPlayerRedTurn && PlayerScript.Instance.BluePlayerInfos.dontTouchThis))
         {
+            if (_selectedUnit.GetComponent<UnitScript>().DoingCharg1Blue == true)
+            {
+                List<int> unitNeigh = PlayerStatic.GetNeighbourDiag(_selectedUnit.GetComponent<UnitScript>().ActualTiledId, TilesManager.Instance.TileList[_selectedUnit.GetComponent<UnitScript>().ActualTiledId].GetComponent<TileScript>().Line, false);
+                foreach (int i in unitNeigh)
+                {
+                    DiceResult++;
+                }
+                _selectedUnit.GetComponent<UnitScript>().DoingCharg1Blue = false;
+            }
             DiceResult += 3;
             if (DiceResult > 12)
             {

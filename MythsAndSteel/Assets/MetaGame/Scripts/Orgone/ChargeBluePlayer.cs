@@ -14,9 +14,9 @@ public class ChargeBluePlayer : ChargeOrgone
 
             unitList.AddRange(PlayerScript.Instance.UnitRef.UnitListBluePlayer);
 
-                GameManager.Instance.StartEventModeUnit(1, true, unitList, "Charge d'orgone 1", "Êtes-vous sur de vouloir augmenter d'1 les dégâts de cete unité?");
-                GameManager.Instance._eventCall += UseChargeOrgone1;
-            
+            GameManager.Instance.StartEventModeUnit(1, true, unitList, "Charge d'orgone 1", "Êtes-vous sur de vouloir augmenter d'1 les dégâts de cete unité?");
+            GameManager.Instance._eventCall += UseChargeOrgone1;
+
         }
     }
 
@@ -24,14 +24,15 @@ public class ChargeBluePlayer : ChargeOrgone
     {
         UIInstance.Instance.ActivateNextPhaseButton();
 
-        foreach (GameObject unit in GameManager.Instance.UnitChooseList)
-        {
-            unit.GetComponent<UnitScript>().AddDamageToUnit(1);
-        }
+
+        GameManager.Instance.UnitChooseList[0].GetComponent<UnitScript>().AddDamageToUnit(1);
+        GameManager.Instance.UnitChooseList[0].GetComponent<UnitScript>().DoingCharg1Blue = true;
+
 
         GameManager.Instance.UnitChooseList.Clear();
+        EndOrgoneUpdate(1, 2);
     }
-    
+
     public override void ChargeOrgone3(int cost)
     {
         if (MythsAndSteel.Orgone.OrgoneCheck.CanUseOrgonePower(3, 2))
@@ -51,8 +52,8 @@ public class ChargeBluePlayer : ChargeOrgone
         {
             gam.GetComponent<TileScript>().RemoveRessources(1, 2);
         }
-
         GameManager.Instance.TileChooseList.Clear();
+        EndOrgoneUpdate(3, 2);
     }
 
     #region Charge 5 D'orgone
@@ -60,17 +61,20 @@ public class ChargeBluePlayer : ChargeOrgone
     {
         if (MythsAndSteel.Orgone.OrgoneCheck.CanUseOrgonePower(4, 2))
         {
-            OrgoneManager.Instance.ischarge5Blue = true;
-            Debug.Log("B5");
-            GameManager.Instance._eventCall += UseCharge5BluePlayer;
-            GameManager.Instance.StartEventModeUnit(1, false, PlayerScript.Instance.UnitRef.UnitListBluePlayer, "Charge 3 d'orgone Bleu", "Êtes vous sûr de vouloir d'utiliser la charge 3 d'orgone ?");
+            List<GameObject> unitList = new List<GameObject>();
+
+            unitList.AddRange(PlayerScript.Instance.UnitRef.UnitListBluePlayer);
+
+            GameManager.Instance.StartEventModeUnit(1, false, unitList, "Bombardement Aérien", "Êtes-vous sur de vouloir séléctionner cette unité?");
+            GameManager.Instance._eventCall += MoveChargeOrgone5;
+            unitList.Clear();
         }
     }
 
-    void UseCharge5BluePlayer()
+    void MoveChargeOrgone5()
     {
-        Debug.Log("UseCharge");
         List<GameObject> SelectTileList = new List<GameObject>();
+
         foreach (GameObject gam in TilesManager.Instance.TileList)
         {
             TileScript tilescript = gam.GetComponent<TileScript>();
@@ -88,19 +92,16 @@ public class ChargeBluePlayer : ChargeOrgone
                     }
                 }
             }
-        }
-        GameManager.Instance._eventCall -= UseCharge5BluePlayer;
-        //if (GameManager.Instance._eventCall == null) Debug.Log("Call null"); else Debug.Log("Call non null");
-        GameManager.Instance.StartEventModeTiles(1, false, SelectTileList, "Tile de tp", "Etes vous sur de validé cette case de tp?");
-        //if (GameManager.Instance._eventCall == null) Debug.Log("Call null"); else Debug.Log("Call non null");
-        GameManager.Instance._eventCall += DoneCharge5Blueplayer;
-    }
-    void DoneCharge5Blueplayer()
-    {
-        Debug.Log("Tu as atin le bonheur");
-        GameManager.Instance.UnitChooseList[0].GetComponent<UnitScript>().ActualTiledId = GameManager.Instance.TileChooseList[0].GetComponent<TileScript>().TileId;
-        GameManager.Instance.StopEventModeTile();
 
+            GameManager.Instance.StartEventModeTiles(1, false, SelectTileList, "Bombardement Aérien", "Êtes-vous sur de vouloir déplacer l'unité sur cette case?");
+            GameManager.Instance._eventCall += DoneMoveChargeOrgone5;
+
+        }
+    }
+    void DoneMoveChargeOrgone5()
+    {
+        GameManager.Instance.TileChooseList[0].GetComponent<TileScript>().AddUnitToTile(GameManager.Instance.UnitChooseList[0].gameObject);
+        //GameManager.Instance.UnitChooseList[0].GetComponent<UnitScript>().ActualTiledId = GameManager.Instance.TileChooseList[0].GetComponent<TileScript>().TileId;
     }
     #endregion
 

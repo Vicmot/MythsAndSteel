@@ -81,6 +81,7 @@ public class ChargeRedPlayer : ChargeOrgone
             PlayerScript.Instance.RedPlayerInfos.OrgoneValue -= 3;
             Debug.Log("R3 finish");
             PlayerScript.Instance.RedPlayerInfos.UpdateOrgoneUI(1);
+            EndOrgoneUpdate(3, 1);
         }
 
     }
@@ -115,8 +116,7 @@ public class ChargeRedPlayer : ChargeOrgone
                 break;
             }
         }
-        PlayerScript.Instance.RedPlayerInfos.OrgoneValue = 0;
-        PlayerScript.Instance.RedPlayerInfos.UpdateOrgoneUI(1);
+        EndOrgoneUpdate(5, 1);
         GameManager.Instance._eventCall -= UseCharge5RedPlayer;
     }
     #endregion
