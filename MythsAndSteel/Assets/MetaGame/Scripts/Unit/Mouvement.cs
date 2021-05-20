@@ -683,6 +683,14 @@ public class Mouvement : MonoSingleton<Mouvement>
     /// </summary>
     public void ApplyMouvement()
     {
+        if (RaycastManager.Instance.ActualUnitSelected != null)
+        {
+            speed = RaycastManager.Instance.ActualUnitSelected.GetComponent<UnitScript>().UnitSO.MvmtSpeed;
+        }
+        else
+        {
+            speed = 5;
+        }
         mvmtrunning = true;
 
         foreach(int ID in PlayerStatic.GetNeighbourDiag(selectedTileId[selectedTileId.Count - 1], TilesManager.Instance.TileList[selectedTileId.Count - 1].GetComponent<TileScript>().Line, false))
