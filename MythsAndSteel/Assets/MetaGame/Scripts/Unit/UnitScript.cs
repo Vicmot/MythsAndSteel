@@ -182,6 +182,8 @@ public class UnitScript : MonoBehaviour
     //lorsque le joueur a effectué soit une attaque soit un pouvoir actif
     public bool _isActionDone;
 
+    [SerializeField] bool UseCapacity = false;
+
     //lorsque l'activation a totalement été finie
     [SerializeField] bool _isActivationDone;
     public bool IsActivationDone => _isActivationDone;
@@ -787,6 +789,13 @@ public class UnitScript : MonoBehaviour
                 UIInstance.Instance.UpdateActivationLeft();
             }
         }
+        else if (UseCapacity)
+        {
+            UseCapacity = false;
+            PlayerScript.Instance.RedPlayerInfos.ActivationLeft--;
+            UIInstance.Instance.UpdateActivationLeft();
+
+        }
     }
 
     public void StartCapacity()
@@ -804,6 +813,7 @@ public class UnitScript : MonoBehaviour
 
     public void EndCapacity()
     {
+        UseCapacity = true;
         CapacitySystem.Instance.CapacityRunning = false;
         _isActivationDone = true;
         RunningCapacity = false;
