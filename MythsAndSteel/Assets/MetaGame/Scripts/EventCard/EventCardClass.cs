@@ -364,7 +364,7 @@ public class EventCardClass : ScriptableObject{
 
         int firstTileId = GameManager.Instance.UnitChooseList[0].GetComponent<UnitScript>().ActualTiledId;
 
-        TilesManager.Instance.TileList[GameManager.Instance.UnitChooseList[1].GetComponent<UnitScript>().ActualTiledId].GetComponent<TileScript>().AddUnitToTile(GameManager.Instance.UnitChooseList[0].gameObject);
+        TilesManager.Instance.TileList[ GameManager.Instance.UnitChooseList[1].GetComponent<UnitScript>().ActualTiledId ].GetComponent<TileScript>().AddUnitToTile(GameManager.Instance.UnitChooseList[0].gameObject);
         TilesManager.Instance.TileList[firstTileId].GetComponent<TileScript>().AddUnitToTile(GameManager.Instance.UnitChooseList[1].gameObject);
 
         GameManager.Instance.UnitChooseList.Clear();

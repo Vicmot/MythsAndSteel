@@ -31,6 +31,14 @@ public class Capacity : MonoBehaviour
         Debug.Log("Active La capacité 1");
     }
 
+    public void EventUnit(int numberUnit, bool redPlayer, List<GameObject> _unitSelectable, string title, string description, bool multiplesUnit = false)
+    {
+        GameManager.Instance.StartEventModeUnit(numberUnit, redPlayer, _unitSelectable, title, description, multiplesUnit);
+    }
+    public void EventTile(int numberUnit, bool redPlayer, List<GameObject> _unitSelectable, string title, string description, bool multiplesUnit = false)
+    {
+        GameManager.Instance.StartEventModeTiles(numberUnit, redPlayer, _unitSelectable, title, description, multiplesUnit);
+    }
     /// <summary>
     /// Retourne le préfab pour l'UI de l'unité.
     /// </summary>

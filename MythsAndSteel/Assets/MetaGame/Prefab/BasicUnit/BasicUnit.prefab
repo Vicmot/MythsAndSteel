@@ -93,6 +93,7 @@ GameObject:
   - component: {fileID: 7435506871874765583}
   - component: {fileID: 7435506871874765582}
   - component: {fileID: 7435506871874765581}
+  - component: {fileID: 8953636332022436628}
   - component: {fileID: 7435506871874765580}
   m_Layer: 0
   m_Name: BasicUnit
@@ -181,6 +182,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _unitSO: {fileID: 0}
   _life: 0
+  Renderer: {fileID: 0}
   _shield: 0
   _attackRange: 0
   AttackRangeBonus: 0
@@ -190,20 +192,43 @@ MonoBehaviour:
   _damageMaximum: 0
   _damageBonus: 0
   _diceBonus: 0
+  RunningCapacity: 0
   _moveSpeed: 0
   MoveSpeedBonus: 0
+  BonusUsed: 0
   _moveLeft: 0
   _creationCost: 0
   _SonAttaque: {fileID: 0}
   _SonDeplacement: {fileID: 0}
   _SonMort: {fileID: 0}
   _actualTileld: 0
-  _hasStartMove: 0
+  LastTileId: 0
+  hasStartMove: 0
   _isMoveDone: 0
   _isActionDone: 0
   _isActivationDone: 0
-  _unitStatus: 
+  _unitStatuts: 
+  StatusPrefab: {fileID: 0}
+  StatusData: {fileID: 0}
+  step: 0
+  hasUseActivation: 0
   _Animation: {fileID: 7435506871874765580}
+--- !u!114 &8953636332022436628
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7435506871874765619}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc572d132978bf94295b7570ecc92b28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _Capacity1Name: 
+  render1: {fileID: 0}
+  _Capacity1Description: 
+  _Capacity1Cost: 0
 --- !u!95 &7435506871874765580
 Animator:
   serializedVersion: 3
