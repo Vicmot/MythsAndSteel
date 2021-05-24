@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class Player
 {
     #region Variables
+  public  int EventUseLeft;
     [Header("ARMY INFO")]
     //nom de l'armée
     public string ArmyName;
@@ -22,6 +23,7 @@ public class Player
     [Header("ORGONE")]
     //Nombre de charges d'orgone actuel
     [SerializeField] private int _OrgoneValue;
+    public bool OrgoneExploseCancel = true;
     public int OrgoneValue
     {
         get
@@ -83,6 +85,7 @@ public class Player
             _LastKnownOrgoneValue = _OrgoneValue;
             _OrgoneValue += Value;
             UpdateOrgoneUI(player);
+       
         }
     }
 
@@ -104,13 +107,24 @@ public class Player
             else GameManager.Instance._eventCallCancel += CancelOrgoneP2;
             PLayerOrgoneExplose = player;
 
-
-            UpdateOrgoneUI(player);
+            if (OrgoneExploseCancel == true)
+            {
+                UpdateOrgoneUI(player);
+            
+                OrgoneExploseCancel = false;
+            }
+          
+            
         }
         else
         {
-            UpdateOrgoneUI(player);
+            if (OrgoneExploseCancel == true)
+            {
 
+            UpdateOrgoneUI(player);
+              
+            }
+          
 
             GameManager.Instance.IsCheckingOrgone = false;
             if(GameManager.Instance._waitToCheckOrgone != null)
@@ -131,8 +145,10 @@ public class Player
         GameManager.Instance._waitEvent += DealOrgoneDamageToUnit;
         GameManager.Instance.WaitToMove(0);
 
-        ChangeOrgone(-6, PLayerOrgoneExplose);
-        UpdateOrgoneUI(PLayerOrgoneExplose);
+        _OrgoneValue = 0;
+        _LastKnownOrgoneValue = 0;
+
+
 
     }
 
@@ -158,7 +174,7 @@ public class Player
             if(GameManager.Instance._waitToCheckOrgone != null)
             {
                 GameManager.Instance._waitToCheckOrgone();
-                Debug.Log("mais non");
+             
             }
         }
     }
@@ -172,6 +188,7 @@ public class Player
             GameManager.Instance._waitEvent -= DealOrgoneDamageToUnit;
             GameManager.Instance._waitEvent += DealOrgoneDamageToUnit;
             GameManager.Instance.WaitToMove(.035f);
+            
         }
    
         else
@@ -179,7 +196,7 @@ public class Player
             GameManager.Instance._waitEvent -= DealOrgoneDamageToUnit;
 
             GameManager.Instance.UnitChooseList.Clear();
-
+            OrgoneExploseCancel = true;
             GameManager.Instance.IsCheckingOrgone = false;
 
             GameManager.Instance.DoingEpxlosionOrgone = false;
@@ -187,7 +204,7 @@ public class Player
             if (GameManager.Instance._waitToCheckOrgone != null)
             {
                 GameManager.Instance._waitToCheckOrgone();
-                Debug.Log("mais non");
+             
             }
         }
     }
@@ -197,7 +214,7 @@ public class Player
     /// </summary>
     void CancelOrgoneP1(){
         CheckOrgone(1);
-        UpdateOrgoneUI(1);
+       
     }
 
     /// <summary>
@@ -206,7 +223,7 @@ public class Player
     void CancelOrgoneP2()
     {
         CheckOrgone(2);
-        UpdateOrgoneUI(2);
+     
     }
 
     /// <summary>
@@ -219,6 +236,7 @@ public class Player
         }
         else
         {
+
             OrgoneManager.Instance.StartOrgoneAnimation(2, _LastKnownOrgoneValue, OrgoneValue);
         }
 

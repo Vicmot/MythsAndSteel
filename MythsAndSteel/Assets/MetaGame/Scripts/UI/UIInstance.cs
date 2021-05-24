@@ -216,7 +216,7 @@ public class UIInstance : MonoSingleton<UIInstance>
     /// <param name="description"></param>
     public void ShowValidationPanel(string title, string description){
        
-        if (PlayerPrefs.GetInt("Avertissement") == 1)
+        if (PlayerPrefs.GetInt("Avertissement") == 1 && !OrgoneManager.Instance.DoingOrgoneCharge)
         {
 
         _validationPanel.SetActive(true);
@@ -297,7 +297,7 @@ public class UIInstance : MonoSingleton<UIInstance>
     [Tooltip("ensemble des textes pour le menu Statistiques des renforts")]
     [SerializeField] private TextRenfortMenu _pageUnitéRenfort;
     public TextRenfortMenu PageUnitéRenfort => _pageUnitéRenfort;
-
+    public GameObject RenfortBlockant;
     [Tooltip("Ensemble des Emplacements pour les images du menu Statistiques des renforts")]
     [SerializeField] private EmplacementImageMenuRenfort _emplacementImageMenuRenfort;
     public EmplacementImageMenuRenfort EmplacementImageMenuRenfort => _emplacementImageMenuRenfort;

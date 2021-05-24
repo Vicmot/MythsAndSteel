@@ -414,7 +414,10 @@ public class GameManager : MonoSingleton<GameManager>
         UIInstance.Instance.DesactivateNextPhaseButton();
         _titleValidation = title;
         _descriptionValidation = description;
-
+        Attaque.Instance.PanelBlockant1.SetActive(true);
+        Attaque.Instance.PanelBlockant2.SetActive(true);
+        Attaque.Instance.PanelBlockantOrgone1.SetActive(true);
+        Attaque.Instance.PanelBlockantOrgone2.SetActive(true);
         _numberOfUnitToChoose = numberUnit;
         _chooseUnitForEvent = true;
         _selectableUnit.AddRange(_unitSelectable);
@@ -452,7 +455,10 @@ public class GameManager : MonoSingleton<GameManager>
         _redPlayerUseEvent = false;
         IllusionStratégique = false;
         _canSelectMultiples = false;
-
+        Attaque.Instance.PanelBlockant1.SetActive(false);
+        Attaque.Instance.PanelBlockant2.SetActive(false);
+        Attaque.Instance.PanelBlockantOrgone1.SetActive(false);
+        Attaque.Instance.PanelBlockantOrgone2.SetActive(false);
         _eventCall = null;
 
         foreach (GameObject gam in _selectableUnit)
@@ -577,7 +583,10 @@ public class GameManager : MonoSingleton<GameManager>
     {
         //
         UIInstance.Instance.DesactivateNextPhaseButton();
-
+        Attaque.Instance.PanelBlockant1.SetActive(true);
+        Attaque.Instance.PanelBlockant2.SetActive(true);
+        Attaque.Instance.PanelBlockantOrgone1.SetActive(true);
+        Attaque.Instance.PanelBlockantOrgone2.SetActive(true);
         _titleValidation = title;
         _descriptionValidation = description;
 
@@ -609,7 +618,10 @@ public class GameManager : MonoSingleton<GameManager>
         _redPlayerUseEvent = false;
         IllusionStratégique = false;
         _canSelectMultiples = false;
-
+        Attaque.Instance.PanelBlockant1.SetActive(false);
+        Attaque.Instance.PanelBlockant2.SetActive(false);
+        Attaque.Instance.PanelBlockantOrgone1.SetActive(false);
+        Attaque.Instance.PanelBlockantOrgone2.SetActive(false);
         _eventCall = null;
 
         foreach (GameObject gam in _selectableTiles)
@@ -645,7 +657,7 @@ public class GameManager : MonoSingleton<GameManager>
                 if (_tileChooseList.Count == _numberOfTilesToChoose)
                 {
                     _chooseTileForEvent = false;
-                    if (PlayerPrefs.GetInt("Avertissement") == 0)
+                    if (PlayerPrefs.GetInt("Avertissement") == 0 || OrgoneManager.Instance.DoingOrgoneCharge)
                     {
                         _eventCall();
                     }

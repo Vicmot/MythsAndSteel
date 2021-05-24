@@ -167,8 +167,10 @@ public class OrgoneManager : MonoSingleton<OrgoneManager>
                 {
                     for (int u = 4; u >= i; u--)
                     {
+
                         if (i < 0 || i > 4)
                         {
+                            Debug.Log("je suis là");
                             OrgoneRunning1 = false;
                             break;
                         }
@@ -227,26 +229,34 @@ public class OrgoneManager : MonoSingleton<OrgoneManager>
             {
                 for (int i = LastOrgoneValue; i > ActualOrgoneValue; i--)
                 {
-                    if(i < 0 || i > 4)
-                    {
-                        OrgoneRunning2 = false;
-                        break;
-                    }
                     for (int u = 4; u >= i; u--)
                     {
+
+                        if (i < 0 || i > 4)
+                        {
+                            OrgoneRunning2 = false;
+                            break;
+                        }
                         if (OrgoneManager.Instance.BluePlayerCharge[u].GetBool("Increase"))
                         {
                             OrgoneManager.Instance.BluePlayerCharge[u].SetBool("Increase", false);
+
+                       
                             yield return new WaitForSeconds(.5f);
                         }
+
                     }
-                    if(i-1>=0)
-                    { 
-                    OrgoneManager.Instance.BluePlayerCharge[i - 1].SetBool("Increase", false);
-                    yield return new WaitForSeconds(.5f);
+                    if (i - 1 >= 0)
+                    {
+                        OrgoneManager.Instance.BluePlayerCharge[i - 1].SetBool("Increase", false);
+                        yield return new WaitForSeconds(.5f);
                     }
+
                 }
             }
+         
+
+        
             else if (w == 0)
             {
                 Debug.Log("Same value.");
@@ -276,22 +286,22 @@ namespace MythsAndSteel.Orgone{
         /// <returns></returns>
         public static bool CanUseOrgonePower(int cost, int player){
             bool canUse = false;
-            Debug.Log("pk tu marche pas1");
+          
             if(GameManager.Instance.ActualTurnPhase == MYthsAndSteel_Enum.PhaseDeJeu.OrgoneJ1 || GameManager.Instance.ActualTurnPhase == MYthsAndSteel_Enum.PhaseDeJeu.OrgoneJ2){
                 if(GameManager.Instance.IsPlayerRedTurn == (player == 1? true : false)){
-                    Debug.Log("pk tu marche pas2");
+              
                     if (player == 1){
-                        Debug.Log("pk tu marche pas3");
+                       
                         if (PlayerScript.Instance.RedPlayerInfos.OrgonePowerLeft > 0 && PlayerScript.Instance.RedPlayerInfos.OrgoneValue >= cost){
-                            Debug.Log("pk tu marche pas4");
+                           
                             canUse = true;
                         }
                     }
                     else{
-                        Debug.Log("pk tu marche pas5");
+                        
                         if (PlayerScript.Instance.BluePlayerInfos.OrgonePowerLeft > 0 && PlayerScript.Instance.BluePlayerInfos.OrgoneValue >= cost){
                             canUse = true;
-                            Debug.Log("pk tu marche pas6");
+                        
                         }
                     }
                 }
