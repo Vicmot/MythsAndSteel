@@ -26,7 +26,13 @@ public class MenuTransition : ScriptableObject
     }
     public void DesactivMenuOptionInGame(int sceneId)
     {
-       GameManager.Instance.menuOptionOuvert = false;
+        Scene[] eho = SceneManager.GetAllScenes();
+        if (eho[0].buildIndex != 1)
+        {
+
+            GameManager.Instance.menuOptionOuvert = false;
+        }
+      
         SceneManager.UnloadSceneAsync(sceneId);
     }
     /// <summary>

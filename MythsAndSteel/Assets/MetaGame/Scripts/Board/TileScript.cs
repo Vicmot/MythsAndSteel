@@ -183,6 +183,7 @@ public class TileScript : MonoBehaviour
         if (!inEditor) unit.GetComponent<UnitScript>().ActualTiledId = TileId;
         Unit = unit;
         Unit.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, _unit.transform.position.z);
+
     }
 
     /// <summary>

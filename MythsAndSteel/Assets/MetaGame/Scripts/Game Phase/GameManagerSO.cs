@@ -125,10 +125,12 @@ public class GameManagerSO : ScriptableObject
                 if(GameManager.Instance.IsPlayerRedStarting)
                 {
                     PlayerScript.Instance.RedPlayerInfos.OrgonePowerLeft = 1;
+                    PlayerScript.Instance.RedPlayerInfos.EventUseLeft = 1;
                 }
                 else
                 {
                     PlayerScript.Instance.BluePlayerInfos.OrgonePowerLeft = 1;
+                    PlayerScript.Instance.BluePlayerInfos.EventUseLeft = 1;
                 }
                 GoToOrgoneJ1Phase();
                 break;
@@ -279,17 +281,20 @@ public class GameManagerSO : ScriptableObject
                 if (!GameManager.Instance.IsPlayerRedStarting)
                 {
                     PlayerScript.Instance.RedPlayerInfos.OrgonePowerLeft = 1;
+                    PlayerScript.Instance.RedPlayerInfos.EventUseLeft = 1;
                 }
                 else
                 {
                     PlayerScript.Instance.BluePlayerInfos.OrgonePowerLeft = 1;
+                    PlayerScript.Instance.BluePlayerInfos.EventUseLeft = 1;
                 }
 
-
+                UIInstance.Instance.ActiveOrgoneChargeButton();
                 GoToOrgoneJ2Phase();
                 break;
 
             case MYthsAndSteel_Enum.PhaseDeJeu.ActionJ2:
+                UIInstance.Instance.DesactiveOrgoneChargeButton();
                 UIInstance.Instance.ButtonRenfortJ2.GetComponent<Button>().interactable = true;
                 if (GameManager.Instance.SabotageStat == 1 && !GameManager.Instance.IsPlayerRedTurn)
                 {

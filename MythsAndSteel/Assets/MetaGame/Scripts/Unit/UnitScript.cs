@@ -674,6 +674,7 @@ public class UnitScript : MonoBehaviour
     #endregion Statut
 
     #region ChangementStat
+    public bool DoingCharg1Blue = false;
     /// <summary>
     /// Ajoute des dégâts supplémentaires aux unités
     /// </summary>

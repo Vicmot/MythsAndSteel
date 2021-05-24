@@ -11,10 +11,12 @@ public class Attaque : MonoSingleton<Attaque>
 
     public List<int> _newNeighbourId => newNeighbourId;
     [SerializeField] private List<int> newNeighbourId = new List<int>(); // Voisins atteignables avec le range de l'unitÃ©.
-    [SerializeField]
-    private GameObject PanelBlockant1;
-    [SerializeField]
-    private GameObject PanelBlockant2;
+   
+    public GameObject PanelBlockant1;
+  
+    public GameObject PanelBlockant2;
+    public GameObject PanelBlockantOrgone1;
+    public GameObject PanelBlockantOrgone2;
     //Est ce que l'unitÃ© a commencÃ© Ã  choisir son dÃ©placement ?
     [SerializeField] private bool _isInAttack;
     public bool IsInAttack
@@ -566,10 +568,23 @@ public class Attaque : MonoSingleton<Attaque>
     /// </summary>
     private void RandomMore()
     {
-        if ((GameManager.Instance.IsPlayerRedTurn && PlayerScript.Instance.RedPlayerInfos.dontTouchThis) ||
-        (!GameManager.Instance.IsPlayerRedTurn && PlayerScript.Instance.BluePlayerInfos.dontTouchThis))
+        if (GameManager.Instance.IsPlayerRedTurn || !GameManager.Instance.IsPlayerRedTurn) 
         {
-            DiceResult += 3;
+            if (_selectedUnit.GetComponent<UnitScript>().DoingCharg1Blue == true)
+            {
+                List<int> unitNeigh = PlayerStatic.GetNeighbourDiag(_selectedUnit.GetComponent<UnitScript>().ActualTiledId, TilesManager.Instance.TileList[_selectedUnit.GetComponent<UnitScript>().ActualTiledId].GetComponent<TileScript>().Line, false);
+
+                foreach (int i in unitNeigh)
+                {
+                    if(TilesManager.Instance.TileList[i].GetComponent<TileScript>().Unit != null)
+                    {
+
+                    DiceResult++;
+                    }
+                    Debug.Log(DiceResult);
+                }
+                _selectedUnit.GetComponent<UnitScript>().DoingCharg1Blue = false;
+            }
             if (DiceResult > 12)
             {
                 DiceResult = 12;

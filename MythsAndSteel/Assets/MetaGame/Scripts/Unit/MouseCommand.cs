@@ -915,6 +915,7 @@ public class MouseCommand : MonoBehaviour
 
 
         RenfortUI.SetActive(false);
+        UIInstance.Instance.RenfortBlockant.SetActive(false);
     }
 
     /// <summary>
@@ -924,15 +925,8 @@ public class MouseCommand : MonoBehaviour
     {
         if (player)
         {
-            /*
-            //Update le drapeau qui se situe dans UI Instance correspondant à l'armée Rouge.
-            UIInstance.Instance.EmplacementImageMenuRenfort._drapeauDuJoueur.GetComponent<SpriteRenderer>().sprite = UIInstance.Instance.StockageImage._drapeauJoueur[0];
 
-            UIInstance.Instance.PageUnitéRenfort._ressourceJoueur.GetComponent<TextMeshProUGUI>().text = player.Ressource.ToString();
-            if(player.Ressource <= 1)
-            {
-                UIInstance.Instance.PageUnitéRenfort._ressourceJoueur.GetComponent<TextMeshProUGUI>().text = "Ressource";
-            }*/
+            UIInstance.Instance.PageUnitéRenfort._ressourceJoueur.GetComponent<TextMeshProUGUI>().text = PlayerScript.Instance.RedPlayerInfos.Ressource.ToString();
 
             //Permet de déterminer le nombre d'emplacements à mettre à jour sur le menu Renfort de l'Armée Rouge.
             for (int i = 2; i < unitReference.UnitClassCreableListRedPlayer.Count; i++)
@@ -942,11 +936,11 @@ public class MouseCommand : MonoBehaviour
                 _elementMenuRenfort[0].SetActive(true);
                 _elementMenuRenfort[1].SetActive(true);
                 _elementMenuRenfort[2].SetActive(true);
-              
 
 
-                    //Statistique pour l'unité1
-                    UIInstance.Instance.PageUnitéRenfort._nameUnit1.GetComponent<TextMeshProUGUI>().text = unitReference.UnitClassCreableListRedPlayer[0].GetComponent<UnitScript>().UnitSO.UnitName.ToString();
+
+                //Statistique pour l'unité1
+                UIInstance.Instance.PageUnitéRenfort._nameUnit1.GetComponent<TextMeshProUGUI>().text = unitReference.UnitClassCreableListRedPlayer[0].GetComponent<UnitScript>().UnitSO.UnitName.ToString();
                 UIInstance.Instance.PageUnitéRenfort._lifeValor1.GetComponent<TextMeshProUGUI>().text = unitReference.UnitClassCreableListRedPlayer[0].GetComponent<UnitScript>().UnitSO.LifeMax.ToString();
                 UIInstance.Instance.PageUnitéRenfort._rangeValor1.GetComponent<TextMeshProUGUI>().text = unitReference.UnitClassCreableListRedPlayer[0].GetComponent<UnitScript>().UnitSO.AttackRange.ToString();
                 UIInstance.Instance.PageUnitéRenfort._moveValor1.GetComponent<TextMeshProUGUI>().text = unitReference.UnitClassCreableListRedPlayer[0].GetComponent<UnitScript>().UnitSO.MoveSpeed.ToString();
@@ -973,8 +967,7 @@ public class MouseCommand : MonoBehaviour
                 #region UpdateImageRenfort1a3
                 //Update Ressource en fonction du nombre.
 
-                if (!OrgoneManager.Instance.DoingOrgoneCharge)
-                {
+               
                     //Si la première unité de l'armée Rouge a besoin de plus de 2 ressources.
                     if (unitReference.UnitClassCreableListRedPlayer[0].GetComponent<UnitScript>().UnitSO.CreationCost > 2)
                     {
@@ -1019,148 +1012,127 @@ public class MouseCommand : MonoBehaviour
                         UIInstance.Instance.RessourceUnit_PasTouche._unité3Ressource[2].SetActive(false);
                         UIInstance.Instance.RessourceUnit_PasTouche._unité3Ressource[3].SetActive(false);
                     }
-                }
-                else
-                {
-                    foreach (GameObject gam in UIInstance.Instance.RessourceUnit_PasTouche._unité1Ressource)
+
+
+
+                    #endregion UpdateImageRenfort1a3
+
+                    #region Update Textuelle et Image Renforts de 4 à 6 pour l'équipe Rouge
+                    //Si la liste des unités créables comportent plus de 3 unités dans la liste de l'équipe Rouge.
+                    if (i >= 3)
                     {
-                        gam.SetActive(false);
-                    }
-                    foreach (GameObject gam in UIInstance.Instance.RessourceUnit_PasTouche._unité2Ressource)
-                    {
-                        gam.SetActive(false);
-                    }
-                    foreach (GameObject gam in UIInstance.Instance.RessourceUnit_PasTouche._unité3Ressource)
-                    {
-                        gam.SetActive(false);
-                    }
+                        //Active l'UI de l'unité 4 de l'arrmée Rouge.
+                        _elementMenuRenfort[3].SetActive(true);
 
-                }
+                        //Statistique pour l'unité4
+                        UIInstance.Instance.PageUnitéRenfort._nameUnit4.GetComponent<TextMeshProUGUI>().text = unitReference.UnitClassCreableListRedPlayer[3].GetComponent<UnitScript>().UnitSO.UnitName.ToString();
+                        UIInstance.Instance.PageUnitéRenfort._lifeValor4.GetComponent<TextMeshProUGUI>().text = unitReference.UnitClassCreableListRedPlayer[3].GetComponent<UnitScript>().UnitSO.LifeMax.ToString();
+                        UIInstance.Instance.PageUnitéRenfort._rangeValor4.GetComponent<TextMeshProUGUI>().text = unitReference.UnitClassCreableListRedPlayer[3].GetComponent<UnitScript>().UnitSO.AttackRange.ToString();
+                        UIInstance.Instance.PageUnitéRenfort._moveValor4.GetComponent<TextMeshProUGUI>().text = unitReference.UnitClassCreableListRedPlayer[3].GetComponent<UnitScript>().UnitSO.MoveSpeed.ToString();
+                        UIInstance.Instance.PageUnitéRenfort._damageValor4.GetComponent<TextMeshProUGUI>().text = unitReference.UnitClassCreableListRedPlayer[3].GetComponent<UnitScript>().UnitSO.DamageMinimum.ToString();
 
-                #endregion UpdateImageRenfort1a3
+                        //Image Ressource pour l'unité 4 de l'armée Rouge.
+                        UIInstance.Instance.RessourceUnit_PasTouche._unité4Ressource[0].SetActive(true);
+                        UIInstance.Instance.RessourceUnit_PasTouche._unité4Ressource[1].SetActive(true);
 
-                #region Update Textuelle et Image Renforts de 4 à 6 pour l'équipe Rouge
-                //Si la liste des unités créables comportent plus de 3 unités dans la liste de l'équipe Rouge.
-                if (i >= 3)
-                {
-                    //Active l'UI de l'unité 4 de l'arrmée Rouge.
-                    _elementMenuRenfort[3].SetActive(true);
-
-                    //Statistique pour l'unité4
-                    UIInstance.Instance.PageUnitéRenfort._nameUnit4.GetComponent<TextMeshProUGUI>().text = unitReference.UnitClassCreableListRedPlayer[3].GetComponent<UnitScript>().UnitSO.UnitName.ToString();
-                    UIInstance.Instance.PageUnitéRenfort._lifeValor4.GetComponent<TextMeshProUGUI>().text = unitReference.UnitClassCreableListRedPlayer[3].GetComponent<UnitScript>().UnitSO.LifeMax.ToString();
-                    UIInstance.Instance.PageUnitéRenfort._rangeValor4.GetComponent<TextMeshProUGUI>().text = unitReference.UnitClassCreableListRedPlayer[3].GetComponent<UnitScript>().UnitSO.AttackRange.ToString();
-                    UIInstance.Instance.PageUnitéRenfort._moveValor4.GetComponent<TextMeshProUGUI>().text = unitReference.UnitClassCreableListRedPlayer[3].GetComponent<UnitScript>().UnitSO.MoveSpeed.ToString();
-                    UIInstance.Instance.PageUnitéRenfort._damageValor4.GetComponent<TextMeshProUGUI>().text = unitReference.UnitClassCreableListRedPlayer[3].GetComponent<UnitScript>().UnitSO.DamageMinimum.ToString();
-
-                    //Image Ressource pour l'unité 4 de l'armée Rouge.
-                    UIInstance.Instance.RessourceUnit_PasTouche._unité4Ressource[0].SetActive(true);
-                    UIInstance.Instance.RessourceUnit_PasTouche._unité4Ressource[1].SetActive(true);
-
-                    //Si la quatrième unité de l'armée Rouge a besoin de plus de 2 ressources.
-                    if (unitReference.UnitClassCreableListRedPlayer[3].GetComponent<UnitScript>().UnitSO.CreationCost > 2)
-                    {
-                        UIInstance.Instance.RessourceUnit_PasTouche._unité4Ressource[2].SetActive(true);
-                        UIInstance.Instance.RessourceUnit_PasTouche._unité4Ressource[3].SetActive(true);
-                    }
-                    else
-                    {
-                        UIInstance.Instance.RessourceUnit_PasTouche._unité4Ressource[2].SetActive(false);
-                        UIInstance.Instance.RessourceUnit_PasTouche._unité4Ressource[3].SetActive(false);
-                    }
-
-                    //Si la liste des unités créables comportent plus de 4 unités dans la liste de l'équipe Rouge.
-                    if (i >= 4)
-                    {
-                        //Active l'UI de l'unité 5 de l'arrmée Rouge.
-                        _elementMenuRenfort[4].SetActive(true);
-
-                        //Statistique pour l'unité 5 de l'armée Rouge.
-                        UIInstance.Instance.PageUnitéRenfort._nameUnit5.GetComponent<TextMeshProUGUI>().text = unitReference.UnitClassCreableListRedPlayer[4].GetComponent<UnitScript>().UnitSO.UnitName.ToString();
-                        UIInstance.Instance.PageUnitéRenfort._lifeValor5.GetComponent<TextMeshProUGUI>().text = unitReference.UnitClassCreableListRedPlayer[4].GetComponent<UnitScript>().UnitSO.LifeMax.ToString();
-                        UIInstance.Instance.PageUnitéRenfort._rangeValor5.GetComponent<TextMeshProUGUI>().text = unitReference.UnitClassCreableListRedPlayer[4].GetComponent<UnitScript>().UnitSO.AttackRange.ToString();
-                        UIInstance.Instance.PageUnitéRenfort._moveValor5.GetComponent<TextMeshProUGUI>().text = unitReference.UnitClassCreableListRedPlayer[4].GetComponent<UnitScript>().UnitSO.MoveSpeed.ToString();
-                        UIInstance.Instance.PageUnitéRenfort._damageValor5.GetComponent<TextMeshProUGUI>().text = unitReference.UnitClassCreableListRedPlayer[4].GetComponent<UnitScript>().UnitSO.DamageMinimum.ToString();
-
-                        //Image Ressource pour l'unité 5 de l'armée Rouge.
-                        UIInstance.Instance.RessourceUnit_PasTouche._unité5Ressource[0].SetActive(true);
-                        UIInstance.Instance.RessourceUnit_PasTouche._unité5Ressource[1].SetActive(true);
-
-                        //Si la cinquième unité de l'armée Rouge a besoin de plus de 2 ressources.
-                        if (unitReference.UnitClassCreableListRedPlayer[4].GetComponent<UnitScript>().UnitSO.CreationCost > 2)
+                        //Si la quatrième unité de l'armée Rouge a besoin de plus de 2 ressources.
+                        if (unitReference.UnitClassCreableListRedPlayer[3].GetComponent<UnitScript>().UnitSO.CreationCost > 2)
                         {
-                            UIInstance.Instance.RessourceUnit_PasTouche._unité5Ressource[2].SetActive(true);
-                            UIInstance.Instance.RessourceUnit_PasTouche._unité5Ressource[3].SetActive(true);
+                            UIInstance.Instance.RessourceUnit_PasTouche._unité4Ressource[2].SetActive(true);
+                            UIInstance.Instance.RessourceUnit_PasTouche._unité4Ressource[3].SetActive(true);
                         }
                         else
                         {
-                            UIInstance.Instance.RessourceUnit_PasTouche._unité5Ressource[2].SetActive(false);
-                            UIInstance.Instance.RessourceUnit_PasTouche._unité5Ressource[3].SetActive(false);
+                            UIInstance.Instance.RessourceUnit_PasTouche._unité4Ressource[2].SetActive(false);
+                            UIInstance.Instance.RessourceUnit_PasTouche._unité4Ressource[3].SetActive(false);
                         }
 
-                        //Si la liste des unités créables comportent plus de 5 unités dans la liste de l'équipe Rouge.
-                        if (i >= 5)
+                        //Si la liste des unités créables comportent plus de 4 unités dans la liste de l'équipe Rouge.
+                        if (i >= 4)
                         {
-                            //Active l'UI de l'unité 6 de l'arrmée Rouge.
-                            _elementMenuRenfort[5].SetActive(true);
+                            //Active l'UI de l'unité 5 de l'arrmée Rouge.
+                            _elementMenuRenfort[4].SetActive(true);
 
-                            //Statistique pour l'unité6 de l'armée Rouge.
-                            UIInstance.Instance.PageUnitéRenfort._nameUnit6.GetComponent<TextMeshProUGUI>().text = unitReference.UnitClassCreableListRedPlayer[5].GetComponent<UnitScript>().UnitSO.UnitName.ToString();
-                            UIInstance.Instance.PageUnitéRenfort._lifeValor6.GetComponent<TextMeshProUGUI>().text = unitReference.UnitClassCreableListRedPlayer[5].GetComponent<UnitScript>().UnitSO.LifeMax.ToString();
-                            UIInstance.Instance.PageUnitéRenfort._rangeValor6.GetComponent<TextMeshProUGUI>().text = unitReference.UnitClassCreableListRedPlayer[5].GetComponent<UnitScript>().UnitSO.AttackRange.ToString();
-                            UIInstance.Instance.PageUnitéRenfort._moveValor6.GetComponent<TextMeshProUGUI>().text = unitReference.UnitClassCreableListRedPlayer[5].GetComponent<UnitScript>().UnitSO.MoveSpeed.ToString();
-                            UIInstance.Instance.PageUnitéRenfort._damageValor6.GetComponent<TextMeshProUGUI>().text = unitReference.UnitClassCreableListRedPlayer[5].GetComponent<UnitScript>().UnitSO.DamageMinimum.ToString();
+                            //Statistique pour l'unité 5 de l'armée Rouge.
+                            UIInstance.Instance.PageUnitéRenfort._nameUnit5.GetComponent<TextMeshProUGUI>().text = unitReference.UnitClassCreableListRedPlayer[4].GetComponent<UnitScript>().UnitSO.UnitName.ToString();
+                            UIInstance.Instance.PageUnitéRenfort._lifeValor5.GetComponent<TextMeshProUGUI>().text = unitReference.UnitClassCreableListRedPlayer[4].GetComponent<UnitScript>().UnitSO.LifeMax.ToString();
+                            UIInstance.Instance.PageUnitéRenfort._rangeValor5.GetComponent<TextMeshProUGUI>().text = unitReference.UnitClassCreableListRedPlayer[4].GetComponent<UnitScript>().UnitSO.AttackRange.ToString();
+                            UIInstance.Instance.PageUnitéRenfort._moveValor5.GetComponent<TextMeshProUGUI>().text = unitReference.UnitClassCreableListRedPlayer[4].GetComponent<UnitScript>().UnitSO.MoveSpeed.ToString();
+                            UIInstance.Instance.PageUnitéRenfort._damageValor5.GetComponent<TextMeshProUGUI>().text = unitReference.UnitClassCreableListRedPlayer[4].GetComponent<UnitScript>().UnitSO.DamageMinimum.ToString();
 
-                            //Image Ressource pour l'unité6 de l'armée Rouge.
-                            UIInstance.Instance.RessourceUnit_PasTouche._unité6Ressource[0].SetActive(true);
-                            UIInstance.Instance.RessourceUnit_PasTouche._unité6Ressource[1].SetActive(true);
+                            //Image Ressource pour l'unité 5 de l'armée Rouge.
+                            UIInstance.Instance.RessourceUnit_PasTouche._unité5Ressource[0].SetActive(true);
+                            UIInstance.Instance.RessourceUnit_PasTouche._unité5Ressource[1].SetActive(true);
 
-                            //Si la sixième unité de l'armée Rouge a besoin de plus de 2 ressources.
-                            if (unitReference.UnitClassCreableListRedPlayer[5].GetComponent<UnitScript>().UnitSO.CreationCost > 2)
+                            //Si la cinquième unité de l'armée Rouge a besoin de plus de 2 ressources.
+                            if (unitReference.UnitClassCreableListRedPlayer[4].GetComponent<UnitScript>().UnitSO.CreationCost > 2)
                             {
-                                UIInstance.Instance.RessourceUnit_PasTouche._unité6Ressource[2].SetActive(true);
-                                UIInstance.Instance.RessourceUnit_PasTouche._unité6Ressource[3].SetActive(true);
+                                UIInstance.Instance.RessourceUnit_PasTouche._unité5Ressource[2].SetActive(true);
+                                UIInstance.Instance.RessourceUnit_PasTouche._unité5Ressource[3].SetActive(true);
                             }
                             else
                             {
-                                UIInstance.Instance.RessourceUnit_PasTouche._unité6Ressource[2].SetActive(false);
-                                UIInstance.Instance.RessourceUnit_PasTouche._unité6Ressource[3].SetActive(false);
+                                UIInstance.Instance.RessourceUnit_PasTouche._unité5Ressource[2].SetActive(false);
+                                UIInstance.Instance.RessourceUnit_PasTouche._unité5Ressource[3].SetActive(false);
                             }
 
+                            //Si la liste des unités créables comportent plus de 5 unités dans la liste de l'équipe Rouge.
+                            if (i >= 5)
+                            {
+                                //Active l'UI de l'unité 6 de l'arrmée Rouge.
+                                _elementMenuRenfort[5].SetActive(true);
+
+                                //Statistique pour l'unité6 de l'armée Rouge.
+                                UIInstance.Instance.PageUnitéRenfort._nameUnit6.GetComponent<TextMeshProUGUI>().text = unitReference.UnitClassCreableListRedPlayer[5].GetComponent<UnitScript>().UnitSO.UnitName.ToString();
+                                UIInstance.Instance.PageUnitéRenfort._lifeValor6.GetComponent<TextMeshProUGUI>().text = unitReference.UnitClassCreableListRedPlayer[5].GetComponent<UnitScript>().UnitSO.LifeMax.ToString();
+                                UIInstance.Instance.PageUnitéRenfort._rangeValor6.GetComponent<TextMeshProUGUI>().text = unitReference.UnitClassCreableListRedPlayer[5].GetComponent<UnitScript>().UnitSO.AttackRange.ToString();
+                                UIInstance.Instance.PageUnitéRenfort._moveValor6.GetComponent<TextMeshProUGUI>().text = unitReference.UnitClassCreableListRedPlayer[5].GetComponent<UnitScript>().UnitSO.MoveSpeed.ToString();
+                                UIInstance.Instance.PageUnitéRenfort._damageValor6.GetComponent<TextMeshProUGUI>().text = unitReference.UnitClassCreableListRedPlayer[5].GetComponent<UnitScript>().UnitSO.DamageMinimum.ToString();
+
+                                //Image Ressource pour l'unité6 de l'armée Rouge.
+                                UIInstance.Instance.RessourceUnit_PasTouche._unité6Ressource[0].SetActive(true);
+                                UIInstance.Instance.RessourceUnit_PasTouche._unité6Ressource[1].SetActive(true);
+
+                                //Si la sixième unité de l'armée Rouge a besoin de plus de 2 ressources.
+                                if (unitReference.UnitClassCreableListRedPlayer[5].GetComponent<UnitScript>().UnitSO.CreationCost > 2)
+                                {
+                                    UIInstance.Instance.RessourceUnit_PasTouche._unité6Ressource[2].SetActive(true);
+                                    UIInstance.Instance.RessourceUnit_PasTouche._unité6Ressource[3].SetActive(true);
+                                }
+                                else
+                                {
+                                    UIInstance.Instance.RessourceUnit_PasTouche._unité6Ressource[2].SetActive(false);
+                                    UIInstance.Instance.RessourceUnit_PasTouche._unité6Ressource[3].SetActive(false);
+                                }
+
+                            }
+                            else
+                            {
+                                _elementMenuRenfort[5].SetActive(false);
+                            }
                         }
                         else
                         {
+                            _elementMenuRenfort[4].SetActive(false);
                             _elementMenuRenfort[5].SetActive(false);
                         }
                     }
                     else
                     {
+                        _elementMenuRenfort[3].SetActive(false);
                         _elementMenuRenfort[4].SetActive(false);
                         _elementMenuRenfort[5].SetActive(false);
                     }
-                }
-                else
-                {
-                    _elementMenuRenfort[3].SetActive(false);
-                    _elementMenuRenfort[4].SetActive(false);
-                    _elementMenuRenfort[5].SetActive(false);
-                }
-                #endregion Update Textuelle et Image Renforts de 4 à 6 pour l'équipe Rouge
+                    #endregion Update Textuelle et Image Renforts de 4 à 6 pour l'équipe Rouge
+                
+
             }
         }
 
         else if (!player)
         {
-            /*
-            //Update le drapeau qui se situe dans UI Instance correspondant à l'armée Bleu.
-            UIInstance.Instance.EmplacementImageMenuRenfort._drapeauDuJoueur.GetComponent<SpriteRenderer>().sprite = UIInstance.Instance.StockageImage._drapeauJoueur[1];
 
-            UIInstance.Instance.PageUnitéRenfort._ressourceJoueur.GetComponent<TextMeshProUGUI>().text = player.Ressource.ToString();
-            if (player.Ressource <= 1)
-            {
-                UIInstance.Instance.PageUnitéRenfort._ressourceJoueur.GetComponent<TextMeshProUGUI>().text = "Ressource";
-            }*/
-
+            UIInstance.Instance.PageUnitéRenfort._ressourceJoueur.GetComponent<TextMeshProUGUI>().text = PlayerScript.Instance.BluePlayerInfos.Ressource.ToString();
             //Permet de déterminer le nombre d'emplacements à mettre à jour sur le menu Renfort de l'Armée Bleu.
             for (int i = 2; i < unitReference.UnitClassCreableListBluePlayer.Count; i++)
             {
@@ -1372,6 +1344,7 @@ public class MouseCommand : MonoBehaviour
     public void MenuRenfortUI(bool player)
     {
         RenfortUI.SetActive(true);
+        UIInstance.Instance.RenfortBlockant.SetActive(true);
         UpdateStatsMenuRenforts(player);
     }
     #endregion MenuRenfortFunction
