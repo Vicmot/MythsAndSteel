@@ -19,10 +19,53 @@ public class SoinImmobilisation : Capacity
             }
         }
 
+        foreach (int T in PlayerStatic.GetNeighbourDiag(tileId + 1, TilesManager.Instance.TileList[tileId + 1].GetComponent<TileScript>().Line, false))
+        {
+            if (TilesManager.Instance.TileList[T] != null)
+            {
+                if (TilesManager.Instance.TileList[T].GetComponent<TileScript>().Unit != RaycastManager.Instance.ActualUnitSelected)
+                {
+                    tile.Add(TilesManager.Instance.TileList[T]);
+                }
+            }
+        }
+
+        foreach (int T in PlayerStatic.GetNeighbourDiag(tileId - 1, TilesManager.Instance.TileList[tileId - 1].GetComponent<TileScript>().Line, false))
+        {
+            if (TilesManager.Instance.TileList[T] != null)
+            {
+                if (TilesManager.Instance.TileList[T].GetComponent<TileScript>().Unit != RaycastManager.Instance.ActualUnitSelected)
+                {
+                    tile.Add(TilesManager.Instance.TileList[T]);
+                }
+            }
+        }
+
+        foreach (int T in PlayerStatic.GetNeighbourDiag(tileId - 9, TilesManager.Instance.TileList[tileId - 9].GetComponent<TileScript>().Line, false))
+        {
+            if (TilesManager.Instance.TileList[T] != null)
+            {
+                if (TilesManager.Instance.TileList[T].GetComponent<TileScript>().Unit != RaycastManager.Instance.ActualUnitSelected)
+                {
+                    tile.Add(TilesManager.Instance.TileList[T]);
+                }
+            }
+        }
+
+        foreach (int T in PlayerStatic.GetNeighbourDiag(tileId + 9, TilesManager.Instance.TileList[tileId + 9].GetComponent<TileScript>().Line, false))
+        {
+            if (TilesManager.Instance.TileList[T] != null)
+            {
+                if (TilesManager.Instance.TileList[T].GetComponent<TileScript>().Unit != RaycastManager.Instance.ActualUnitSelected)
+                {
+                    tile.Add(TilesManager.Instance.TileList[T]);
+                }
+            }
+        }
 
         GameManager.Instance._eventCall += EndCpty;
         GameManager.Instance._eventCallCancel += StopCpty;
-        GameManager.Instance.StartEventModeTiles(1, GetComponent<UnitScript>().UnitSO.IsInRedArmy, tile, "Soin/Immobilisation", "Voulez-vous vraiment soigner/immobiliser cette unitée ?");
+        GameManager.Instance.StartEventModeTiles(1, false, tile, "Soin/Immobilisation", "Voulez-vous vraiment soigner/immobiliser cette unitée ?");
         base.StartCpty();
     }
 
@@ -37,16 +80,17 @@ public class SoinImmobilisation : Capacity
 
     public override void EndCpty()
     {
-        GameObject TileChoose = GameManager.Instance.TileChooseList[0];
-        if (TileChoose.GetComponent<TileScript>().Unit.GetComponent<UnitScript>().UnitSO.IsInRedArmy == true)
+        if (GameManager.Instance.TileChooseList[0].GetComponent<TileScript>().Unit.GetComponent<UnitScript>().UnitSO.IsInRedArmy == true)
         {
-            TileChoose.GetComponent<TileScript>().Unit.GetComponent<UnitScript>().AddStatutToUnit(MYthsAndSteel_Enum.UnitStatut.Immobilisation);
+            GameManager.Instance.TileChooseList[0].GetComponent<TileScript>().Unit.GetComponent<UnitScript>().AddStatutToUnit(MYthsAndSteel_Enum.UnitStatut.Immobilisation);
         }
-        else
+        else if (GameManager.Instance.TileChooseList[0].GetComponent<TileScript>().Unit.GetComponent<UnitScript>().UnitSO.IsInRedArmy == false)   
         {
-            TileChoose.GetComponent<TileScript>().Unit.GetComponent<UnitScript>().Life += 2;
+            GameManager.Instance.TileChooseList[0].GetComponent<TileScript>().Unit.GetComponent<UnitScript>().GiveLife(2);
         }
+        GameManager.Instance._eventCall -= EndCpty;
         GetComponent<UnitScript>().EndCapacity();
         base.EndCpty();
+        GameManager.Instance.TileChooseList.Clear();
     }
 }

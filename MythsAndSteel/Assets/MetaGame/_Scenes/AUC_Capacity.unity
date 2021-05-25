@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.1273174, g: 0.13414761, b: 0.12107885, a: 1}
+  m_IndirectSpecularColor: {r: 0.12731749, g: 0.13414757, b: 0.1210787, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -5513,7 +5513,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 6244242718017290110, guid: 05ea443c18494aa4b9bebdf213b20ae8, type: 3}
   m_PrefabInstance: {fileID: 3573671939702946865}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &409550978
+--- !u!114 &409550975
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5522,14 +5522,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 409550974}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fa96692a7d2f2c4493090433583d569, type: 3}
+  m_Script: {fileID: 11500000, guid: 79b3198f85accd14dae5c19a9ab0e182, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _Capacity1Name: "La capacit\xE9 originelle"
-  render1: {fileID: 628933551328896066, guid: 38e78899b63747846919312a4620c871, type: 3}
-  _Capacity1Description: "Je suis la premi\xE8re capacit\xE9 et je me porte bien"
-  _Capacity1Cost: 2
-  fr: {fileID: 1431489989}
+  _Capacity1Name: Charge creuse
+  render1: {fileID: 0}
+  _Capacity1Description: "inflige 3 d\xE9gats chakal"
+  _Capacity1Cost: 0
 --- !u!1 &410746577 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2505849687832993500, guid: 9c16f23506dd9eb4cae93373ea3e8c51, type: 3}
@@ -7618,7 +7617,8 @@ PrefabInstance:
       propertyPath: _actualTileld
       value: 62
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5175906133083138480, guid: cab109d310ee2b743ba60a48e05bdebf, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: cab109d310ee2b743ba60a48e05bdebf, type: 3}
 --- !u!4 &550122655 stripped
 Transform:
@@ -10687,6 +10687,22 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 4473479720353736792, guid: cab109d310ee2b743ba60a48e05bdebf, type: 3}
   m_PrefabInstance: {fileID: 802328526}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &794419051
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 794419050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79b3198f85accd14dae5c19a9ab0e182, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _Capacity1Name: f
+  render1: {fileID: 0}
+  _Capacity1Description: f
+  _Capacity1Cost: 0
 --- !u!1001 &794866314
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10989,7 +11005,8 @@ PrefabInstance:
       propertyPath: fr
       value: 
       objectReference: {fileID: 1431489989}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5175906133083138480, guid: cab109d310ee2b743ba60a48e05bdebf, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: cab109d310ee2b743ba60a48e05bdebf, type: 3}
 --- !u!4 &802328527 stripped
 Transform:
@@ -12504,6 +12521,23 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 4473479720353736792, guid: cab109d310ee2b743ba60a48e05bdebf, type: 3}
   m_PrefabInstance: {fileID: 550122654}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &927307461
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 927307460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4376c21b79ffbc4459421c8ab60e2895, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _Capacity1Name: Guerison
+  render1: {fileID: 0}
+  _Capacity1Description: "Soigne 2 points de vie \xE0 une unit\xE9 alli\xE9e sur
+    une case adjacente."
+  _Capacity1Cost: 1
 --- !u!1001 &928283469
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13690,15 +13724,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1023258099}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 22a2689b805c9e44784abe67c1beb2d7, type: 3}
+  m_Script: {fileID: 11500000, guid: b210a482f7ea5624d985f0ebc1ee96cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _Capacity1Name: Soin/Immobilisation
-  render1: {fileID: 21300000, guid: 778083e7eba65f040a645d34ad449d9b, type: 3}
-  _Capacity1Description: "Le M7 Priest tire \xE0 port\xE9e d'attaque sur une unit\xE9.
-    Si c\u2019est un alli\xE9: +2 PV / Si c\u2019est un ennemi: Immobilis\xE9 durant
-    1 tour. (Statut Immobilisation)"
-  _Capacity1Cost: 0
+  _Capacity1Name: Blitzkrieg
+  render1: {fileID: 0}
+  _Capacity1Description: "Conf\xE8re 2 activations suppl\xE9mentaire ce tour-ci"
+  _Capacity1Cost: 2
 --- !u!1 &1028398667
 GameObject:
   m_ObjectHideFlags: 0
