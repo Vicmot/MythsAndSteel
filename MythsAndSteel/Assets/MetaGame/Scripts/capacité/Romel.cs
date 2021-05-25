@@ -54,7 +54,7 @@ public class Romel : Capacity
         //GetComponent<UnitScript>().UnitSO = TransformationRomel;
         if (TransformationRomel != null) GetComponent<UnitScript>().UnitSO = TransformationRomel;
         else Debug.Log("debug");
-        //GetComponent<UnitScript>().UpdateUnitStat();
+        GetComponent<UnitScript>().UpdateUnitStat();
     }
 
     public override void StopCpty()
