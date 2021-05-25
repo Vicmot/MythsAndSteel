@@ -7,12 +7,12 @@ public class SoinImmobilisation : Capacity
     {
         int tileId = RaycastManager.Instance.ActualUnitSelected.GetComponent<UnitScript>().ActualTiledId;
         List<GameObject> tile = new List<GameObject>();
-
+        
         foreach (int T in PlayerStatic.GetNeighbourDiag(tileId, TilesManager.Instance.TileList[tileId].GetComponent<TileScript>().Line, false))
         {
             if (TilesManager.Instance.TileList[T] != null)
             {
-                if (TilesManager.Instance.TileList[T].GetComponent<TileScript>().Unit != RaycastManager.Instance.ActualUnitSelected)
+                if (TilesManager.Instance.TileList[T].GetComponent<TileScript>().Unit != RaycastManager.Instance.ActualUnitSelected && TilesManager.Instance.TileList[T].GetComponent<TileScript>().Unit != null)
                 {
                     tile.Add(TilesManager.Instance.TileList[T]);
                 }
@@ -23,7 +23,7 @@ public class SoinImmobilisation : Capacity
         {
             if (TilesManager.Instance.TileList[T] != null)
             {
-                if (TilesManager.Instance.TileList[T].GetComponent<TileScript>().Unit != RaycastManager.Instance.ActualUnitSelected)
+                if (TilesManager.Instance.TileList[T].GetComponent<TileScript>().Unit != RaycastManager.Instance.ActualUnitSelected && TilesManager.Instance.TileList[T].GetComponent<TileScript>().Unit != null)
                 {
                     tile.Add(TilesManager.Instance.TileList[T]);
                 }
@@ -34,7 +34,7 @@ public class SoinImmobilisation : Capacity
         {
             if (TilesManager.Instance.TileList[T] != null)
             {
-                if (TilesManager.Instance.TileList[T].GetComponent<TileScript>().Unit != RaycastManager.Instance.ActualUnitSelected)
+                if (TilesManager.Instance.TileList[T].GetComponent<TileScript>().Unit != RaycastManager.Instance.ActualUnitSelected && TilesManager.Instance.TileList[T].GetComponent<TileScript>().Unit != null)
                 {
                     tile.Add(TilesManager.Instance.TileList[T]);
                 }
@@ -45,7 +45,7 @@ public class SoinImmobilisation : Capacity
         {
             if (TilesManager.Instance.TileList[T] != null)
             {
-                if (TilesManager.Instance.TileList[T].GetComponent<TileScript>().Unit != RaycastManager.Instance.ActualUnitSelected)
+                if (TilesManager.Instance.TileList[T].GetComponent<TileScript>().Unit != RaycastManager.Instance.ActualUnitSelected && TilesManager.Instance.TileList[T].GetComponent<TileScript>().Unit != null)
                 {
                     tile.Add(TilesManager.Instance.TileList[T]);
                 }
@@ -56,17 +56,21 @@ public class SoinImmobilisation : Capacity
         {
             if (TilesManager.Instance.TileList[T] != null)
             {
-                if (TilesManager.Instance.TileList[T].GetComponent<TileScript>().Unit != RaycastManager.Instance.ActualUnitSelected)
+                if (TilesManager.Instance.TileList[T].GetComponent<TileScript>().Unit != RaycastManager.Instance.ActualUnitSelected && TilesManager.Instance.TileList[T].GetComponent<TileScript>().Unit != null)
                 {
                     tile.Add(TilesManager.Instance.TileList[T]);
                 }
             }
         }
+        
+        tile.Remove(TilesManager.Instance.TileList[GetComponent<UnitScript>().ActualTiledId].GetComponent<GameObject>());
+        
 
         GameManager.Instance._eventCall += EndCpty;
         GameManager.Instance._eventCallCancel += StopCpty;
         GameManager.Instance.StartEventModeTiles(1, false, tile, "Soin/Immobilisation", "Voulez-vous vraiment soigner/immobiliser cette unitée ?");
         base.StartCpty();
+        
     }
 
 
@@ -88,9 +92,11 @@ public class SoinImmobilisation : Capacity
         {
             GameManager.Instance.TileChooseList[0].GetComponent<TileScript>().Unit.GetComponent<UnitScript>().GiveLife(2);
         }
+        
         GameManager.Instance._eventCall -= EndCpty;
         GetComponent<UnitScript>().EndCapacity();
         base.EndCpty();
         GameManager.Instance.TileChooseList.Clear();
+        
     }
 }

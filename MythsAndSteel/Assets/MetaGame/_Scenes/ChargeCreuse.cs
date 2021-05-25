@@ -9,22 +9,22 @@ public class ChargeCreuse: Capacity
         if (PlayerPrefs.GetInt("ChargeCreuseDone") == 0)
         {
             int tileId = RaycastManager.Instance.ActualUnitSelected.GetComponent<UnitScript>().ActualTiledId;
-            List<GameObject> tile = new List<GameObject>();
+            List<GameObject> unitList = new List<GameObject>();
 
             foreach (int T in PlayerStatic.GetNeighbourDiag(tileId, TilesManager.Instance.TileList[tileId].GetComponent<TileScript>().Line, false))
             {
                 if (TilesManager.Instance.TileList[T] != null)
                 {
-                    if (TilesManager.Instance.TileList[T].GetComponent<TileScript>().Unit != RaycastManager.Instance.ActualUnitSelected)
+                    if (TilesManager.Instance.TileList[T].GetComponent<TileScript>().Unit != RaycastManager.Instance.ActualUnitSelected && TilesManager.Instance.TileList[T].GetComponent<TileScript>().Unit != null)
                     {
-                        tile.Add(TilesManager.Instance.TileList[T]);
+                        unitList.Add(TilesManager.Instance.TileList[T].GetComponent<TileScript>().Unit);
                     }
                 }
             }
 
             GameManager.Instance._eventCall += EndCpty;
             GameManager.Instance._eventCallCancel += StopCpty;
-            GameManager.Instance.StartEventModeTiles(1, GetComponent<UnitScript>().UnitSO.IsInRedArmy, tile, "Charge creuse", "Voulez-vous vraiment infliger 3 dégats à cette unité ?");
+            GameManager.Instance.StartEventModeTiles(1, GetComponent<UnitScript>().UnitSO.IsInRedArmy, unitList, "Charge creuse", "Voulez-vous vraiment infliger 3 dégats à cette unité ?");
             base.StartCpty();
         }
     }

@@ -17,8 +17,13 @@ public class Blitzkrieg : Capacity
             GameManager.Instance._eventCall += EndCpty;
             GameManager.Instance._eventCallCancel += StopCpty;
             Debug.Log("oui");
-            GameManager.Instance.StartEventModeTiles(0, GetComponent<UnitScript>().UnitSO.IsInRedArmy, tile, "Blitzkrieg!", "Voulez-vous vraiment acquerir deux activations supplémentaire ce tour ?");
-            Debug.Log("oui");
+            
+            if (PlayerPrefs.GetInt("Avertissement") == 0)
+            {
+                GameManager.Instance._eventCall();
+
+            }
+            UIInstance.Instance.ShowValidationPanel("Blitzkrieg!", "Voulez-vous vraiment acquerir deux activations supplémentaire ce tour ?");
         }
         base.StartCpty();
 

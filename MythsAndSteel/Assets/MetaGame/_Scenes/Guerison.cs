@@ -16,7 +16,7 @@ public class Guerison : Capacity
             {
                 if (TilesManager.Instance.TileList[T] != null)
                 {
-                    if (TilesManager.Instance.TileList[T].GetComponent<TileScript>().Unit != RaycastManager.Instance.ActualUnitSelected)
+                    if (TilesManager.Instance.TileList[T].GetComponent<TileScript>().Unit != RaycastManager.Instance.ActualUnitSelected && TilesManager.Instance.TileList[T].GetComponent<TileScript>().Unit != null)
 
                     {
                         tile.Add(TilesManager.Instance.TileList[T]);
