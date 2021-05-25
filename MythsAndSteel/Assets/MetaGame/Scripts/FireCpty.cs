@@ -5,28 +5,34 @@ using UnityEngine;
 public class FireCpty : Capacity
 {
     [SerializeField] private FireGestion fr;
+    private List<GameObject> id = new List<GameObject>();
+    [SerializeField] private int Range = 4;
+    public void Highlight(int tileId, int Range, int lasttileId = 999)
+    {
+        if (Range > 0)
+        {
+            id.Add(TilesManager.Instance.TileList[tileId]);
+            foreach (int ID in PlayerStatic.GetNeighbourDiag(tileId, TilesManager.Instance.TileList[tileId].GetComponent<TileScript>().Line, false))
+            {
+                if (lasttileId != tileId)
+                {
+                    Highlight(ID, Range - 1, tileId);
+                }
+            }
+        }
+    }
 
     public override void StartCpty()
     {
         int ressourcePlayer = GetComponent<UnitScript>().UnitSO.IsInRedArmy ? PlayerScript.Instance.RedPlayerInfos.Ressource : PlayerScript.Instance.BluePlayerInfos.Ressource;
         if (ressourcePlayer >= Capacity1Cost)
         {
-        List<GameObject> tile = new List<GameObject>();
-        foreach(GameObject T in TilesManager.Instance.TileList)
-        {
-            if(T.GetComponent<TileScript>().Unit != RaycastManager.Instance.ActualUnitSelected)
-            {
-                tile.Add(T);
-            }
+            id = new List<GameObject>();
+            Highlight(GetComponent<UnitScript>().ActualTiledId, Range);
+            GameManager.Instance._eventCall += EndCpty;
+            GameManager.Instance._eventCallCancel += StopCpty;
+            GameManager.Instance.StartEventModeTiles(1, GetComponent<UnitScript>().UnitSO.IsInRedArmy, id, "Embrasement!", "Voulez-vous vraiment embraser cette case ?");
         }
-
-        GameManager.Instance._eventCall += EndCpty;
-        GameManager.Instance._eventCallCancel += StopCpty;
-        GameManager.Instance.StartEventModeTiles(1, GetComponent<UnitScript>().UnitSO.IsInRedArmy, tile, "Embrasement!", "Voulez-vous vraiment embraser cette case ?");
-
-        }
-    
-        base.StartCpty();
     }
 
     public override void StopCpty()
@@ -48,8 +54,6 @@ public class FireCpty : Capacity
             PlayerScript.Instance.BluePlayerInfos.Ressource -= Capacity1Cost;
         }
         
-        GameManager.Instance._eventCall -= EndCpty;
-        GetComponent<UnitScript>().EndCapacity();
         if(GameManager.Instance.TileChooseList.Count > 0)
         {
             foreach(int id in PlayerStatic.GetNeighbourDiag(GameManager.Instance.TileChooseList[0].GetComponent<TileScript>().TileId, GameManager.Instance.TileChooseList[0].GetComponent<TileScript>().Line, false))
@@ -58,9 +62,9 @@ public class FireCpty : Capacity
             }
             fr.CreateFire(GameManager.Instance.TileChooseList[0].GetComponent<TileScript>().TileId);
             
-        }
-        
-        base.EndCpty();        
+        }        
+        GameManager.Instance._eventCall -= EndCpty;
+        GetComponent<UnitScript>().EndCapacity();
         GameManager.Instance.TileChooseList.Clear();
     }
 }
