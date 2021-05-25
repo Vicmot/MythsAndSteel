@@ -12,7 +12,17 @@ public class UnitScript : MonoBehaviour
     [Header("--------------- STATS DE BASE DE L'UNITE ---------------")]
     //Scriptable qui contient les stats de base de l'unité
     [SerializeField] Unit_SO _unitSO;
-    public Unit_SO UnitSO => _unitSO;
+    public Unit_SO UnitSO
+    {
+        get
+        {
+            return _unitSO;
+        }
+        set
+        {
+            _unitSO = value;
+        }
+    }
 
     [Header("------------------- VIE -------------------")]
     [Header("------------------- STAT EN JEU -------------------")]
