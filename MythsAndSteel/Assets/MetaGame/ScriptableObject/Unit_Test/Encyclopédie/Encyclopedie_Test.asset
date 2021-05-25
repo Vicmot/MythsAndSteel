@@ -15,10 +15,10 @@ MonoBehaviour:
   UnitName: "Unit\xE9 de fou dingue"
   Description: Et oui
   typeUnite: 0
-  LifeMax: 0
+  LifeMax: 1
   ShieldMax: 0
-  AttackRange: 0
-  MoveSpeed: 0
+  AttackRange: 2
+  MoveSpeed: 3
   CreationCost: 0
   numberOfUnitToAttack: 0
   DamageMinimum: 0

@@ -17,6 +17,9 @@ public class ButtonAssign : MonoBehaviour
     [SerializeField] TextMeshProUGUI UnitName;
     [SerializeField] TextMeshProUGUI UnitLore;
     [SerializeField] GameObject UnitImage;
+    [SerializeField] TextMeshProUGUI UnitLife;
+    [SerializeField] TextMeshProUGUI UnitRange;
+    [SerializeField] TextMeshProUGUI UnitMovement;
 
     public void showArmy1()
     {
@@ -50,6 +53,9 @@ public class ButtonAssign : MonoBehaviour
         UnitName.SetText(UnitShown.UnitName);
         UnitLore.SetText(UnitShown.Description);
         UnitImage.GetComponent<Image>().sprite = UnitShown.Sprite;
+        UnitLife.SetText(UnitShown.LifeMax.ToString());
+        UnitRange.SetText(UnitShown.AttackRange.ToString());
+        UnitMovement.SetText(UnitShown.MoveSpeed.ToString());
 
     }
 

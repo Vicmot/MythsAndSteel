@@ -29,7 +29,8 @@ public class Encyclopedie : MonoBehaviour
             Layer2.transform.position = SaveTransform;
             isLayer1Right = false;
             Layer2.GetComponent<Canvas>().sortingOrder = 2;
-            
+            Layer1.GetComponent<Canvas>().sortingOrder = 0;
+
         }
         else if (!isLayer1Right & index <= 3)
         {
@@ -37,6 +38,7 @@ public class Encyclopedie : MonoBehaviour
             Layer1.transform.position = Layer2.transform.position;
             Layer2.transform.position = SaveTransform;
             isLayer1Right = true;
+            Layer1.GetComponent<Canvas>().sortingOrder = 2;
             Layer2.GetComponent<Canvas>().sortingOrder = 0;
 
         }
