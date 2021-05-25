@@ -85,7 +85,18 @@ public class UnitScript : MonoBehaviour
     //Vitesse de déplacement
     [SerializeField] int _moveSpeed;
     public int MoveSpeed => _moveSpeed;
-    public int MoveSpeedBonus = 0;
+    public int _MoveSpeedBonus = 0;
+    public int MoveSpeedBonus
+    {
+        get
+        {
+            return _MoveSpeedBonus;
+        }
+        set
+        {
+            _MoveSpeedBonus = value;
+        }
+    }
     public bool BonusUsed = false;
     // Déplacement réstant de l'unité durant cette activation
     [SerializeField] int _moveLeft;
@@ -627,6 +638,10 @@ public class UnitScript : MonoBehaviour
     /// </summary>
     public void UpdateLifeHeartShieldUI(Sprite[] listSprite, int life)
     {
+        if(life >= 10)
+        {
+            life = 10;
+        }
         CurrentSpriteLifeHeartUI.sprite = listSprite[life];
     }
     #endregion LifeMethods

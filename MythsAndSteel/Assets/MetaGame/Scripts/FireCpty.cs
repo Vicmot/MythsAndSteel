@@ -2,11 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CapaTest : Capacity
+public class FireCpty : Capacity
 {
     [SerializeField] private FireGestion fr;
-
-
 
     public override void StartCpty()
     {
@@ -21,7 +19,6 @@ public class CapaTest : Capacity
                 tile.Add(T);
             }
         }
-
 
         GameManager.Instance._eventCall += EndCpty;
         GameManager.Instance._eventCallCancel += StopCpty;
