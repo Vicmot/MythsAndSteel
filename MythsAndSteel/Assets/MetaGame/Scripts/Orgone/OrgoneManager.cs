@@ -15,6 +15,12 @@ public class OrgoneManager : MonoSingleton<OrgoneManager>
     //Jauge d'orgone joueur rouge
     [SerializeField] private GameObject _redPlayerPanelOrgone = null;
     public GameObject RedPlayerPanelOrgone => _redPlayerPanelOrgone;
+    public GameObject FxOrgoneGauche;
+    public GameObject FxOrgoneDroit;
+    public GameObject ForceFieldDroit;
+    public GameObject ForceFieldGauche;
+    public GameObject BasOrgoneRed;
+    public GameObject BasOrgoneBlue;
 
     //Jauge d'orgone joueur bleu
     [SerializeField] private GameObject _bluePlayerPanelOrgone = null;
@@ -52,7 +58,14 @@ public class OrgoneManager : MonoSingleton<OrgoneManager>
         GameManager.Instance.ManagerSO.GoToOrgoneJ1Phase += ActivateOrgoneArea;
         GameManager.Instance.ManagerSO.GoToOrgoneJ2Phase += ActivateOrgoneArea;
     }
+    private void Update()
+    {
+       
+        ForceFieldGauche.transform.GetChild(0).position = Camera.main.ScreenToWorldPoint(BasOrgoneRed.transform.position);
+        ForceFieldDroit.transform.GetChild(0).position = Camera.main.ScreenToWorldPoint(BasOrgoneBlue.transform.position);
+ 
 
+    }
     public void ReleaseZone(){
         if(GameManager.Instance.IsPlayerRedTurn){
             _redPlayerZone.GetComponent<ZoneOrgone>().ReleaseZone();

@@ -234,7 +234,7 @@ public class UIInstance : MonoSingleton<UIInstance>
     public void QuitValidationPanel(){
         _validationPanel.SetActive(false);
     }
-
+    
     #region UITile
     [Header("Tile's infos update")]
     [SerializeField] private TileTypeClass _typeTileList;
