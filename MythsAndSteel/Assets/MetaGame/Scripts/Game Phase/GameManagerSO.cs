@@ -164,11 +164,12 @@ public class GameManagerSO : ScriptableObject
                 }
                 if (GameManager.Instance.possesion)
                 {
-
+                    Debug.Log(GameManager.Instance.IsPlayerRedTurn);
                     foreach (GameObject unit in GameManager.Instance.IsPlayerRedTurn ? PlayerScript.Instance.UnitRef.UnitListBluePlayer : PlayerScript.Instance.UnitRef.UnitListRedPlayer)
                     {
-                        unit.GetComponent<UnitScript>().ResetStatutPossesion();
                         GameManager.Instance.possesion = false;
+                        Debug.Log("fjkds");
+                        unit.GetComponent<UnitScript>().ResetStatutPossesion();
 
 
 
@@ -361,7 +362,7 @@ public class GameManagerSO : ScriptableObject
 
                     unit.GetComponent<UnitScript>().RemoveStatutToUnit(MYthsAndSteel_Enum.UnitStatut.PeutPasCombattre);
                     unit.GetComponent<UnitScript>().RemoveStatutToUnit(MYthsAndSteel_Enum.UnitStatut.Invincible);
-                    unit.GetComponent<UnitScript>().RemoveStatutToUnit(MYthsAndSteel_Enum.UnitStatut.PeutPasCombattre);
+                    unit.GetComponent<UnitScript>().RemoveStatutToUnit(MYthsAndSteel_Enum.UnitStatut.PeutPasPrendreDesObjectifs);
 
                 }
 
@@ -370,7 +371,7 @@ public class GameManagerSO : ScriptableObject
 
                     unit.GetComponent<UnitScript>().RemoveStatutToUnit(MYthsAndSteel_Enum.UnitStatut.PeutPasCombattre);
                     unit.GetComponent<UnitScript>().RemoveStatutToUnit(MYthsAndSteel_Enum.UnitStatut.Invincible);
-                    unit.GetComponent<UnitScript>().RemoveStatutToUnit(MYthsAndSteel_Enum.UnitStatut.PeutPasCombattre);
+                    unit.GetComponent<UnitScript>().RemoveStatutToUnit(MYthsAndSteel_Enum.UnitStatut.PeutPasPrendreDesObjectifs);
 
 
                 }
@@ -406,16 +407,19 @@ public class GameManagerSO : ScriptableObject
                             refunit = null;
                         }
                     }
+                }
+                      
                     if (GameManager.Instance.possesion)
                     {
                         foreach (GameObject unit in GameManager.Instance.IsPlayerRedTurn ? PlayerScript.Instance.UnitRef.UnitListBluePlayer : PlayerScript.Instance.UnitRef.UnitListRedPlayer)
                         {
-                            unit.GetComponent<UnitScript>().ResetStatutPossesion();
+                           
                             GameManager.Instance.possesion = false;
+                            unit.GetComponent<UnitScript>().ResetStatutPossesion();
 
                         }
                     }
-                }
+                
                 if (GameManager.Instance.ParalysieStat != 3)
                 {
                     List<GameObject> refunit = new List<GameObject>();
