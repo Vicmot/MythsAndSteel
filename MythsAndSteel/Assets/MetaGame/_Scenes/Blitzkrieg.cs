@@ -6,16 +6,22 @@ public class Blitzkrieg : Capacity
 {
     public override void StartCpty()
     {
-
+      
         int ressourcePlayer = PlayerScript.Instance.RedPlayerInfos.Ressource;
         if (ressourcePlayer >= Capacity1Cost)
         {
-            PlayerScript.Instance.RedPlayerInfos.ActivationLeft += 2;
+            List<GameObject> tile = new List<GameObject>();
+
+
+            Debug.Log("oui");
+            GameManager.Instance._eventCall += EndCpty;
+            GameManager.Instance._eventCallCancel += StopCpty;
+            Debug.Log("oui");
+            GameManager.Instance.StartEventModeTiles(0, GetComponent<UnitScript>().UnitSO.IsInRedArmy, tile, "Blitzkrieg!", "Voulez-vous vraiment acquerir deux activations supplémentaire ce tour ?");
+            Debug.Log("oui");
         }
         base.StartCpty();
 
-        GameManager.Instance._eventCall += EndCpty;
-        GameManager.Instance._eventCallCancel += StopCpty;
     }
 
     public override void StopCpty()
@@ -28,8 +34,12 @@ public class Blitzkrieg : Capacity
 
     public override void EndCpty()
     {
-        PlayerScript.Instance.BluePlayerInfos.Ressource -= Capacity1Cost;
-
+        Debug.Log("oui");
+        PlayerScript.Instance.RedPlayerInfos.Ressource -= Capacity1Cost;
+        PlayerScript.Instance.RedPlayerInfos.ActivationLeft += 2;
+        UIInstance.Instance.UpdateRessourceLeft();
+        UIInstance.Instance.UpdateActivationLeft();
+        Debug.Log("Inchallah");
         GameManager.Instance._eventCall -= EndCpty;
         GetComponent<UnitScript>().EndCapacity();
         base.EndCpty();
