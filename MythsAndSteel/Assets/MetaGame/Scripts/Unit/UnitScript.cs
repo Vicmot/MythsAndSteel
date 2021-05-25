@@ -12,7 +12,17 @@ public class UnitScript : MonoBehaviour
     [Header("--------------- STATS DE BASE DE L'UNITE ---------------")]
     //Scriptable qui contient les stats de base de l'unité
     [SerializeField] Unit_SO _unitSO;
-    public Unit_SO UnitSO => _unitSO;
+    public Unit_SO UnitSO
+    {
+        get
+        {
+            return _unitSO;
+        }
+        set
+        {
+            _unitSO = value;
+        }
+    }
 
     [Header("------------------- VIE -------------------")]
     [Header("------------------- STAT EN JEU -------------------")]
@@ -202,7 +212,7 @@ public class UnitScript : MonoBehaviour
             return _unitStatuts;
         }
         set
-        { 
+        {
             _unitStatuts = value;
         }
     }
@@ -219,13 +229,13 @@ public class UnitScript : MonoBehaviour
             StatusPrefab.SetBool("In", false);
             yield return new WaitForSeconds(1f);
         }
-        if(UnitStatuts.Count >= step && step >= 0)
+        if (UnitStatuts.Count >= step && step >= 0)
         {
             StatusPrefab.runtimeAnimatorController = GetAnimator(_unitStatuts[step]);
         }
         StatusPrefab.SetBool("In", true);
         yield return new WaitForSeconds(3);
-        if(UnitStatuts.Count > 1)
+        if (UnitStatuts.Count > 1)
         {
             NewStep();
         }
@@ -238,11 +248,11 @@ public class UnitScript : MonoBehaviour
 
     public void NewStep()
     {
-        if(step >= UnitStatuts.Count - 1)
+        if (step >= UnitStatuts.Count - 1)
         {
             step = 0;
         }
-        else if(UnitStatuts.Count != 0)
+        else if (UnitStatuts.Count != 0)
         {
             step++;
         }
@@ -251,11 +261,11 @@ public class UnitScript : MonoBehaviour
 
     public RuntimeAnimatorController GetAnimator(MYthsAndSteel_Enum.UnitStatut ST)
     {
-        foreach(Data D in StatusData.Data)
+        foreach (Data D in StatusData.Data)
         {
-            if(D.Status == ST)
+            if (D.Status == ST)
             {
-                if(D.Animation != null)
+                if (D.Animation != null)
                 {
                     return D.Animation;
                 }
@@ -271,7 +281,7 @@ public class UnitScript : MonoBehaviour
 
     public void NextStepSetter(MYthsAndSteel_Enum.UnitStatut ST)
     {
-        if(last != null)
+        if (last != null)
         {
             StopCoroutine(last);
         }
@@ -284,10 +294,10 @@ public class UnitScript : MonoBehaviour
     public Animator Animation => _Animation;
 
     //Récupération de stats pour l'écran de victoire
- 
+
     public bool GotCapacity()
     {
-        if(TryGetComponent<Capacity>(out Capacity C))
+        if (TryGetComponent<Capacity>(out Capacity C))
         {
             return true;
         }
@@ -402,131 +412,131 @@ public class UnitScript : MonoBehaviour
     /// <param name="Damage"></param>
     public virtual void TakeDamage(int Damage, bool IsOrgoneDamage = false)
     {
-        if(!_unitStatuts.Contains(MYthsAndSteel_Enum.UnitStatut.Invincible))
-            {
-
-        if (_shield > 0)
+        if (!_unitStatuts.Contains(MYthsAndSteel_Enum.UnitStatut.Invincible))
         {
-            _shield -= Damage;
-
-            if (_shield < 0)
-            {
-                _life += _shield;
-            }
 
             if (_shield > 0)
             {
-                if (UnitSO.IsInRedArmy)
+                _shield -= Damage;
+
+                if (_shield < 0)
                 {
-                    UpdateLifeHeartShieldUI(UIInstance.Instance.RedHeartShieldSprite, _life + _shield);
+                    _life += _shield;
+                }
+
+                if (_shield > 0)
+                {
+                    if (UnitSO.IsInRedArmy)
+                    {
+                        UpdateLifeHeartShieldUI(UIInstance.Instance.RedHeartShieldSprite, _life + _shield);
                         Renderer.material.SetFloat("_HitTime", Time.time);
-                       
+
                     }
+                    else
+                    {
+                        UpdateLifeHeartShieldUI(UIInstance.Instance.BlueHeartShieldSprite, _life + _shield);
+                        Renderer.material.SetFloat("_HitTime", Time.time);
+
+                    }
+                }
                 else
-                {
-                    UpdateLifeHeartShieldUI(UIInstance.Instance.BlueHeartShieldSprite, _life + _shield);
-                        Renderer.material.SetFloat("_HitTime", Time.time);
-                       
-                    }
-            }
-            else
-            {
-                if (UnitSO.IsInRedArmy)
-                {
-                    UpdateLifeHeartShieldUI(UIInstance.Instance.RedHeartSprite, _life);
-                        Renderer.material.SetFloat("_HitTime", Time.time);
-                     
-                    }
-                else
-                {
-                    UpdateLifeHeartShieldUI(UIInstance.Instance.BlueHeartSprite, _life);
-                        Renderer.material.SetFloat("_HitTime", Time.time);
-                 
-                    }
-            }
-        }
-        else
-        {
-            _life -= Damage;
-            if (_shield > 0)
-            {
-                if (UnitSO.IsInRedArmy)
-                {
-                    UpdateLifeHeartShieldUI(UIInstance.Instance.RedHeartShieldSprite, _life + _shield);
-                        Renderer.material.SetFloat("_HitTime", Time.time);
-                        Debug.Log("je ne fonctionne pas ");
-                    }
-                else
-                {
-                    UpdateLifeHeartShieldUI(UIInstance.Instance.BlueHeartShieldSprite, _life + _shield);
-                        Renderer.material.SetFloat("_HitTime", Time.time);
-                   
-                    }
-            }
-            else
-            {
-                if (_life > 0)
                 {
                     if (UnitSO.IsInRedArmy)
                     {
                         UpdateLifeHeartShieldUI(UIInstance.Instance.RedHeartSprite, _life);
-                            Renderer.material.SetFloat("_HitTime", Time.time);
-                           
-                        }
+                        Renderer.material.SetFloat("_HitTime", Time.time);
+
+                    }
                     else
                     {
                         UpdateLifeHeartShieldUI(UIInstance.Instance.BlueHeartSprite, _life);
-                            Renderer.material.SetFloat("_HitTime", Time.time);
-                        
-                        }
-                }
-            }
-        }
+                        Renderer.material.SetFloat("_HitTime", Time.time);
 
-        CheckLife();
-
-        //Ajout de l'orgone
-        if (Damage > 0)
-        {
-            if (TilesManager.Instance.TileList[ActualTiledId].GetComponent<TileScript>().TerrainEffectList.Contains(MYthsAndSteel_Enum.TerrainType.OrgoneRed))
-            {
-                if (!GameManager.Instance.IsCheckingOrgone)
-                {
-
-                    PlayerScript.Instance.AddOrgone(1, 1);
-                    PlayerScript.Instance.RedPlayerInfos.CheckOrgone(1);
-                }
-                else
-                {
-                    if (!IsOrgoneDamage)
-                    {
-                        PlayerScript.Instance.AddOrgone(1, 1);
-                        Debug.Log("Ca buuuuuug");
                     }
-                    if (GameManager.Instance._waitToCheckOrgone != null) GameManager.Instance._waitToCheckOrgone += AddOrgoneToPlayer;
                 }
             }
-
-            if (TilesManager.Instance.TileList[ActualTiledId].GetComponent<TileScript>().TerrainEffectList.Contains(MYthsAndSteel_Enum.TerrainType.OrgoneBlue))
+            else
             {
-                if (!GameManager.Instance.IsCheckingOrgone)
+                _life -= Damage;
+                if (_shield > 0)
                 {
-                    PlayerScript.Instance.AddOrgone(1, 2);
-                    PlayerScript.Instance.BluePlayerInfos.CheckOrgone(2);
+                    if (UnitSO.IsInRedArmy)
+                    {
+                        UpdateLifeHeartShieldUI(UIInstance.Instance.RedHeartShieldSprite, _life + _shield);
+                        Renderer.material.SetFloat("_HitTime", Time.time);
+                        Debug.Log("je ne fonctionne pas ");
+                    }
+                    else
+                    {
+                        UpdateLifeHeartShieldUI(UIInstance.Instance.BlueHeartShieldSprite, _life + _shield);
+                        Renderer.material.SetFloat("_HitTime", Time.time);
+
+                    }
                 }
                 else
                 {
-                    if (!IsOrgoneDamage)
+                    if (_life > 0)
+                    {
+                        if (UnitSO.IsInRedArmy)
+                        {
+                            UpdateLifeHeartShieldUI(UIInstance.Instance.RedHeartSprite, _life);
+                            Renderer.material.SetFloat("_HitTime", Time.time);
+
+                        }
+                        else
+                        {
+                            UpdateLifeHeartShieldUI(UIInstance.Instance.BlueHeartSprite, _life);
+                            Renderer.material.SetFloat("_HitTime", Time.time);
+
+                        }
+                    }
+                }
+            }
+
+            CheckLife();
+
+            //Ajout de l'orgone
+            if (Damage > 0)
+            {
+                if (TilesManager.Instance.TileList[ActualTiledId].GetComponent<TileScript>().TerrainEffectList.Contains(MYthsAndSteel_Enum.TerrainType.OrgoneRed))
+                {
+                    if (!GameManager.Instance.IsCheckingOrgone)
+                    {
+
+                        PlayerScript.Instance.AddOrgone(1, 1);
+                        PlayerScript.Instance.RedPlayerInfos.CheckOrgone(1);
+                    }
+                    else
+                    {
+                        if (!IsOrgoneDamage)
+                        {
+                            PlayerScript.Instance.AddOrgone(1, 1);
+                            Debug.Log("Ca buuuuuug");
+                        }
+                        if (GameManager.Instance._waitToCheckOrgone != null) GameManager.Instance._waitToCheckOrgone += AddOrgoneToPlayer;
+                    }
+                }
+
+                if (TilesManager.Instance.TileList[ActualTiledId].GetComponent<TileScript>().TerrainEffectList.Contains(MYthsAndSteel_Enum.TerrainType.OrgoneBlue))
+                {
+                    if (!GameManager.Instance.IsCheckingOrgone)
                     {
                         PlayerScript.Instance.AddOrgone(1, 2);
-                        Debug.Log("Ca buuuuuug");
+                        PlayerScript.Instance.BluePlayerInfos.CheckOrgone(2);
                     }
-                    if (GameManager.Instance._waitToCheckOrgone != null) GameManager.Instance._waitToCheckOrgone += AddOrgoneToPlayer;
+                    else
+                    {
+                        if (!IsOrgoneDamage)
+                        {
+                            PlayerScript.Instance.AddOrgone(1, 2);
+                            Debug.Log("Ca buuuuuug");
+                        }
+                        if (GameManager.Instance._waitToCheckOrgone != null) GameManager.Instance._waitToCheckOrgone += AddOrgoneToPlayer;
+                    }
                 }
             }
         }
     }
-        }
 
     /// <summary>
     /// Check si l'orgone a redépassé le joueur
@@ -549,11 +559,11 @@ public class UnitScript : MonoBehaviour
         {
             if (UnitSO.IsInRedArmy)
             {
-               GameManager.Instance.victoryScreen.redDeadUnits += 1;
+                GameManager.Instance.victoryScreen.redDeadUnits += 1;
             }
             if (!UnitSO.IsInRedArmy)
             {
-               GameManager.Instance.victoryScreen.blueDeadUnits += 1;
+                GameManager.Instance.victoryScreen.blueDeadUnits += 1;
             }
             Death();
             IsDead = true;
@@ -571,7 +581,7 @@ public class UnitScript : MonoBehaviour
     public virtual void Death()
     {
 
-      
+
         if (RaycastManager.Instance.ActualUnitSelected == this.gameObject)
         {
             Mouvement.Instance.StopMouvement(false);
@@ -616,7 +626,7 @@ public class UnitScript : MonoBehaviour
         if (Animation != null)
         {
 
-            Animation.SetBool("Dead", true); 
+            Animation.SetBool("Dead", true);
 
             yield return new WaitForSeconds(Animation.runtimeAnimatorController.animationClips[0].length);
         }
@@ -749,7 +759,7 @@ public class UnitScript : MonoBehaviour
     /// </summary>
     public void checkMovementLeft()
     {
-        if (UnitSO.IsInRedArmy && !hasUseActivation || (!_unitSO.IsInRedArmy && _unitStatuts.Contains(MYthsAndSteel_Enum.UnitStatut.Possédé)) && !hasUseActivation) 
+        if (UnitSO.IsInRedArmy && !hasUseActivation || (!_unitSO.IsInRedArmy && _unitStatuts.Contains(MYthsAndSteel_Enum.UnitStatut.Possédé)) && !hasUseActivation)
         {
             hasUseActivation = true;
             PlayerScript.Instance.RedPlayerInfos.ActivationLeft--;
@@ -801,14 +811,14 @@ public class UnitScript : MonoBehaviour
     public void StartCapacity()
     {
         CapacitySystem.Instance.CapacityRunning = true;
-        RunningCapacity = true; 
+        RunningCapacity = true;
         CapacitySystem.Instance.Updatebutton();
         UIInstance.Instance.DesactivateNextPhaseButton();
-            if (TryGetComponent<Capacity>(out Capacity T))
-            {
-                Debug.Log("starrt");
-                T.StartCpty();
-            }
+        if (TryGetComponent<Capacity>(out Capacity T))
+        {
+            Debug.Log("starrt");
+            T.StartCpty();
+        }
     }
 
     public void EndCapacity()
@@ -846,9 +856,9 @@ public class UnitScript : MonoBehaviour
         if (_unitStatuts.Contains(MYthsAndSteel_Enum.UnitStatut.Possédé))
         {
             _diceBonus += 4;
-          
+
             ResetTurn();
-          RemoveStatutToUnit(MYthsAndSteel_Enum.UnitStatut.Possédé);
+            RemoveStatutToUnit(MYthsAndSteel_Enum.UnitStatut.Possédé);
         }
     }
 }
