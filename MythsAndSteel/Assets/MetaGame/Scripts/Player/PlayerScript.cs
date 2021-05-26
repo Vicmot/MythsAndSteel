@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class PlayerScript : MonoSingleton<PlayerScript>
 {
-    [SerializeField ]
+    [SerializeField]
    List<MYthsAndSteel_Enum.EventCard> eventWithCostRessource;
     [SerializeField]
     GameObject prefabIconRessource; 
@@ -34,13 +34,18 @@ public class PlayerScript : MonoSingleton<PlayerScript>
     [SerializeField] private EventCardList _eventCardList = null;
     public EventCardList EventCardList => _eventCardList;
 
-   public List<MYthsAndSteel_Enum.EventCard> _cardObtain = new List<MYthsAndSteel_Enum.EventCard>();
+    public List<MYthsAndSteel_Enum.EventCard> _cardObtain = new List<MYthsAndSteel_Enum.EventCard>();
+
+    [SerializeField] private Animator Addcardeventred;
+    [SerializeField] private Animator Addcardeventblue;
+    
 
     private void Start(){        
         EventCardList._eventSO.UpdateVisualUI(_eventCardList._eventGamBluePlayer, 2);
         EventCardList._eventSO.UpdateVisualUI(_eventCardList._eventGamRedPlayer, 1);
         RedPlayerInfos.UpdateOrgoneUI(1);
         BluePlayerInfos.UpdateOrgoneUI(2);
+        
 
     }
 
@@ -83,6 +88,10 @@ public class PlayerScript : MonoSingleton<PlayerScript>
 
             AddEventCard(player, newCard);
             _cardObtain.Add(newCard);
+            if (player == 1)
+            { Addcardeventred.Play("CardEventAnimRed"); }
+            else if (player == 2)
+            { Addcardeventblue.Play("CardEventAnimBlue"); }
         }
         else{
             Debug.Log("Il n'y a plus de cartes events");
