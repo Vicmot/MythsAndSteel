@@ -40,14 +40,14 @@ public class Romel : Capacity
             if (GetComponent<UnitScript>().ActualTiledId == i)
             {
                 GameManager.Instance._eventCall += EndCpty;
-                if(PlayerPrefs.GetInt("Avertissement") == 0)
+                if (PlayerPrefs.GetInt("Avertissement") == 0)
                 {
-                
+
                     GameManager.Instance._eventCall();
 
                 }
-            
-                    UIInstance.Instance.ShowValidationPanel(Capacity1Name, "Êtes-vous sûr de vouloir utiliser la transformation de Romel ?");
+
+                UIInstance.Instance.ShowValidationPanel(Capacity1Name, "Êtes-vous sûr de vouloir utiliser la transformation de Romel ?");
                 break;
             }
             //tilelist.Add(TilesManager.Instance.TileList[i]);
@@ -57,7 +57,9 @@ public class Romel : Capacity
 
     public override void EndCpty()
     {
-        if (TransformationRomel != null) GetComponent<UnitScript>().UnitSO = TransformationRomel;
+        Debug.Log("test");
+        Unit_SO currentUnitSo = GetComponent<UnitScript>().UnitSO;
+        if (TransformationRomel != null) currentUnitSo = TransformationRomel;
         else Debug.Log("debug");
         GetComponent<UnitScript>().UpdateUnitStat();
     }
