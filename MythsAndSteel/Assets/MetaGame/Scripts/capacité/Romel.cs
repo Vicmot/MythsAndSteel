@@ -7,7 +7,8 @@ public class Romel : Capacity
 
     GameObject usine;
     [SerializeField] Unit_SO TransformationRomel;
-
+    [SerializeField] RuntimeAnimatorController TransformationRomelAnimator;
+    [SerializeField] SpriteRenderer TransformationRomelsprite; 
     public override void StartCpty()
     {
         List<GameObject> tilelist = new List<GameObject>();
@@ -58,10 +59,24 @@ public class Romel : Capacity
     public override void EndCpty()
     {
         Debug.Log("test");
-        Unit_SO currentUnitSo = GetComponent<UnitScript>().UnitSO;
-        if (TransformationRomel != null) currentUnitSo = TransformationRomel;
-        else Debug.Log("debug");
+        UIInstance.Instance.ActivateNextPhaseButton();
+        GetComponent<Animator>().runtimeAnimatorController = null;
+        if (TransformationRomel != null) GetComponent<UnitScript>().UnitSO = TransformationRomel;
+       
         GetComponent<UnitScript>().UpdateUnitStat();
+
+        if (GetComponent<UnitScript>().UnitSO.IsInRedArmy)
+        {
+            PlayerScript.Instance.RedPlayerInfos.Ressource -= Capacity1Cost;
+        }
+        else
+        {
+            PlayerScript.Instance.BluePlayerInfos.Ressource -= Capacity1Cost;
+        }
+        GetComponent<Animator>().runtimeAnimatorController = TransformationRomelAnimator;
+        GetComponent<UnitScript>().UpdateLifeHeartShieldUI(GameManager.Instance.IsPlayerRedTurn ? UIInstance.Instance.RedHeartSprite : UIInstance.Instance.BlueHeartSprite,GetComponent<UnitScript>().Life);
+     
+        Destroy(GetComponent<Romel>());
     }
 
     public override void StopCpty()
