@@ -224,16 +224,16 @@ public class GameManagerSO : ScriptableObject
 
                 if (GameManager.Instance.armeEpidemelogiqueStat != 0)
                 {
-                    List<GameObject> refunit = new List<GameObject>();
+                    List<GameObject> refunit3 = new List<GameObject>();
                     if (GameManager.Instance.IsPlayerRedTurn && GameManager.Instance.armeEpidemelogiqueStat == 2)
                     {
-                        refunit = PlayerScript.Instance.UnitRef.UnitListRedPlayer;
+                        refunit3 = PlayerScript.Instance.UnitRef.UnitListRedPlayer;
                     }
                     else if (!GameManager.Instance.IsPlayerRedTurn && GameManager.Instance.armeEpidemelogiqueStat == 1)
                     {
-                        refunit = PlayerScript.Instance.UnitRef.UnitListBluePlayer;
+                        refunit3 = PlayerScript.Instance.UnitRef.UnitListBluePlayer;
                     }
-                    foreach (GameObject unit in refunit)
+                    foreach (GameObject unit in refunit3)
                     {
 
                         if (unit.GetComponent<UnitScript>().UnitStatuts.Contains(MYthsAndSteel_Enum.UnitStatut.ArmeEpidemiologique))
@@ -251,35 +251,72 @@ public class GameManagerSO : ScriptableObject
                             }
                             
                             GameManager.Instance.armeEpidemelogiqueStat = 0;
-                            refunit = null;
+                            refunit3 = null;
 
                         }
                     }
 
                 }
-                if (GameManager.Instance.ParalysieStat != 3)
+
+                List<GameObject> refunit = new List<GameObject>();
+                refunit.AddRange(PlayerScript.Instance.UnitRef.UnitListRedPlayer);
+                refunit.AddRange(PlayerScript.Instance.UnitRef.UnitListBluePlayer);
+                if (GameManager.Instance.IsPlayerRedTurn)
                 {
-                    List<GameObject> refunit = new List<GameObject>();
-                    refunit.AddRange(PlayerScript.Instance.UnitRef.UnitListRedPlayer);
-                    refunit.AddRange(PlayerScript.Instance.UnitRef.UnitListBluePlayer);
-                    if (GameManager.Instance.IsPlayerRedTurn && GameManager.Instance.ParalysieStat == 2 || !GameManager.Instance.IsPlayerRedTurn && GameManager.Instance.ParalysieStat == 1)
+
+                    foreach (GameObject unit in refunit)
                     {
 
-                        foreach (GameObject unit in refunit)
+                        if (unit.GetComponent<UnitScript>().ParalysieStat == 2)
+                        {
+                            unit.GetComponent<UnitScript>().RemoveStatutToUnit(MYthsAndSteel_Enum.UnitStatut.Paralysie);
+                            unit.GetComponent<UnitScript>().ParalysieStat = 3;
+                        }
+
+                    }
+
+
+                }
+                else if (!GameManager.Instance.IsPlayerRedTurn)
+                {
+
+                    foreach (GameObject unit in refunit)
+                    {
+
+                        if (unit.GetComponent<UnitScript>().ParalysieStat == 1)
+                        {
+                            unit.GetComponent<UnitScript>().RemoveStatutToUnit(MYthsAndSteel_Enum.UnitStatut.Paralysie);
+                            unit.GetComponent<UnitScript>().ParalysieStat = 3;
+                        }
+
+                    }
+
+
+                }
+                refunit.Clear();
+
+                if (GameManager.Instance.statetImmobilisation != 3)
+                {
+                    List<GameObject> refunit4 = new List<GameObject>();
+                    refunit4.AddRange(PlayerScript.Instance.UnitRef.UnitListRedPlayer);
+                    refunit4.AddRange(PlayerScript.Instance.UnitRef.UnitListBluePlayer);
+                    if (GameManager.Instance.IsPlayerRedTurn && GameManager.Instance.statetImmobilisation == 2 || !GameManager.Instance.IsPlayerRedTurn && GameManager.Instance.statetImmobilisation == 1)
+                    {
+
+                        foreach (GameObject unit in refunit4)
                         {
 
-                            if (unit.GetComponent<UnitScript>().UnitStatuts.Contains(MYthsAndSteel_Enum.UnitStatut.Paralysie))
+                            if (unit.GetComponent<UnitScript>().UnitStatuts.Contains(MYthsAndSteel_Enum.UnitStatut.Immobilisation))
                             {
-                                unit.GetComponent<UnitScript>().RemoveStatutToUnit(MYthsAndSteel_Enum.UnitStatut.Paralysie);
+                                unit.GetComponent<UnitScript>().RemoveStatutToUnit(MYthsAndSteel_Enum.UnitStatut.Immobilisation);
                             }
 
                         }
-                     
-                    GameManager.Instance.ParalysieStat = 3;
+
+                        GameManager.Instance.statetImmobilisation = 3;
                     }
-                    refunit.Clear();
                 }
-                if (!GameManager.Instance.IsPlayerRedStarting)
+                    if (!GameManager.Instance.IsPlayerRedStarting)
                 {
                     PlayerScript.Instance.RedPlayerInfos.OrgonePowerLeft = 1;
                     PlayerScript.Instance.RedPlayerInfos.EventUseLeft = 1;
@@ -378,16 +415,16 @@ public class GameManagerSO : ScriptableObject
                 GameManager.Instance.GoPhase(MYthsAndSteel_Enum.PhaseDeJeu.Strategie);
                 if (GameManager.Instance.armeEpidemelogiqueStat != 0)
                 {
-                    List<GameObject> refunit = new List<GameObject>();
+                    List<GameObject> refunit5 = new List<GameObject>();
                     if (GameManager.Instance.IsPlayerRedTurn && GameManager.Instance.armeEpidemelogiqueStat == 2)
                     {
-                        refunit = PlayerScript.Instance.UnitRef.UnitListRedPlayer;
+                        refunit5 = PlayerScript.Instance.UnitRef.UnitListRedPlayer;
                     }
                     else if (!GameManager.Instance.IsPlayerRedTurn && GameManager.Instance.armeEpidemelogiqueStat == 1)
                     {
-                        refunit = PlayerScript.Instance.UnitRef.UnitListBluePlayer;
+                        refunit5 = PlayerScript.Instance.UnitRef.UnitListBluePlayer;
                     }
-                    foreach (GameObject unit in refunit)
+                    foreach (GameObject unit in refunit5)
                     {
 
                         if (unit.GetComponent<UnitScript>().UnitStatuts.Contains(MYthsAndSteel_Enum.UnitStatut.ArmeEpidemiologique))
@@ -404,7 +441,7 @@ public class GameManagerSO : ScriptableObject
                                 }
                             }
                             GameManager.Instance.armeEpidemelogiqueStat = 0;
-                            refunit = null;
+                            refunit5 = null;
                         }
                     }
                 }
@@ -419,29 +456,65 @@ public class GameManagerSO : ScriptableObject
 
                         }
                     }
-                
-                if (GameManager.Instance.ParalysieStat != 3)
+
+                List<GameObject> refunit2 = new List<GameObject>();
+                refunit2.AddRange(PlayerScript.Instance.UnitRef.UnitListRedPlayer);
+                refunit2.AddRange(PlayerScript.Instance.UnitRef.UnitListBluePlayer);
+                if (GameManager.Instance.IsPlayerRedTurn)
                 {
-                    List<GameObject> refunit = new List<GameObject>();
-                    refunit.AddRange(PlayerScript.Instance.UnitRef.UnitListRedPlayer);
-                    refunit.AddRange(PlayerScript.Instance.UnitRef.UnitListBluePlayer);
-                    if (GameManager.Instance.IsPlayerRedTurn && GameManager.Instance.ParalysieStat == 2 || !GameManager.Instance.IsPlayerRedTurn && GameManager.Instance.ParalysieStat == 1)
-                    {
-                      
-                    foreach (GameObject unit in refunit)
+
+                    foreach (GameObject unit in refunit2)
                     {
 
-                        if (unit.GetComponent<UnitScript>().UnitStatuts.Contains(MYthsAndSteel_Enum.UnitStatut.Paralysie))
+                        if (unit.GetComponent<UnitScript>().ParalysieStat == 2)
                         {
                             unit.GetComponent<UnitScript>().RemoveStatutToUnit(MYthsAndSteel_Enum.UnitStatut.Paralysie);
+                            unit.GetComponent<UnitScript>().ParalysieStat = 3;
                         }
 
-                    GameManager.Instance.ParalysieStat = 3;
                     }
-                    }
-                    refunit.Clear();
+
+
                 }
-                UIInstance.Instance.ButtonRenfortJ2.GetComponent<Button>().interactable = false;
+                else if (!GameManager.Instance.IsPlayerRedTurn)
+                {
+
+                    foreach (GameObject unit in refunit2)
+                    {
+
+                        if (unit.GetComponent<UnitScript>().ParalysieStat == 1)
+                        {
+                            unit.GetComponent<UnitScript>().RemoveStatutToUnit(MYthsAndSteel_Enum.UnitStatut.Paralysie);
+                            unit.GetComponent<UnitScript>().ParalysieStat = 3;
+                        }
+
+                    }
+
+
+                }
+                refunit2.Clear();
+                if (GameManager.Instance.statetImmobilisation != 3)
+                {
+                    List<GameObject> refunit6 = new List<GameObject>();
+                    refunit6.AddRange(PlayerScript.Instance.UnitRef.UnitListRedPlayer);
+                    refunit6.AddRange(PlayerScript.Instance.UnitRef.UnitListBluePlayer);
+                    if (GameManager.Instance.IsPlayerRedTurn && GameManager.Instance.statetImmobilisation == 2 || !GameManager.Instance.IsPlayerRedTurn && GameManager.Instance.statetImmobilisation == 1)
+                    {
+
+                        foreach (GameObject unit in refunit6)
+                        {
+
+                            if (unit.GetComponent<UnitScript>().UnitStatuts.Contains(MYthsAndSteel_Enum.UnitStatut.Immobilisation))
+                            {
+                                unit.GetComponent<UnitScript>().RemoveStatutToUnit(MYthsAndSteel_Enum.UnitStatut.Immobilisation);
+                            }
+
+                        }
+
+                        GameManager.Instance.statetImmobilisation = 3;
+                    }
+                }
+                    UIInstance.Instance.ButtonRenfortJ2.GetComponent<Button>().interactable = false;
                 PlayerScript.Instance.RedPlayerInfos.HasCreateUnit = false;
                 PlayerScript.Instance.BluePlayerInfos.HasCreateUnit = false;
                 if (GoToStrategyPhase != null) GoToStrategyPhase();

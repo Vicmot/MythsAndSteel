@@ -20,6 +20,7 @@ public class GameManager : MonoSingleton<GameManager>
 
 
     #region Variables
+    public int statetImmobilisation = 3;
     [SerializeField] private SaveData saveData;
     public GameObject détonationPrefab;
     public VictoryScreen victoryScreen;
@@ -31,7 +32,7 @@ public class GameManager : MonoSingleton<GameManager>
     public int VolDeRavitaillementStat = 3;
     public bool possesion = false;
     public int SabotageStat = 3;
-    public int ParalysieStat = 3;
+
     [SerializeField]
     GameObject pauseMenu;
     /// <param name="sceneId"></param>

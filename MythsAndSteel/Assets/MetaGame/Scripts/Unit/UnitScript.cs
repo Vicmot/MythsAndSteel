@@ -13,6 +13,7 @@ public class UnitScript : MonoBehaviour
     //Scriptable qui contient les stats de base de l'unité
     [SerializeField] Unit_SO _unitSO;
 
+    public int ParalysieStat = 3;
     public Unit_SO UnitSO
     {
         get
