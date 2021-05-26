@@ -65,11 +65,11 @@ public class ParaCpty : Capacity
         if (GameManager.Instance.IsPlayerRedTurn)
         {
 
-            GameManager.Instance.ParalysieStat = 1;
+            GameManager.Instance.TileChooseList[0].GetComponent<TileScript>().Unit.GetComponent<UnitScript>().ParalysieStat = 1;
         }
         else
         {
-            GameManager.Instance.ParalysieStat = 2;
+            GameManager.Instance.TileChooseList[0].GetComponent<TileScript>().Unit.GetComponent<UnitScript>().ParalysieStat = 2;
         }
         GameManager.Instance._eventCall -= EndCpty;
         GetComponent<UnitScript>().EndCapacity();

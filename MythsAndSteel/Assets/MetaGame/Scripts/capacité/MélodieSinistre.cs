@@ -13,14 +13,22 @@ public class MélodieSinistre : Capacity
    
         
             List<GameObject> unit = new List<GameObject>();
-
-            foreach (GameObject T in gameObject.GetComponent<UnitScript>().UnitSO.IsInRedArmy ? PlayerScript.Instance.UnitRef.UnitListBluePlayer : PlayerScript.Instance.UnitRef.UnitListRedPlayer)
-            {
-                if (T.GetComponent<UnitScript>().UnitSO.typeUnite == MYthsAndSteel_Enum.TypeUnite.Infanterie || T.GetComponent<UnitScript>().UnitSO.typeUnite == MYthsAndSteel_Enum.TypeUnite.Leader || T.GetComponent<UnitScript>().UnitSO.typeUnite == MYthsAndSteel_Enum.TypeUnite.Artillerie)
+        foreach (int i in PlayerStatic.GetNeighbourDiag(gameObject.GetComponent<UnitScript>().ActualTiledId, TilesManager.Instance.TileList[gameObject.GetComponent<UnitScript>().ActualTiledId].GetComponent<TileScript>().Line, false))
+        {
+          GameObject  Unit = TilesManager.Instance.TileList[i].GetComponent<TileScript>().Unit;
+          if (  Unit != null)
                 {
-                    unit.Add(T);
+                if (Unit.GetComponent<UnitScript>().UnitSO.typeUnite == MYthsAndSteel_Enum.TypeUnite.Infanterie || Unit.GetComponent<UnitScript>().UnitSO.typeUnite == MYthsAndSteel_Enum.TypeUnite.Leader || Unit.GetComponent<UnitScript>().UnitSO.typeUnite == MYthsAndSteel_Enum.TypeUnite.Artillerie)
+                {
+                if (!Unit.GetComponent<UnitScript>().UnitStatuts.Contains(MYthsAndSteel_Enum.UnitStatut.Possédé))
+                {
+                    unit.Add(Unit);
                 }
             }
+        }
+       
+            
+        }
 
 
             GameManager.Instance._eventCall += EndCpty;

@@ -19,7 +19,10 @@ public class Hacking : Capacity
             {
                 if (T.GetComponent<UnitScript>().UnitSO.typeUnite == MYthsAndSteel_Enum.TypeUnite.Mecha || T.GetComponent<UnitScript>().UnitSO.typeUnite == MYthsAndSteel_Enum.TypeUnite.Vehicule)
                 {
+                    if(!T.GetComponent<UnitScript>().UnitStatuts.Contains(MYthsAndSteel_Enum.UnitStatut.Possédé))
+                    {
                     unit.Add(T);
+                    }
                 }
             }
 

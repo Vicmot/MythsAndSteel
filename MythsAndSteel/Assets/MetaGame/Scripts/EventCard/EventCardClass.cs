@@ -859,9 +859,15 @@ foreach (GameObject element in TilesManager.Instance.TileList)
         int player = DeterminArmy(MYthsAndSteel_Enum.EventCard.Reprogrammation);
         List<GameObject> unitList = new List<GameObject>();
 
-        unitList.AddRange(player == 1 ? PlayerScript.Instance.UnitRef.UnitListBluePlayer : PlayerScript.Instance.UnitRef.UnitListRedPlayer);
-
-        if((GameManager.Instance.ActualTurnPhase == MYthsAndSteel_Enum.PhaseDeJeu.ActionJ1 || GameManager.Instance.ActualTurnPhase == MYthsAndSteel_Enum.PhaseDeJeu.ActionJ2) &&
+       
+        foreach(GameObject T in player == 1 ? PlayerScript.Instance.UnitRef.UnitListBluePlayer : PlayerScript.Instance.UnitRef.UnitListRedPlayer)
+        {
+            if(!T.GetComponent<UnitScript>().UnitStatuts.Contains(MYthsAndSteel_Enum.UnitStatut.Possédé))
+            {
+                unitList.Add(T);
+            }
+        }
+        if ((GameManager.Instance.ActualTurnPhase == MYthsAndSteel_Enum.PhaseDeJeu.ActionJ1 || GameManager.Instance.ActualTurnPhase == MYthsAndSteel_Enum.PhaseDeJeu.ActionJ2) &&
             ((player == 1 && GameManager.Instance.IsPlayerRedTurn && PlayerScript.Instance.RedPlayerInfos.EventUseLeft > 0) || (player == 2 && !GameManager.Instance.IsPlayerRedTurn && PlayerScript.Instance.BluePlayerInfos.EventUseLeft > 0)))
         {
             if(PlayerScript.Instance.RedPlayerInfos.Ressource >= 1 && player == 1 || PlayerScript.Instance.BluePlayerInfos.Ressource >= 1 && player == 2)
@@ -1011,15 +1017,15 @@ foreach (GameObject element in TilesManager.Instance.TileList)
             {
                 unit.GetComponent<UnitScript>().AddStatutToUnit(MYthsAndSteel_Enum.UnitStatut.Paralysie);
             }
-        }
         if (GameManager.Instance.IsPlayerRedTurn)
         {
 
-            GameManager.Instance.ParalysieStat = 1;
+            unit.GetComponent<UnitScript>().ParalysieStat = 1;
         }
         else
         {
-            GameManager.Instance.ParalysieStat = 2;
+           unit.GetComponent<UnitScript>().ParalysieStat = 2;
+        }
         }
         RemovePlayerRessource(MYthsAndSteel_Enum.EventCard.Paralysie);
         unitList.Clear();
