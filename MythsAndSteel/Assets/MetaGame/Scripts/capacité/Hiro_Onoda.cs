@@ -6,19 +6,27 @@ public class Hiro_Onoda : Capacity
 {
     public override void StartCpty()
     {
-        List<GameObject> unitlist = GameManager.Instance.IsPlayerRedTurn ? PlayerScript.Instance.UnitRef.UnitListRedPlayer : PlayerScript.Instance.UnitRef.UnitListBluePlayer;
-
-        foreach(GameObject gam in unitlist)
+        List<GameObject> unitlist = new List<GameObject>();
+        List<int> idTileNeigh = PlayerStatic.GetNeighbourDiag(gameObject.GetComponent<UnitScript>().ActualTiledId, TilesManager.Instance.TileList[gameObject.GetComponent<UnitScript>().ActualTiledId].GetComponent<TileScript>().Line, false);
+        foreach (int gam in idTileNeigh)
         {
-            if (gam.GetComponent<UnitScript>().UnitSO.typeUnite != MYthsAndSteel_Enum.TypeUnite.Infanterie)
+            if(TilesManager.Instance.TileList[gam].GetComponent<TileScript>().Unit != null)
             {
-                unitlist.Remove(gam);
+           UnitScript unit = TilesManager.Instance.TileList[gam].GetComponent<TileScript>().Unit.GetComponent<UnitScript>();
+            if (unit.UnitSO.typeUnite == MYthsAndSteel_Enum.TypeUnite.Infanterie && unit.UnitSO.IsInRedArmy == GameManager.Instance.IsPlayerRedTurn)
+            {
+                unitlist.Add(unit.gameObject); 
+            }
+
             }
         }
-        unitlist.Remove(GetComponent<GameObject>());
+        Debug.Log(unitlist.Count);
+        if(unitlist.Count>=2)
+        {
 
         EventUnit(2, GameManager.Instance.IsPlayerRedTurn ? true : false , unitlist, "Regroupement Instantané", "Êtes-vous sûr de vouloir déplacer ces deux unités à côté de Hiro Onoda");
         GameManager.Instance._eventCall += UseCpty;
+        }
     }
 
     void UseCpty()
