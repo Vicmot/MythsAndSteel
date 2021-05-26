@@ -369,6 +369,7 @@ public bool MélodieSinistre = false;
     /// <param name="Lifeadd"></param>
     public virtual void GiveLife(int Lifeadd)
     {
+        SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[3]);
         _life += Lifeadd;
         if (_shield > 0)
         {

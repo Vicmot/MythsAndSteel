@@ -214,6 +214,7 @@ public class GameManager : MonoSingleton<GameManager>
 
         _eventCallCancel += CancelSkipPhase;
         _eventCall += ChangePhase;
+        _eventCall += SoundController.Instance.nextPhaseSound;
 
         if (PlayerPrefs.GetInt("Avertissement") == 0)
         {

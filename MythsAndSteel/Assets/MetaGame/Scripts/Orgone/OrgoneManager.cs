@@ -139,6 +139,7 @@ public class OrgoneManager : MonoSingleton<OrgoneManager>
         {
             Explodeblue.SetTrigger("explode");
         }
+        SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[2]);
         StartCoroutine(UpdateOrgoneUI(Player, 4, 0));
     }
 

@@ -22458,6 +22458,8 @@ MonoBehaviour:
   _Capacity1Description: 
   _Capacity1Cost: 0
   TransformationRomel: {fileID: 11400000, guid: de7341a724493fc4b8ef2f7b5fad5c81, type: 2}
+  TransformationRomelAnimator: {fileID: 0}
+  TransformationRomelsprite: {fileID: 0}
 --- !u!1 &1527759277
 GameObject:
   m_ObjectHideFlags: 0
@@ -28408,6 +28410,8 @@ MonoBehaviour:
   _Capacity1Description: 
   _Capacity1Cost: 4
   TransformationRomel: {fileID: 11400000, guid: 2378c437940554d4a8df8fe602444812, type: 2}
+  TransformationRomelAnimator: {fileID: 0}
+  TransformationRomelsprite: {fileID: 0}
 --- !u!1 &1927025204
 GameObject:
   m_ObjectHideFlags: 0
@@ -28887,6 +28891,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _Source: {fileID: 1968846221}
+  _audioClip:
+  - {fileID: 8300000, guid: 21044b910fd46c246a8012791de4dbb8, type: 3}
+  - {fileID: 8300000, guid: 2f4ad73fb6d75be41b571a0c3f58acaf, type: 3}
+  - {fileID: 8300000, guid: bfc2e72fc39ff1e489fe8db16ad1e591, type: 3}
+  - {fileID: 8300000, guid: 9b4ab36e0e81df84582f7fe4710fdf6d, type: 3}
+  - {fileID: 8300000, guid: 9b4ab36e0e81df84582f7fe4710fdf6d, type: 3}
+  - {fileID: 8300000, guid: 9b4ab36e0e81df84582f7fe4710fdf6d, type: 3}
+  - {fileID: 8300000, guid: 9b4ab36e0e81df84582f7fe4710fdf6d, type: 3}
+  - {fileID: 8300000, guid: 9b4ab36e0e81df84582f7fe4710fdf6d, type: 3}
 --- !u!82 &1968846223
 AudioSource:
   m_ObjectHideFlags: 0
