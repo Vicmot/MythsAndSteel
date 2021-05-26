@@ -19,7 +19,7 @@ public class Luch : Capacity
             }
             GameManager.Instance._eventCall += EndCpty;
             GameManager.Instance._eventCallCancel += StopCpty;
-            GameManager.Instance.StartEventModeUnit(1, GetComponent<UnitScript>().UnitSO.IsInRedArmy, unit, "Souffle de feu!", "Inflige 2 points de dégâts sur 3 cases en ligne droite. Voulez-vous vraiment effectuer cette action ?");
+            GameManager.Instance.StartEventModeUnit(1, GetComponent<UnitScript>().UnitSO.IsInRedArmy, unit, Capacity1Name , "Inflige 1 point de dégât et faire reculer l'unité jusqu'à 2 cases. Voulez-vous vraiment effectuer cette action ?");
         }
     }
 
