@@ -5820,14 +5820,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 409550974}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fa96692a7d2f2c4493090433583d569, type: 3}
+  m_Script: {fileID: 11500000, guid: bc572d132978bf94295b7570ecc92b28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _Capacity1Name: "La capacit\xE9 originelle"
-  render1: {fileID: 628933551328896066, guid: 38e78899b63747846919312a4620c871, type: 3}
-  _Capacity1Description: "Je suis la premi\xE8re capacit\xE9 et je me porte bien"
-  _Capacity1Cost: 2
-  LineCount: 2
+  _Capacity1Name: 
+  render1: {fileID: 0}
+  _Capacity1Description: 
+  _Capacity1Cost: 0
 --- !u!1 &410746577 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2505849687832993500, guid: 9c16f23506dd9eb4cae93373ea3e8c51, type: 3}
@@ -14124,14 +14123,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1023258099}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1db96cacdb85f0542b0ced89ae0f6673, type: 3}
+  m_Script: {fileID: 11500000, guid: 6a44031bfe4a66a418a3566b9ae107d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _Capacity1Name: 
   render1: {fileID: 0}
   _Capacity1Description: 
   _Capacity1Cost: 0
-  Range: 4
+  LineCount: 2
 --- !u!1 &1028398667
 GameObject:
   m_ObjectHideFlags: 0
@@ -15856,7 +15855,7 @@ PrefabInstance:
       objectReference: {fileID: 1583193101}
     - target: {fileID: 9171649473118307007, guid: bdfbac4c885f5c044994fb5c263b03dc, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9171649473118307007, guid: bdfbac4c885f5c044994fb5c263b03dc, type: 3}
       propertyPath: m_LocalPosition.x
@@ -22442,6 +22441,23 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 4473479720353736792, guid: cab109d310ee2b743ba60a48e05bdebf, type: 3}
   m_PrefabInstance: {fileID: 2037221011}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1522235968
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1522235964}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bd51f8ae7766254b918b0b2ef7e4aba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _Capacity1Name: 
+  render1: {fileID: 0}
+  _Capacity1Description: 
+  _Capacity1Cost: 0
+  TransformationRomel: {fileID: 11400000, guid: de7341a724493fc4b8ef2f7b5fad5c81, type: 2}
 --- !u!1 &1527759277
 GameObject:
   m_ObjectHideFlags: 0
@@ -26551,6 +26567,23 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 6244242718017290110, guid: 05ea443c18494aa4b9bebdf213b20ae8, type: 3}
   m_PrefabInstance: {fileID: 863863411}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1817200154
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1817200150}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ae647ecfbc8bb84b84a57fefdb0ed52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _Capacity1Name: 
+  render1: {fileID: 0}
+  _Capacity1Description: 
+  _Capacity1Cost: 0
+  PowerUseLeft: 2
 --- !u!1 &1820718438
 GameObject:
   m_ObjectHideFlags: 0
@@ -28358,6 +28391,23 @@ MonoBehaviour:
   render1: {fileID: 0}
   _Capacity1Description: si je mets ce que je veux
   _Capacity1Cost: 2
+--- !u!114 &1917074186
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1917074181}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bd51f8ae7766254b918b0b2ef7e4aba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _Capacity1Name: 
+  render1: {fileID: 0}
+  _Capacity1Description: 
+  _Capacity1Cost: 4
+  TransformationRomel: {fileID: 11400000, guid: 2378c437940554d4a8df8fe602444812, type: 2}
 --- !u!1 &1927025204
 GameObject:
   m_ObjectHideFlags: 0

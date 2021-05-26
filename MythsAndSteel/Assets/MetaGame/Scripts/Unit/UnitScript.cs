@@ -12,8 +12,20 @@ public class UnitScript : MonoBehaviour
     [Header("--------------- STATS DE BASE DE L'UNITE ---------------")]
     //Scriptable qui contient les stats de base de l'unité
     [SerializeField] Unit_SO _unitSO;
-    public Unit_SO UnitSO => _unitSO;
-    public bool MélodieSinistre = false;
+
+    public Unit_SO UnitSO
+    {
+        get
+        {
+            return _unitSO;
+        }
+        set
+        {
+            _unitSO = value;
+        }
+    }
+
+public bool MélodieSinistre = false;
     [Header("------------------- VIE -------------------")]
     [Header("------------------- STAT EN JEU -------------------")]
     //Vie actuelle
@@ -744,6 +756,7 @@ public class UnitScript : MonoBehaviour
         _shield = 0;
         _attackRange = _unitSO.AttackRange;
         _moveSpeed = _unitSO.MoveSpeed;
+       Renderer.sprite = _unitSO.Sprite;
         _creationCost = _unitSO.CreationCost;
         _damageMinimum = _unitSO.DamageMinimum;
         _damageMaximum = _unitSO.DamageMaximum;
@@ -751,7 +764,6 @@ public class UnitScript : MonoBehaviour
         _numberRangeMin = _unitSO.NumberRangeMin;
 
         //Assigne le sprite de l'unité
-        GetComponent<SpriteRenderer>().sprite = _unitSO.Sprite;
 
         //Assigne les sons
         _SonAttaque = _unitSO.SonAttaque;

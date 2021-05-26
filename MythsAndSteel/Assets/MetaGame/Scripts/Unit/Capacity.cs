@@ -37,8 +37,18 @@ public class Capacity : MonoBehaviour
     /// <param name="PrefabCapacity"></param>
     /// <param name="number">Capacité 0 ou capacité 1</param>
     /// <returns></returns>
+    /// 
+    public void EventUnit(int numberUnit, bool redPlayer, List<GameObject> _unitSelectable, string title, string description, bool multiplesUnit = false)
+    {
+        GameManager.Instance.StartEventModeUnit(numberUnit, redPlayer, _unitSelectable, title, description, multiplesUnit);
+    }
+    public void EventTile(int numberUnit, bool redPlayer, List<GameObject> _unitSelectable, string title, string description, bool multiplesUnit = false)
+    {
+        GameManager.Instance.StartEventModeTiles(numberUnit, redPlayer, _unitSelectable, title, description, multiplesUnit);
+    }
     public GameObject ReturnInfo(GameObject PrefabCapacity, int number = 0)
     {
+
         switch(number)
         {
             case 0:
