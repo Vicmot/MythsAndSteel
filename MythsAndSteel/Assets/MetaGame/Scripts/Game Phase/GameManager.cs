@@ -23,6 +23,7 @@ public class GameManager : MonoSingleton<GameManager>
     [SerializeField] private SaveData saveData;
     public GameObject détonationPrefab;
     public VictoryScreen victoryScreen;
+   
     [Header("INFO TOUR ACTUEL")]
     //Correspond à la valeur du tour actuel
   public  int armeEpidemelogiqueStat = 0;

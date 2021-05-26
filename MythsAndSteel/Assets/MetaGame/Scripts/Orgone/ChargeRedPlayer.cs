@@ -117,6 +117,7 @@ public class ChargeRedPlayer : ChargeOrgone
 
     void UseCharge5RedPlayer()
     {
+        UIInstance.Instance.ActivateNextPhaseButton();
         OrgoneManager.Instance.DoingOrgoneCharge = true;
 
         List<GameObject> TempSelectablelist = PlayerInstance.GetComponent<UnitReference>().UnitClassCreableListRedPlayer;
