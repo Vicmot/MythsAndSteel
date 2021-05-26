@@ -42,6 +42,8 @@ public class ParaCpty : Capacity
     {
         GameManager.Instance.StopEventModeTile();
         GameManager.Instance.TileChooseList.Clear();
+        GameManager.Instance.StopEventModeUnit(); GameManager.Instance.UnitChooseList.Clear();
+
         GetComponent<UnitScript>().StopCapacity(true);
         base.StopCpty();
     }

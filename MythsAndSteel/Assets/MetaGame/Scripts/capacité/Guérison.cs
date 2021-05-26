@@ -18,12 +18,16 @@ public class Guérison : Capacity
             {
                 if(TilesManager.Instance.TileList[T].GetComponent<TileScript>().Unit != null)
                 {
+                    if(TilesManager.Instance.TileList[T].GetComponent<TileScript>().Unit.GetComponent<UnitScript>().UnitSO.IsInRedArmy == GameManager.Instance.IsPlayerRedTurn)
+                    {
                     tile.Add(TilesManager.Instance.TileList[T]);
+                    }
+
                 }
             }
             GameManager.Instance._eventCall += EndCpty;
             GameManager.Instance._eventCallCancel += StopCpty;
-            GameManager.Instance.StartEventModeTiles(1, GetComponent<UnitScript>().UnitSO.IsInRedArmy, tile, "Equipement optimisé!", "Donne " + HealValue + " PV une unité adjacente. Voulez-vous vraiment effectuer cette action ?");
+            GameManager.Instance.StartEventModeTiles(1, GetComponent<UnitScript>().UnitSO.IsInRedArmy, tile, "Guérison", "Donne " + HealValue + " PV une unité adjacente. Voulez-vous vraiment effectuer cette action ?");
         }
     }
 

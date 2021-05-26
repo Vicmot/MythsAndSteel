@@ -20,7 +20,14 @@ public class HealNear : Capacity
                 {
                     Unit_SO unit = TilesManager.Instance.TileList[T].GetComponent<TileScript>().Unit.GetComponent<UnitScript>().UnitSO;
                     if (unit.typeUnite == MYthsAndSteel_Enum.TypeUnite.Mecha || unit.typeUnite == MYthsAndSteel_Enum.TypeUnite.Artillerie || unit.typeUnite == MYthsAndSteel_Enum.TypeUnite.Vehicule)
+                    {
+
+                        if(unit.IsInRedArmy == GameManager.Instance.IsPlayerRedTurn)
+                        {
+
                     tile.Add(TilesManager.Instance.TileList[T]);
+                        }
+                    }
                 }
             }
             GameManager.Instance._eventCall += EndCpty;
