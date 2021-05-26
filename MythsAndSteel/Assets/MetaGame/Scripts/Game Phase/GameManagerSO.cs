@@ -285,7 +285,28 @@ public class GameManagerSO : ScriptableObject
                     PlayerScript.Instance.BluePlayerInfos.OrgonePowerLeft = 1;
                 }
 
+                if (GameManager.Instance.statetImmobilisation != 3)
+                {
+                    List<GameObject> refunit = new List<GameObject>();
+                    refunit.AddRange(PlayerScript.Instance.UnitRef.UnitListRedPlayer);
+                    refunit.AddRange(PlayerScript.Instance.UnitRef.UnitListBluePlayer);
+                    if (GameManager.Instance.IsPlayerRedTurn && GameManager.Instance.statetImmobilisation == 2 || !GameManager.Instance.IsPlayerRedTurn && GameManager.Instance.statetImmobilisation == 1)
+                    {
 
+                        foreach (GameObject unit in refunit)
+                        {
+
+                            if (unit.GetComponent<UnitScript>().UnitStatuts.Contains(MYthsAndSteel_Enum.UnitStatut.Immobilisation))
+                            {
+                                unit.GetComponent<UnitScript>().RemoveStatutToUnit(MYthsAndSteel_Enum.UnitStatut.Immobilisation);
+                            }
+
+                        }
+
+                    GameManager.Instance.statetImmobilisation= 3;
+                    }
+                    refunit.Clear();
+                }
                 GoToOrgoneJ2Phase();
                 break;
 
@@ -430,6 +451,28 @@ public class GameManagerSO : ScriptableObject
                     }
                     }
                     GameManager.Instance.ParalysieStat = 3;
+                    refunit.Clear();
+                }
+                if (GameManager.Instance.statetImmobilisation != 3)
+                {
+                    List<GameObject> refunit = new List<GameObject>();
+                    refunit.AddRange(PlayerScript.Instance.UnitRef.UnitListRedPlayer);
+                    refunit.AddRange(PlayerScript.Instance.UnitRef.UnitListBluePlayer);
+                    if (GameManager.Instance.IsPlayerRedTurn && GameManager.Instance.statetImmobilisation == 2 || !GameManager.Instance.IsPlayerRedTurn && GameManager.Instance.statetImmobilisation == 1)
+                    {
+
+                        foreach (GameObject unit in refunit)
+                        {
+
+                            if (unit.GetComponent<UnitScript>().UnitStatuts.Contains(MYthsAndSteel_Enum.UnitStatut.Immobilisation))
+                            {
+                                unit.GetComponent<UnitScript>().RemoveStatutToUnit(MYthsAndSteel_Enum.UnitStatut.Immobilisation);
+                            }
+
+                        }
+
+                    GameManager.Instance.statetImmobilisation = 3;
+                    }
                     refunit.Clear();
                 }
                 UIInstance.Instance.ButtonRenfortJ2.GetComponent<Button>().interactable = false;

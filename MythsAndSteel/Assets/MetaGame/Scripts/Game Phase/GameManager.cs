@@ -20,6 +20,7 @@ public class GameManager : MonoSingleton<GameManager>
 
 
     #region Variables
+  public int statetImmobilisation= 3;
     [SerializeField] private SaveData saveData;
     public GameObject détonationPrefab;
     public VictoryScreen victoryScreen;

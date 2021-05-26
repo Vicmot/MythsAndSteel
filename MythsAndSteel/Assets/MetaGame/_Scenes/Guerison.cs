@@ -10,16 +10,25 @@ public class Guerison : Capacity
         List<GameObject> tile = new List<GameObject>();
 
         int ressourcePlayer = GetComponent<UnitScript>().UnitSO.IsInRedArmy ? PlayerScript.Instance.RedPlayerInfos.Ressource : PlayerScript.Instance.BluePlayerInfos.Ressource;
+
         if (ressourcePlayer >= Capacity1Cost)
         {
+           
             foreach (int T in PlayerStatic.GetNeighbourDiag(tileId, TilesManager.Instance.TileList[tileId].GetComponent<TileScript>().Line, false))
             {
+               
                 if (TilesManager.Instance.TileList[T] != null)
                 {
+          
                     if (TilesManager.Instance.TileList[T].GetComponent<TileScript>().Unit != RaycastManager.Instance.ActualUnitSelected && TilesManager.Instance.TileList[T].GetComponent<TileScript>().Unit != null)
 
                     {
+                     
+                        if (TilesManager.Instance.TileList[T].GetComponent<TileScript>().Unit.GetComponent<UnitScript>().UnitSO == GameManager.Instance.IsPlayerRedTurn)
+                        {
+                         
                         tile.Add(TilesManager.Instance.TileList[T]);
+                        }
                     }
                 }
             }
@@ -41,11 +50,11 @@ public class Guerison : Capacity
 
     public override void EndCpty()
     {
-        if (GameManager.Instance.TileChooseList[0].GetComponent<TileScript>().Unit.GetComponent<UnitScript>().UnitSO.IsInRedArmy == false)
-        {
-            GameManager.Instance.TileChooseList[0].GetComponent<TileScript>().Unit.GetComponent<UnitScript>().GiveLife(2);
-            PlayerScript.Instance.BluePlayerInfos.Ressource -= Capacity1Cost;
-        }
+
+      Player player = GameManager.Instance.IsPlayerRedTurn? PlayerScript.Instance.RedPlayerInfos : PlayerScript.Instance.BluePlayerInfos;
+        GameManager.Instance.TileChooseList[0].GetComponent<TileScript>().Unit.GetComponent<UnitScript>().GiveLife(2);
+            player.Ressource -= Capacity1Cost;
+       
         GameManager.Instance._eventCall -= EndCpty;
         GetComponent<UnitScript>().EndCapacity();
         GameManager.Instance.TileChooseList.Clear();

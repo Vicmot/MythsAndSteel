@@ -327,9 +327,13 @@ public class Mouvement : MonoSingleton<Mouvement>
                 mUnit = tileSelected.GetComponent<TileScript>().Unit;
                 if (!mUnit.GetComponent<UnitScript>().IsMoveDone)
                 {
-                    _selected = true;
+                    if (!mUnit.GetComponent<UnitScript>().UnitStatuts.Contains(MYthsAndSteel_Enum.UnitStatut.Immobilisation))
+                    {
+
+                        _selected = true;
                     MoveLeftBase = mUnit.GetComponent<UnitScript>().MoveLeft;
                     StartMouvement(TilesManager.Instance.TileList.IndexOf(tileSelected), mUnit.GetComponent<UnitScript>().MoveSpeed - (mUnit.GetComponent<UnitScript>().MoveSpeed - MoveLeftBase) + mUnit.GetComponent<UnitScript>().MoveSpeedBonus);
+                    }
                 }
                 else
                 {
@@ -348,9 +352,13 @@ public class Mouvement : MonoSingleton<Mouvement>
                 mUnit = tileSelected.GetComponent<TileScript>().Unit;
                 if (!mUnit.GetComponent<UnitScript>().IsMoveDone)
                 {
+                  if(!mUnit.GetComponent<UnitScript>().UnitStatuts.Contains(MYthsAndSteel_Enum.UnitStatut.Immobilisation))
+                    {
+
                     _selected = true;
                     MoveLeftBase = mUnit.GetComponent<UnitScript>().MoveLeft;
                     StartMouvement(TilesManager.Instance.TileList.IndexOf(tileSelected), mUnit.GetComponent<UnitScript>().MoveSpeed - (mUnit.GetComponent<UnitScript>().MoveSpeed - MoveLeftBase) + mUnit.GetComponent<UnitScript>().MoveSpeedBonus);
+                    }
                 }
                 else
                 {

@@ -6,8 +6,7 @@ public class ChargeCreuse: Capacity
 {
     public override void StartCpty()
     {
-        if (PlayerPrefs.GetInt("ChargeCreuseDone") == 0)
-        {
+      
             int tileId = RaycastManager.Instance.ActualUnitSelected.GetComponent<UnitScript>().ActualTiledId;
             List<GameObject> unitList = new List<GameObject>();
 
@@ -17,7 +16,11 @@ public class ChargeCreuse: Capacity
                 {
                     if (TilesManager.Instance.TileList[T].GetComponent<TileScript>().Unit != RaycastManager.Instance.ActualUnitSelected && TilesManager.Instance.TileList[T].GetComponent<TileScript>().Unit != null)
                     {
-                        unitList.Add(TilesManager.Instance.TileList[T].GetComponent<TileScript>().Unit);
+                    if(TilesManager.Instance.TileList[T].GetComponent<TileScript>().Unit.GetComponent<UnitScript>().UnitSO.IsInRedArmy != GameManager.Instance.IsPlayerRedTurn)
+                    {
+
+                        unitList.Add(TilesManager.Instance.TileList[T]);
+                    }
                     }
                 }
             }
@@ -26,7 +29,7 @@ public class ChargeCreuse: Capacity
             GameManager.Instance._eventCallCancel += StopCpty;
             GameManager.Instance.StartEventModeTiles(1, GetComponent<UnitScript>().UnitSO.IsInRedArmy, unitList, "Charge creuse", "Voulez-vous vraiment infliger 3 dégats à cette unité ?");
             base.StartCpty();
-        }
+        
     }
 
     public override void StopCpty()
@@ -39,15 +42,19 @@ public class ChargeCreuse: Capacity
 
     public override void EndCpty()
     {
-        if (GameManager.Instance.TileChooseList[0].GetComponent<TileScript>().Unit.GetComponent<UnitScript>().UnitSO.IsInRedArmy == false)
-        {
+       
+        
             GameManager.Instance.TileChooseList[0].GetComponent<TileScript>().Unit.GetComponent<UnitScript>().TakeDamage(3);
-            PlayerPrefs.SetInt("ChargeCreuseDone", 1);
-        }
-
-        GameManager.Instance._eventCall -= EndCpty;
-        GetComponent<UnitScript>().EndCapacity();
-        base.EndCpty();
-        GameManager.Instance.TileChooseList.Clear();
+            GameManager.Instance._eventCall -= EndCpty;
+            GetComponent<UnitScript>().EndCapacity();
+            base.EndCpty();
+            GameManager.Instance.TileChooseList.Clear();
+            Destroy(GetComponent<ChargeCreuse>());
+        
+            GameManager.Instance._eventCall -= EndCpty;
+            GetComponent<UnitScript>().EndCapacity();
+            base.EndCpty();
+            GameManager.Instance.TileChooseList.Clear();
+        
     }
 }

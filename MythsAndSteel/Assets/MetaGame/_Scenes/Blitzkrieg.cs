@@ -7,7 +7,7 @@ public class Blitzkrieg : Capacity
     public override void StartCpty()
     {
       
-        int ressourcePlayer = PlayerScript.Instance.RedPlayerInfos.Ressource;
+        int ressourcePlayer = GameManager.Instance.IsPlayerRedTurn ? PlayerScript.Instance.RedPlayerInfos.Ressource : PlayerScript.Instance.BluePlayerInfos.Ressource;
         if (ressourcePlayer >= Capacity1Cost)
         {
             List<GameObject> tile = new List<GameObject>();
@@ -39,9 +39,10 @@ public class Blitzkrieg : Capacity
 
     public override void EndCpty()
     {
+         Player player = GameManager.Instance.IsPlayerRedTurn ? PlayerScript.Instance.RedPlayerInfos : PlayerScript.Instance.BluePlayerInfos;
         Debug.Log("oui");
-        PlayerScript.Instance.RedPlayerInfos.Ressource -= Capacity1Cost;
-        PlayerScript.Instance.RedPlayerInfos.ActivationLeft += 2;
+        player.Ressource -= Capacity1Cost;
+        player.ActivationLeft += 2;
         UIInstance.Instance.UpdateRessourceLeft();
         UIInstance.Instance.UpdateActivationLeft();
         Debug.Log("Inchallah");
