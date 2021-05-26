@@ -19,25 +19,42 @@ public class CapacitySystem : MonoSingleton<CapacitySystem>
 
         if (Unit != null)
         {
-            if (!Mouvement.Instance.MvmtRunning && !Attaque.Instance.attackselected && !Unit.GetComponent<UnitScript>().IsActivationDone && !Mouvement.Instance.mvmtrunning)
+            Player player;
+            Debug.Log("test");
+            if(GameManager.Instance.IsPlayerRedTurn)
             {
+                player = PlayerScript.Instance.RedPlayerInfos;
+            }
+            else
+            {
+                player = PlayerScript.Instance.BluePlayerInfos;
+            }
+            if ((!Attaque.Instance.attackselected && !Unit.GetComponent<UnitScript>()._isActionDone 
+                && !Mouvement.Instance.mvmtrunning && player.ActivationLeft > 0) || (!Attaque.Instance.attackselected && !Unit.GetComponent<UnitScript>()._isActionDone && Unit.GetComponent<UnitScript>()._hasStartMove && player.ActivationLeft == 0))
+            {
+
+              
                 ButtonLaunchCapacity.SetActive(true);
 
                 if (Unit.GetComponent<UnitScript>().GotCapacity())
                 {
+                  
                     if (Unit.GetComponent<UnitScript>().RunningCapacity)
                     {
+                     
                         ButtonLaunchCapacity.GetComponent<Image>().sprite = attackcancelspritebutton;
                         UIInstance.Instance.DesactivateNextPhaseButton();
                     }
                     else
                     {
+                       
                         ButtonLaunchCapacity.GetComponent<Image>().sprite = attacklaunchspritebutton;
                         UIInstance.Instance.ActivateNextPhaseButton();
                     }
                 }
                 else
                 {
+                    Debug.Log("test");
                     ButtonLaunchCapacity.SetActive(false);
                     UIInstance.Instance.ActivateNextPhaseButton();
                 }
@@ -45,7 +62,7 @@ public class CapacitySystem : MonoSingleton<CapacitySystem>
             
             else
             {
-              
+                Debug.Log("test");
                 ButtonLaunchCapacity.SetActive(false);
                 UIInstance.Instance.ActivateNextPhaseButton();
             }
