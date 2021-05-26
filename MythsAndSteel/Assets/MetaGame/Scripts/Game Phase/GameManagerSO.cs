@@ -275,8 +275,8 @@ public class GameManagerSO : ScriptableObject
 
                         }
                      
-                    }
                     GameManager.Instance.ParalysieStat = 3;
+                    }
                     refunit.Clear();
                 }
                 if (!GameManager.Instance.IsPlayerRedStarting)
@@ -436,9 +436,9 @@ public class GameManagerSO : ScriptableObject
                             unit.GetComponent<UnitScript>().RemoveStatutToUnit(MYthsAndSteel_Enum.UnitStatut.Paralysie);
                         }
 
-                    }
-                    }
                     GameManager.Instance.ParalysieStat = 3;
+                    }
+                    }
                     refunit.Clear();
                 }
                 UIInstance.Instance.ButtonRenfortJ2.GetComponent<Button>().interactable = false;
