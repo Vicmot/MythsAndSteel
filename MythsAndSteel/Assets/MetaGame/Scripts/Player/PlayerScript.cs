@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.Animations;
 
 public class PlayerScript : MonoSingleton<PlayerScript>
 {
@@ -38,7 +39,7 @@ public class PlayerScript : MonoSingleton<PlayerScript>
 
     [SerializeField] private Animator Addcardeventred;
     [SerializeField] private Animator Addcardeventblue;
-    
+
 
     private void Start(){        
         EventCardList._eventSO.UpdateVisualUI(_eventCardList._eventGamBluePlayer, 2);
@@ -88,10 +89,12 @@ public class PlayerScript : MonoSingleton<PlayerScript>
 
             AddEventCard(player, newCard);
             _cardObtain.Add(newCard);
-            if (player == 1)
-            { Addcardeventred.Play("CardEventAnimRed"); }
-            else if (player == 2)
-            { Addcardeventblue.Play("CardEventAnimBlue"); }
+            if (player == 1){
+                Addcardeventred.Play("CardEventAnimRed");
+            }
+            else if (player == 2){ 
+                Addcardeventblue.Play("CardEventAnimBlue"); 
+            }
         }
         else{
             Debug.Log("Il n'y a plus de cartes events");
