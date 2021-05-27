@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Guérison : Capacity
 {
-    [SerializeField] private int HealValue = 1;
+    [SerializeField] private int HealValue = 2;
 
 
     public override void StartCpty()
