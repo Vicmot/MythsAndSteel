@@ -49,7 +49,7 @@ public class VictoryScreen : MonoBehaviour
 
     void Timer()
     {
-      
+        
         float t = Time.time - startTime;
         string minutes = ((int)t / 60).ToString();
         string seconds = (t % 60).ToString("f0");
@@ -67,7 +67,9 @@ public class VictoryScreen : MonoBehaviour
         if (IsVictoryScreenActive)
         {
             DisplayVictoryScreen();
-            Time.timeScale = 0;       
+            TimeCounterM.text = TimeCounterM.text;
+            TimeCounterS.text = TimeCounterS.text;
+
         }
     }
 
