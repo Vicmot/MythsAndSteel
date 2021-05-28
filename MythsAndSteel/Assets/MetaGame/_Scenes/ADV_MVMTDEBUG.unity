@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.1273174, g: 0.13414761, b: 0.12107885, a: 1}
+  m_IndirectSpecularColor: {r: 0.12731749, g: 0.13414757, b: 0.1210787, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -24724,7 +24724,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2025641296}
   m_HandleRect: {fileID: 2025641295}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -29726,7 +29726,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2060190551
 RectTransform:
   m_ObjectHideFlags: 0
@@ -36201,9 +36201,17 @@ PrefabInstance:
       value: ZoneOrgone
       objectReference: {fileID: 0}
     - target: {fileID: 1041681343423423038, guid: 952bdf0716382114eaa4a1733562d578, type: 3}
+      propertyPath: centerOrgoneArea
+      value: 
+      objectReference: {fileID: 1321010384}
+    - target: {fileID: 1041681343423423038, guid: 952bdf0716382114eaa4a1733562d578, type: 3}
       propertyPath: _centerOrgoneArea
       value: 
       objectReference: {fileID: 1321010384}
+    - target: {fileID: 1041681344671033462, guid: 952bdf0716382114eaa4a1733562d578, type: 3}
+      propertyPath: centerOrgoneArea
+      value: 
+      objectReference: {fileID: 1036877431}
     - target: {fileID: 1041681344671033462, guid: 952bdf0716382114eaa4a1733562d578, type: 3}
       propertyPath: _centerOrgoneArea
       value: 
