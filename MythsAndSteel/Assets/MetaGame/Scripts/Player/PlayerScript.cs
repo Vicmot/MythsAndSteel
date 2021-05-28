@@ -37,8 +37,8 @@ public class PlayerScript : MonoSingleton<PlayerScript>
 
     public List<MYthsAndSteel_Enum.EventCard> _cardObtain = new List<MYthsAndSteel_Enum.EventCard>();
 
-    [SerializeField] private Animator Addcardeventred;
-    [SerializeField] private Animator Addcardeventblue;
+    [SerializeField] private GameObject RedAnim;
+    [SerializeField] private GameObject BlueAnim;
 
 
     private void Start(){        
@@ -49,6 +49,18 @@ public class PlayerScript : MonoSingleton<PlayerScript>
         
 
     }
+
+    IEnumerator WaitEventRed(float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+        RedAnim.SetActive(false);
+    }
+    IEnumerator WaitEventBlue(float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+        BlueAnim.SetActive(false);
+    }
+
 
     #region DesactivationUnitType
     /// <summary>
@@ -90,10 +102,14 @@ public class PlayerScript : MonoSingleton<PlayerScript>
             AddEventCard(player, newCard);
             _cardObtain.Add(newCard);
             if (player == 1){
-                Addcardeventred.Play("CardEventAnimRed");
+                RedAnim.SetActive(true);
+               StartCoroutine(WaitEventRed(0.8f));
+           
             }
-            else if (player == 2){ 
-                Addcardeventblue.Play("CardEventAnimBlue"); 
+            else if (player == 2){
+                BlueAnim.SetActive(true);
+                StartCoroutine(WaitEventBlue(0.8f));
+                 
             }
         }
         else{
