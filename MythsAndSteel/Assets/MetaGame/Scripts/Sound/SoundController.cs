@@ -11,16 +11,40 @@ public class SoundController : MonoSingleton<SoundController>
     [SerializeField] List<AudioClip> _audioClip = new List<AudioClip>();
     public List<AudioClip> AudioClips => _audioClip;
 
+    [SerializeField] List<AudioClip> Waitlist = new List<AudioClip>();
+    bool Iscoroutplay = false;
+
     public void PlaySound(AudioClip SoundPlay, string debug = null)
     {
-        AudioClip tolpay = SoundPlay;
-        _Source.clip = tolpay;
+        if (_Source.isPlaying)
+        {
+            Waitlist.Add(SoundPlay);
+            if (!Iscoroutplay)
+            {
+                StartCoroutine(DelayPlay());
+            }
 
-        if (debug == null) debug = SoundPlay.name;
-        Debug.Log(debug);
+        }
+        else
+        {
 
-        if (_Source.clip != null) _Source.Play();
-        else Debug.Log("No sound");
+            _Source.clip = SoundPlay;
+            if (debug == null) debug = SoundPlay.name;
+            Debug.Log(debug);
+
+            if (_Source.clip != null)
+            {
+                _Source.Play();
+            }
+            else Debug.Log("No sound");
+        }
+    }
+
+    public void Multisong(AudioClip ClipOne, AudioClip ClipTwo, AudioClip ClipThree = null, string debug = null)
+    {
+        PlaySound(ClipOne, debug);
+        PlaySound(ClipTwo, debug);
+        if (ClipThree != null) PlaySound(ClipThree, debug);
     }
 
 
@@ -31,5 +55,14 @@ public class SoundController : MonoSingleton<SoundController>
     private void Start()
     {
         PlaySound(_audioClip[1]);
+    }
+
+
+
+    IEnumerator DelayPlay()
+    {
+        yield return new WaitUntil(() => !_Source.isPlaying);
+        PlaySound(Waitlist[0]);
+        Waitlist.Remove(Waitlist[0]);
     }
 }

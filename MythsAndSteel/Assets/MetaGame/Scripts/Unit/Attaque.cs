@@ -371,23 +371,17 @@ public class Attaque : MonoSingleton<Attaque>
             selectedUnitEnnemy.GetComponent<UnitScript>().TakeDamage(_damageMaximum + AttackVariation);
             if (_selectedUnit.GetComponent<UnitScript>().VoiceLine != null)
             {
-                SoundController.Instance.PlaySound(_selectedUnit.GetComponent<UnitScript>().VoiceLine );
-                bool Playing = true;
-                while (Playing)
-                {
-                    if (!SoundController.Instance.Source.isPlaying)
-                    {
-                        SoundController.Instance.PlaySound(_selectedUnit.GetComponent<UnitScript>().SonAttaque, "attaquemax");
-                        Playing = false;
-                        break;
-                    }
-                }
+                SoundController.Instance.PlaySound(_selectedUnit.GetComponent<UnitScript>().VoiceLine);
+                Debug.Log("vocieline");
+                
             }
             else
             {
-                SoundController.Instance.PlaySound(_selectedUnit.GetComponent<UnitScript>().SonAttaque, "chocolate");
+                SoundController.Instance.PlaySound(_selectedUnit.GetComponent<UnitScript>().SonAttaque);
+
             }
-            Debug.Log("Damage : " + _damageMaximum);
+
+            Debug.Log("Damage Max : " + _damageMaximum);
             StopAttack();
         }
         if (DiceResult < _numberRangeMin.x)

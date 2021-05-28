@@ -25,9 +25,9 @@ MonoBehaviour:
   NumberRangeMin: {x: 3, y: 7}
   DamageMaximum: 6
   NumberRangeMax: {x: 8, y: 12}
-  SonAttaque: {fileID: 0}
-  SonDeplacement: {fileID: 0}
-  SonMort: {fileID: 8300000, guid: 19907052015cd27468e3060fb67593ef, type: 3}
+  SonAttaque: {fileID: 8300000, guid: 672ed031b3907f14a9b1d2f3e52f71b8, type: 3}
+  SonDeplacement: {fileID: 8300000, guid: 0ca07458c9c9da4428e5ab5f250ea49a, type: 3}
+  SonMort: {fileID: 8300000, guid: fabb10955420f6e40954c29726c15e9d, type: 3}
   VoiceLine: {fileID: 0}
   Sprite: {fileID: 21300000, guid: 53c8e41a1004008469d1fa2efe6cadb0, type: 3}
   CanAttackEmptyTile: 0

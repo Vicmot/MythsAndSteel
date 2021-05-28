@@ -20,7 +20,7 @@ public class CapacitySystem : MonoSingleton<CapacitySystem>
         if (Unit != null)
         {
             Player player;
-            Debug.Log("test");
+            //Debug.Log("test");
             if(GameManager.Instance.IsPlayerRedTurn)
             {
                 player = PlayerScript.Instance.RedPlayerInfos;
@@ -54,7 +54,7 @@ public class CapacitySystem : MonoSingleton<CapacitySystem>
                 }
                 else
                 {
-                    Debug.Log("test");
+                    //Debug.Log("test");
                     ButtonLaunchCapacity.SetActive(false);
                     UIInstance.Instance.ActivateNextPhaseButton();
                 }
@@ -62,7 +62,7 @@ public class CapacitySystem : MonoSingleton<CapacitySystem>
             
             else
             {
-                Debug.Log("test");
+                //Debug.Log("test");
                 ButtonLaunchCapacity.SetActive(false);
                 UIInstance.Instance.ActivateNextPhaseButton();
             }
