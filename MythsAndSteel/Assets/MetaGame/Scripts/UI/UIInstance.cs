@@ -137,8 +137,16 @@ public class UIInstance : MonoSingleton<UIInstance>
     public List<TextSpriteAttributUnit> textSpriteAttributUnit = new List<TextSpriteAttributUnit>();
     //Array comportant les ObjectsAttributs. A ne pas modifier !
     public ObjectsAttributs[] objectsAttributs = new ObjectsAttributs[3];
+
+    public List<Image> MiniJaugeSlot = new List<Image>();
+    public Sprite Maximum;
+    public Sprite Minimum;
+    public Sprite None;
+    public GameObject MinSlider;
+    public GameObject MaxSlider;
+
     #endregion ShiftClicPanelP1
-    
+
     #region ShiftClicPanelP2
     [Header("LISTES DES ELEMENTS UI POUR LE SHIFT CLIC DE LA PAGE 2")]
     [Tooltip("Tous les éléments qui composent l'UI pour le Shift Clic de la Page 2")]
