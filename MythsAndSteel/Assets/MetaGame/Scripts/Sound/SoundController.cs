@@ -11,13 +11,18 @@ public class SoundController : MonoSingleton<SoundController>
     [SerializeField] List<AudioClip> _audioClip = new List<AudioClip>();
     public List<AudioClip> AudioClips => _audioClip;
 
-    public void PlaySound(AudioClip SoundPlay)
+    public void PlaySound(AudioClip SoundPlay, string debug = null)
     {
         AudioClip tolpay = SoundPlay;
         _Source.clip = tolpay;
 
-        _Source.Play();
+        if (debug == null) debug = SoundPlay.name;
+        Debug.Log(debug);
+
+        if (_Source.clip != null) _Source.Play();
+        else Debug.Log("No sound");
     }
+
 
     public void nextPhaseSound()
     {

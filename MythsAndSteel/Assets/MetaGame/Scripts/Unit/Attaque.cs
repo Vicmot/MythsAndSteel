@@ -11,9 +11,9 @@ public class Attaque : MonoSingleton<Attaque>
 
     public List<int> _newNeighbourId => newNeighbourId;
     [SerializeField] private List<int> newNeighbourId = new List<int>(); // Voisins atteignables avec le range de l'unitÃ©.
-   
+
     public GameObject PanelBlockant1;
-  
+
     public GameObject PanelBlockant2;
     public GameObject PanelBlockantOrgone1;
     public GameObject PanelBlockantOrgone2;
@@ -52,7 +52,7 @@ public class Attaque : MonoSingleton<Attaque>
     public Sprite DeviationSelectUI => _DeviationSelectUI;
     [SerializeField] Sprite _DeviationOriginalSpriteCase;
     public Sprite DeviationOriginalSpriteCase => _DeviationOriginalSpriteCase;
- 
+
 
 
     List<int> SetEnnemyUnitListTileNeighbourDiagUI;
@@ -87,11 +87,11 @@ public class Attaque : MonoSingleton<Attaque>
     public List<int> _selectedTiles
     {
         get
-        {         
+        {
             return SelectedTiles;
         }
         set
-        {            
+        {
             SelectedTiles = value;
         }
     }
@@ -100,7 +100,7 @@ public class Attaque : MonoSingleton<Attaque>
 
     int numberOfTileToSelect = 0;
     private GameObject _selectedUnitEnemy;
-   public GameObject selectedUnitEnnemy
+    public GameObject selectedUnitEnnemy
     {
         get
         {
@@ -134,7 +134,7 @@ public class Attaque : MonoSingleton<Attaque>
         firstDiceInt = Random.Range(1, 7);
         secondDiceInt = Random.Range(1, 7);
 
-        DiceResult = firstDiceInt + secondDiceInt + RaycastManager.Instance.ActualUnitSelected.GetComponent<UnitScript>().DiceBonus;
+        DiceResult = firstDiceInt + secondDiceInt + RaycastManager.Instance.ActualUnitSelected.GetComponent<UnitScript>().DiceBonus + 12;
         //DiceResult = firstDiceInt + secondDiceInt;
 
         RandomMore();
@@ -150,7 +150,7 @@ public class Attaque : MonoSingleton<Attaque>
     {
         if (DiceResult >= _numberRangeMin.x && DiceResult <= _numberRangeMin.y)
         {
-            ChangeStat();  
+            ChangeStat();
             AnimationUpdate();
             int AttackVariation = 0;
             TileScript T = TilesManager.Instance.TileList[selectedUnitEnnemy.GetComponent<UnitScript>().ActualTiledId].GetComponent<TileScript>();
@@ -324,7 +324,7 @@ public class Attaque : MonoSingleton<Attaque>
         if (DiceResult >= _numberRangeMax.x && DiceResult <= _numberRangeMax.y)
         {
             ChangeStat();
-          
+
             _damageMaximum = this._damageMaximum;
             AnimationUpdate();
             int AttackVariation = 0;
@@ -369,7 +369,24 @@ public class Attaque : MonoSingleton<Attaque>
                 }
             }
             selectedUnitEnnemy.GetComponent<UnitScript>().TakeDamage(_damageMaximum + AttackVariation);
-            SoundController.Instance.PlaySound(_selectedUnit.GetComponent<UnitScript>().SonAttaque);
+            if (_selectedUnit.GetComponent<UnitScript>().VoiceLine != null)
+            {
+                SoundController.Instance.PlaySound(_selectedUnit.GetComponent<UnitScript>().VoiceLine );
+                bool Playing = true;
+                while (Playing)
+                {
+                    if (!SoundController.Instance.Source.isPlaying)
+                    {
+                        SoundController.Instance.PlaySound(_selectedUnit.GetComponent<UnitScript>().SonAttaque, "attaquemax");
+                        Playing = false;
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                SoundController.Instance.PlaySound(_selectedUnit.GetComponent<UnitScript>().SonAttaque, "chocolate");
+            }
             Debug.Log("Damage : " + _damageMaximum);
             StopAttack();
         }
@@ -441,47 +458,47 @@ public class Attaque : MonoSingleton<Attaque>
     void AnimationUpdate()
     {
         GameObject ActualUnit = RaycastManager.Instance.ActualUnitSelected;
-        
-        if(ActualUnit.GetComponent<UnitScript>().Animation != null)
+
+        if (ActualUnit.GetComponent<UnitScript>().Animation != null)
         {
             GameObject ActualEnemy = selectedUnitEnnemy;
 
             float X = ActualEnemy.transform.position.x - ActualUnit.transform.position.x;
             float Y = ActualEnemy.transform.position.y - ActualUnit.transform.position.y;
 
-            if(X >= 0)
+            if (X >= 0)
             {
-                if(Mathf.Abs(X) > Mathf.Abs(Y))
+                if (Mathf.Abs(X) > Mathf.Abs(Y))
                 {
                     ActualUnit.GetComponent<UnitScript>().Animation.SetInteger("A", 1); //right
                     ActualUnit.GetComponent<SpriteRenderer>().flipX = true;
                 }
-                else if(Mathf.Abs(X) <= Mathf.Abs(Y))
+                else if (Mathf.Abs(X) <= Mathf.Abs(Y))
                 {
-                    if(Y > 0)
+                    if (Y > 0)
                     {
                         ActualUnit.GetComponent<UnitScript>().Animation.SetInteger("A", 2); // up
                     }
-                    else if(Y < 0)
+                    else if (Y < 0)
                     {
                         ActualUnit.GetComponent<UnitScript>().Animation.SetInteger("A", 3); // down
                     }
                 }
             }
-            if(X < 0)
+            if (X < 0)
             {
-                if(Mathf.Abs(X) > Mathf.Abs(Y))
+                if (Mathf.Abs(X) > Mathf.Abs(Y))
                 {
                     ActualUnit.GetComponent<UnitScript>().Animation.SetInteger("A", 1); // left
                     ActualUnit.GetComponent<SpriteRenderer>().flipX = false;
                 }
-                else if(Mathf.Abs(X) <= Mathf.Abs(Y))
+                else if (Mathf.Abs(X) <= Mathf.Abs(Y))
                 {
-                    if(Y > 0)
+                    if (Y > 0)
                     {
                         ActualUnit.GetComponent<UnitScript>().Animation.SetInteger("A", 2); // up
                     }
-                    else if(Y < 0)
+                    else if (Y < 0)
                     {
                         ActualUnit.GetComponent<UnitScript>().Animation.SetInteger("A", 3); // down
                     }
@@ -494,14 +511,14 @@ public class Attaque : MonoSingleton<Attaque>
 
     public IEnumerator AnimationWait(Animator AnimToWait, string BoolName)
     {
-        if(AnimToWait.runtimeAnimatorController != null)
+        if (AnimToWait.runtimeAnimatorController != null)
         {
             yield return new WaitForSeconds(AnimToWait.runtimeAnimatorController.animationClips[0].length);
             AnimToWait.SetBool(BoolName, false);
         }
     }
 
-    
+
     public bool Go = false;
     /// <summary>
     /// Choisit le type d'attaque
@@ -544,7 +561,7 @@ public class Attaque : MonoSingleton<Attaque>
                 TileScript TileSc = TilesManager.Instance.TileList[ID].GetComponent<TileScript>();
                 bool i = false;
 
-              if(ID == currentID )
+                if (ID == currentID)
                 {
                     i = true;
 
@@ -568,7 +585,7 @@ public class Attaque : MonoSingleton<Attaque>
     /// </summary>
     private void RandomMore()
     {
-        if (GameManager.Instance.IsPlayerRedTurn || !GameManager.Instance.IsPlayerRedTurn) 
+        if (GameManager.Instance.IsPlayerRedTurn || !GameManager.Instance.IsPlayerRedTurn)
         {
             if (_selectedUnit.GetComponent<UnitScript>().DoingCharg1Blue == true)
             {
@@ -576,10 +593,10 @@ public class Attaque : MonoSingleton<Attaque>
 
                 foreach (int i in unitNeigh)
                 {
-                    if(TilesManager.Instance.TileList[i].GetComponent<TileScript>().Unit != null)
+                    if (TilesManager.Instance.TileList[i].GetComponent<TileScript>().Unit != null)
                     {
 
-                    DiceResult++;
+                        DiceResult++;
                     }
                     Debug.Log(DiceResult);
                 }
@@ -597,7 +614,7 @@ public class Attaque : MonoSingleton<Attaque>
     /// </summary>
     public void StartAttackSelectionUnit(int tileId = -1)
     {
-        
+
         GameObject tileSelected = RaycastManager.Instance.ActualTileSelected;
         _selectedUnit = tileSelected.GetComponent<TileScript>().Unit;
         foreach (int i in _selectedTiles)
@@ -626,7 +643,7 @@ public class Attaque : MonoSingleton<Attaque>
 
         _selectedTiles.Clear();
         _newNeighbourId.Clear();
-        
+
         if ((GameManager.Instance.IsPlayerRedTurn && PlayerScript.Instance.RedPlayerInfos.ActivationLeft > 0) || (_selectedUnit.GetComponent<UnitScript>()._hasStartMove && GameManager.Instance.IsPlayerRedTurn && PlayerScript.Instance.RedPlayerInfos.ActivationLeft == 0))
         {
             if (tileId != -1)
@@ -635,11 +652,11 @@ public class Attaque : MonoSingleton<Attaque>
 
                 if (!_selectedUnit.GetComponent<UnitScript>()._isActionDone && !_selectedUnit.GetComponent<UnitScript>().UnitStatuts.Contains(MYthsAndSteel_Enum.UnitStatut.PeutPasCombattre))
                 {
-                   
+
                     _isInAttack = false;
                     StartAttack(tileId, _selectedUnit.GetComponent<UnitScript>().AttackRange + _selectedUnit.GetComponent<UnitScript>().AttackRangeBonus);
-                    
-                        
+
+
                 }
                 else
                 {
@@ -649,11 +666,11 @@ public class Attaque : MonoSingleton<Attaque>
             }
             else
             {
-                
+
 
                 if (tileSelected != null)
                 {
-                
+
                     if (!_selectedUnit.GetComponent<UnitScript>()._isActionDone && !_selectedUnit.GetComponent<UnitScript>().UnitStatuts.Contains(MYthsAndSteel_Enum.UnitStatut.PeutPasCombattre))
                     {
 
@@ -661,7 +678,7 @@ public class Attaque : MonoSingleton<Attaque>
                         _selected = true;
                         UpdateJauge(tileId);
                         StartAttack(tileSelected.GetComponent<TileScript>().TileId, _selectedUnit.GetComponent<UnitScript>().AttackRange + _selectedUnit.GetComponent<UnitScript>().AttackRangeBonus);
-                        
+
                     }
                     else
                     {
@@ -682,7 +699,7 @@ public class Attaque : MonoSingleton<Attaque>
                 {
                     _isInAttack = false;
                     StartAttack(tileId, _selectedUnit.GetComponent<UnitScript>().AttackRange + _selectedUnit.GetComponent<UnitScript>().AttackRangeBonus);
-                   
+
 
                 }
                 else
@@ -692,18 +709,18 @@ public class Attaque : MonoSingleton<Attaque>
             }
             else
             {
-               
+
 
                 if (tileSelected != null)
                 {
-           
+
                     if (!_selectedUnit.GetComponent<UnitScript>()._isActionDone && !_selectedUnit.GetComponent<UnitScript>().UnitStatuts.Contains(MYthsAndSteel_Enum.UnitStatut.PeutPasCombattre))
                     {
                         Debug.Log(_selectedUnit);
                         _selected = true;
-                     
+
                         GetStats();
-                           UpdateJauge(tileId);
+                        UpdateJauge(tileId);
                         StartAttack(tileSelected.GetComponent<TileScript>().TileId, _selectedUnit.GetComponent<UnitScript>().AttackRange + _selectedUnit.GetComponent<UnitScript>().AttackRangeBonus);
                     }
                     else
@@ -749,10 +766,10 @@ public class Attaque : MonoSingleton<Attaque>
         {
             _isInAttack = true;
 
-                PanelBlockant1.SetActive(true);
-            
-                PanelBlockant2.SetActive(true);
-            
+            PanelBlockant1.SetActive(true);
+
+            PanelBlockant2.SetActive(true);
+
             ID = new List<int>();
             ID.Add(tileId);
 
@@ -798,7 +815,7 @@ public class Attaque : MonoSingleton<Attaque>
                 }
             }
             Highlight(tileId, tileId, Range2);
-            
+
         }
     }
 
@@ -819,15 +836,16 @@ public class Attaque : MonoSingleton<Attaque>
     /// Ajout une case d'attaque à la liste
     /// </summary>
     /// <param name="tileId"></param>
-    public void AddTileToList(int tileId){
-        if(!_selectedTiles.Contains(tileId))
+    public void AddTileToList(int tileId)
+    {
+        if (!_selectedTiles.Contains(tileId))
         {
-            if(_selectedTiles.Count < numberOfTileToSelect && newNeighbourId.Contains(tileId))
+            if (_selectedTiles.Count < numberOfTileToSelect && newNeighbourId.Contains(tileId))
             {
                 TileScript currentTileScript = TilesManager.Instance.TileList[tileId].GetComponent<TileScript>();
-                if (currentTileScript.Unit != null  )
+                if (currentTileScript.Unit != null)
                 {
-                if(currentTileScript.Unit.GetComponent<UnitScript>().UnitSO.IsInRedArmy != GameManager.Instance.IsPlayerRedTurn)
+                    if (currentTileScript.Unit.GetComponent<UnitScript>().UnitSO.IsInRedArmy != GameManager.Instance.IsPlayerRedTurn)
                     {
                         foreach (MYthsAndSteel_Enum.TerrainType T1 in TilesManager.Instance.TileList[tileId].GetComponent<TileScript>().TerrainEffectList)
                         {
@@ -922,9 +940,9 @@ public class Attaque : MonoSingleton<Attaque>
         _numberRangeMin.y = 0;
         _numberRangeMax.x = 0;
         _numberRangeMax.y = 0;
-        
-  
-   
+
+
+
         RaycastManager.Instance.ActualTileSelected = null;
     }
 
@@ -932,12 +950,13 @@ public class Attaque : MonoSingleton<Attaque>
     /// Supprime l'effet de case
     /// </summary>
     /// <param name="WithoutSelected"></param>
-    public void RemoveTileSprite(bool WithoutSelected = false){
-        if(!WithoutSelected)
+    public void RemoveTileSprite(bool WithoutSelected = false)
+    {
+        if (!WithoutSelected)
         {
-            foreach(int Neighbour in newNeighbourId) // Supprime toutes les tiles.
+            foreach (int Neighbour in newNeighbourId) // Supprime toutes les tiles.
             {
-                if(TilesManager.Instance.TileList[Neighbour] != null)
+                if (TilesManager.Instance.TileList[Neighbour] != null)
                 {
                     TilesManager.Instance.TileList[Neighbour].GetComponent<TileScript>().DesActiveChildObj(MYthsAndSteel_Enum.ChildTileType.AttackSelect);
                 }
@@ -945,15 +964,15 @@ public class Attaque : MonoSingleton<Attaque>
         }
         else
         {
-            foreach(int Neighbour in newNeighbourId) // Supprime toutes les tiles.
+            foreach (int Neighbour in newNeighbourId) // Supprime toutes les tiles.
             {
-                if(TilesManager.Instance.TileList[Neighbour] != null && !_selectedTiles.Contains(Neighbour))
+                if (TilesManager.Instance.TileList[Neighbour] != null && !_selectedTiles.Contains(Neighbour))
                 {
                     TilesManager.Instance.TileList[Neighbour].GetComponent<TileScript>().DesActiveChildObj(MYthsAndSteel_Enum.ChildTileType.AttackSelect);
                 }
             }
         }
-          
+
     }
 
     /// <summary>
@@ -966,10 +985,10 @@ public class Attaque : MonoSingleton<Attaque>
             if (_selectedTiles.Count != 0)
             {
                 ApplyAttack();
-                foreach(int i in _selectedTiles)
+                foreach (int i in _selectedTiles)
                 {
                     selectedUnitEnnemy = TilesManager.Instance.TileList[i].GetComponent<TileScript>().Unit;
-                    if(selectedUnitEnnemy != null)
+                    if (selectedUnitEnnemy != null)
                     {
                         ChooseAttackType(_numberRangeMin, _damageMinimum, _numberRangeMax, _damageMaximum, DiceResult);
                     }
@@ -1004,18 +1023,18 @@ public class Attaque : MonoSingleton<Attaque>
         _numberRangeMax.y = _selectedUnit.GetComponent<UnitScript>().NumberRangeMax.y; // Récupération de la Range min - y
         numberOfTileToSelect = _selectedUnit.GetComponent<UnitScript>().UnitSO.numberOfUnitToAttack;
         _isAttackDeviation = false;
-        
+
 
         if (!_isAttackDeviation)
-        foreach (MYthsAndSteel_Enum.Attributs element in _selectedUnit.GetComponent<UnitScript>().UnitSO.UnitAttributs)
-        {
-            if(element == MYthsAndSteel_Enum.Attributs.Déviation)
+            foreach (MYthsAndSteel_Enum.Attributs element in _selectedUnit.GetComponent<UnitScript>().UnitSO.UnitAttributs)
+            {
+                if (element == MYthsAndSteel_Enum.Attributs.Déviation)
                 {
                     _isAttackDeviation = true;
                 }
-        }
-            
-     
+            }
+
+
     }
 
     /// <summary>
@@ -1027,9 +1046,9 @@ public class Attaque : MonoSingleton<Attaque>
         CapacitySystem.Instance.Updatebutton();
         IsInAttack = false;
         _selectedUnit.GetComponent<UnitScript>()._isActionDone = true;
-        
+
         _selectedUnit.GetComponent<UnitScript>().checkActivation();
-        _selectedUnit.GetComponent<UnitScript>().checkMovementLeft(); 
+        _selectedUnit.GetComponent<UnitScript>().checkMovementLeft();
     }
 
     /// <summary>
@@ -1097,7 +1116,8 @@ public class Attaque : MonoSingleton<Attaque>
     /// </summary>
     public void StartDeviation()
     {
-        foreach(int i in _selectedTiles){
+        foreach (int i in _selectedTiles)
+        {
             TilesManager.Instance.TileList[i].gameObject.GetComponent<TileScript>().DesActiveChildObj(MYthsAndSteel_Enum.ChildTileType.AttackSelect);
         }
 
@@ -1113,14 +1133,14 @@ public class Attaque : MonoSingleton<Attaque>
         ennemyUnitListTileNeighbourDiagUI.Sort();
 
         //Illumination des cases
-        foreach(int id in SetEnnemyUnitListTileNeighbourDiagUI)
+        foreach (int id in SetEnnemyUnitListTileNeighbourDiagUI)
         {
             TilesManager.Instance.TileList[id].GetComponent<SpriteRenderer>().sprite = _DeviationSelectUI;
             TilesManager.Instance.TileList[id].GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
         }
         //Lancement de l'animation Les coroutines ne se lancent pas les une après les autres c'est pour cela qu'il y a un delay qui va s'incrémenter au fur et à mesure de for 
         int x = 0;
-        for(int i = 0; i < ennemyUnitListTileNeighbourDiagUI.Count; i++, x++)
+        for (int i = 0; i < ennemyUnitListTileNeighbourDiagUI.Count; i++, x++)
         {
             StartCoroutine(ColorTile(i, x, ennemyUnitListTileNeighbourDiagUI, ennemyUnitIdTile, endDeviation));
         }
@@ -1132,15 +1152,15 @@ public class Attaque : MonoSingleton<Attaque>
     IEnumerator ColorTile(int id, int delay, List<int> listTile, int ennemyIDTile, bool endDeviation)
     {
         float z = (float)delay;
-        int idMax =  listTile.Count-1;
+        int idMax = listTile.Count - 1;
         //Si la case actuel n'est pas la première case de la liste alors la précédente case a son sprite qui devient bleu et l'actuelle qui devient un sprite rouge
-        if(id != 0)
+        if (id != 0)
         {
             yield return new WaitForSeconds(z / 3);
             TilesManager.Instance.TileList[listTile[id - 1]].GetComponent<SpriteRenderer>().sprite = DeviationSelectUI;
             TilesManager.Instance.TileList[listTile[id]].GetComponent<SpriteRenderer>().sprite = _selectedSprite;
             //Si on est à la fin de la list et qu'on est a la première animation appel la fonction RandomCase.
-            if(id == idMax && endDeviation == false)
+            if (id == idMax && endDeviation == false)
             {
                 yield return new WaitForSeconds(z / 20);
                 TilesManager.Instance.TileList[listTile[id]].GetComponent<SpriteRenderer>().sprite = DeviationSelectUI;
@@ -1148,7 +1168,7 @@ public class Attaque : MonoSingleton<Attaque>
                 RandomCase(listTile, ennemyIDTile, endDeviation);
             }
             //Si on est à la fin de la list et qu'on est a la deusième animation appel la fonction ApplyDeviation.
-            else if(id == idMax && endDeviation == true)
+            else if (id == idMax && endDeviation == true)
             {
                 yield return new WaitForSeconds(z / 2);
                 TilesManager.Instance.TileList[listTile[id]].GetComponent<SpriteRenderer>().sprite = DeviationSelectUI;
@@ -1160,7 +1180,7 @@ public class Attaque : MonoSingleton<Attaque>
         else
         {
             TilesManager.Instance.TileList[listTile[id]].GetComponent<SpriteRenderer>().sprite = _selectedSprite;
-            if(id == idMax && endDeviation == true)
+            if (id == idMax && endDeviation == true)
             {
                 yield return new WaitForSeconds(1f);
                 TilesManager.Instance.TileList[listTile[id]].GetComponent<SpriteRenderer>().sprite = DeviationSelectUI;
@@ -1188,7 +1208,7 @@ public class Attaque : MonoSingleton<Attaque>
         int DeviationIdTile = listIdUI[DeviationIdTileIndex];
         selectedUnitEnnemy = TilesManager.Instance.TileList[DeviationIdTile].GetComponent<TileScript>().Unit;
         //Si lors du random on tombe sur l'idée case de l'unité visée rajouté précédemment on la rapporte à son valeur correspondante. 
-        if(DeviationIdTileIndex == listIdUI.Count - 1)
+        if (DeviationIdTileIndex == listIdUI.Count - 1)
         {
             DeviationIdTileIndex = indexEnnemyUnitIdTile;
 
@@ -1196,13 +1216,13 @@ public class Attaque : MonoSingleton<Attaque>
         listIdUI.Remove(listIdUI[listIdUI.Count - 1]);
         listIdUI.Sort();
         //On redimensionne la list pour que l'id de la case où l'attaque est dévié soit la dernière de la list  
-        while(listIdUI.Count > DeviationIdTileIndex + 1)
+        while (listIdUI.Count > DeviationIdTileIndex + 1)
         {
             listIdUI.Remove(listIdUI[listIdUI.Count - 1]);
         }
         endDeviation = true;
         // On lance la deuxsième animation
-        for(int i = 0; i < listIdUI.Count; i++, x++)
+        for (int i = 0; i < listIdUI.Count; i++, x++)
         {
             StartCoroutine(ColorTile(i, x, listIdUI, ennemyUnitIDTile, endDeviation));
         }
@@ -1214,14 +1234,14 @@ public class Attaque : MonoSingleton<Attaque>
     /// </summary>
     void ApplyDeviation()
     {
-        foreach(int item in SetEnnemyUnitListTileNeighbourDiagUI)
+        foreach (int item in SetEnnemyUnitListTileNeighbourDiagUI)
         {
             TilesManager.Instance.TileList[item].GetComponent<SpriteRenderer>().sprite = DeviationOriginalSpriteCase;
             TilesManager.Instance.TileList[item].GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 0.19f);
 
 
         }
-        if(selectedUnitEnnemy == null)
+        if (selectedUnitEnnemy == null)
 
         {
             SoundController.Instance.PlaySound(_selectedUnit.GetComponent<UnitScript>().SonAttaque);

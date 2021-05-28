@@ -143,6 +143,9 @@ public bool MélodieSinistre = false;
     private AudioSource _SourceAudio;
     public AudioSource SourceAudio => _SourceAudio;
 
+    [SerializeField] AudioClip _VoiceLine;
+    public AudioClip VoiceLine => _VoiceLine;
+
     [Header("------------------- CASE DE L'UNITE -------------------")]
     //Valeur (id) de la case sur laquelle se trouve l'unité
     [SerializeField] int _actualTileld;
@@ -770,6 +773,7 @@ public bool MélodieSinistre = false;
         _SonAttaque = _unitSO.SonAttaque;
         _SonDeplacement = _unitSO.SonDeplacement;
         _SonMort = _unitSO.SonMort;
+        _VoiceLine = _unitSO.VoiceLine;
         _SourceAudio = GetComponent<AudioSource>();
 
         ResetTurn();
