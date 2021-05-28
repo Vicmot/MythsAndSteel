@@ -9,6 +9,7 @@ C'est pour cela qu'il ne faut surtout pas le MODIFIER !!
  */ 
 public class OrgoneManager : MonoSingleton<OrgoneManager>
 {
+
     public bool DoingOrgoneCharge = false;
     #region Variables
     [Header("PARENT JAUGE D'ORGONE")]
@@ -53,6 +54,21 @@ public class OrgoneManager : MonoSingleton<OrgoneManager>
     public GameObject BluePlayerZone => _bluePlayerZone;
 
     #endregion Variables
+
+    public void CheckZoneOrgone()
+    {
+        if(_bluePlayerZone.GetComponent<ZoneOrgone>()._centerOrgoneArea == _redPlayerZone.GetComponent<ZoneOrgone>()._centerOrgoneArea)
+        {
+            _bluePlayerZone.GetComponent<Animator>().SetBool("SAME", true);
+            _redPlayerZone.GetComponent<Animator>().SetBool("SAME", true);
+        }
+        else
+        {
+            _bluePlayerZone.GetComponent<Animator>().SetBool("SAME", false);
+            _redPlayerZone.GetComponent<Animator>().SetBool("SAME", false);
+        }
+    }
+
 
     private void Start(){
         GameManager.Instance.ManagerSO.GoToOrgoneJ1Phase += ActivateOrgoneArea;
