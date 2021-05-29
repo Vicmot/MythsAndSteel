@@ -292,6 +292,7 @@ public class EventCardClass : ScriptableObject{
     }
 
     public void LaunchDéploiementAccéléré(){
+
         UIInstance.Instance.ActivateNextPhaseButton();
 
         int player = DeterminArmy(MYthsAndSteel_Enum.EventCard.Déploiement_accéléré);
@@ -349,9 +350,10 @@ public class EventCardClass : ScriptableObject{
             }
         }
 
-        if((GameManager.Instance.ActualTurnPhase == MYthsAndSteel_Enum.PhaseDeJeu.ActionJ1 && Attaque.Instance.IsInAttack|| GameManager.Instance.ActualTurnPhase == MYthsAndSteel_Enum.PhaseDeJeu.ActionJ2) && 
+        if((GameManager.Instance.ActualTurnPhase == MYthsAndSteel_Enum.PhaseDeJeu.ActionJ1 || GameManager.Instance.ActualTurnPhase == MYthsAndSteel_Enum.PhaseDeJeu.ActionJ2) && 
             ((player == 1 && GameManager.Instance.IsPlayerRedTurn && PlayerScript.Instance.RedPlayerInfos.EventUseLeft > 0) || (player == 2 && !GameManager.Instance.IsPlayerRedTurn && PlayerScript.Instance.BluePlayerInfos.EventUseLeft > 0))){
             RenfortPhase.Instance.craftUnit(1);
+            Debug.Log("fdkjls");
             LaunchEventTile(1, player == 1 ? true : false, gamList, "Déploiement accéléré", "Êtes-vous sur de vouloir créer une unité d'infanterie sur cette case?", false);
             GameManager.Instance._eventCall += DéploiementAccéléré;
         }

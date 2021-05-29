@@ -138,7 +138,16 @@ public class GameManagerSO : ScriptableObject
             case MYthsAndSteel_Enum.PhaseDeJeu.ActionJ1:
                 GameManager.Instance.GoPhase(MYthsAndSteel_Enum.PhaseDeJeu.ActionJ1);
                 UIInstance.Instance.DesactiveOrgoneChargeButton();
-                UIInstance.Instance.ButtonRenfortJ1.GetComponent<Button>().interactable = true;
+                if (GameManager.Instance.IsPlayerRedTurn)
+                {
+
+
+                    UIInstance.Instance.ButtonRenfortJ1.GetComponent<Button>().interactable = true;
+                }
+                else
+                {
+                    UIInstance.Instance.ButtonRenfortJ2.GetComponent<Button>().interactable = true;
+                }
                 if (GameManager.Instance.SabotageStat == 1 && !GameManager.Instance.IsPlayerRedTurn)
                 {
                     PlayerScript.Instance.BluePlayerInfos.ActivationLeft--;
@@ -157,7 +166,16 @@ public class GameManagerSO : ScriptableObject
 
             case MYthsAndSteel_Enum.PhaseDeJeu.OrgoneJ2:
 
-                UIInstance.Instance.ButtonRenfortJ1.GetComponent<Button>().interactable = false;
+                if (GameManager.Instance.IsPlayerRedTurn)
+                {
+
+
+                    UIInstance.Instance.ButtonRenfortJ1.GetComponent<Button>().interactable = false;
+                }
+                else
+                {
+                    UIInstance.Instance.ButtonRenfortJ2.GetComponent<Button>().interactable = false;
+                }
                 foreach (GameObject unit in GameManager.Instance.IsPlayerRedTurn ? PlayerScript.Instance.UnitRef.UnitListRedPlayer : PlayerScript.Instance.UnitRef.UnitListBluePlayer)
                 {
                     unit.GetComponent<UnitScript>().ResetTurn();
@@ -333,7 +351,16 @@ public class GameManagerSO : ScriptableObject
 
             case MYthsAndSteel_Enum.PhaseDeJeu.ActionJ2:
                 UIInstance.Instance.DesactiveOrgoneChargeButton();
-                UIInstance.Instance.ButtonRenfortJ2.GetComponent<Button>().interactable = true;
+                if(GameManager.Instance.IsPlayerRedTurn)
+                {
+
+
+                UIInstance.Instance.ButtonRenfortJ1.GetComponent<Button>().interactable = true;
+                }
+                else
+                {
+                    UIInstance.Instance.ButtonRenfortJ2.GetComponent<Button>().interactable = true;
+                }
                 if (GameManager.Instance.SabotageStat == 1 && !GameManager.Instance.IsPlayerRedTurn)
                 {
                     PlayerScript.Instance.BluePlayerInfos.ActivationLeft--;
@@ -514,7 +541,17 @@ public class GameManagerSO : ScriptableObject
                         GameManager.Instance.statetImmobilisation = 3;
                     }
                 }
+                if (GameManager.Instance.IsPlayerRedTurn)
+                {
+
+
+                    UIInstance.Instance.ButtonRenfortJ1.GetComponent<Button>().interactable = false;
+                }
+                else
+                {
                     UIInstance.Instance.ButtonRenfortJ2.GetComponent<Button>().interactable = false;
+                }
+           
                 PlayerScript.Instance.RedPlayerInfos.HasCreateUnit = false;
                 PlayerScript.Instance.BluePlayerInfos.HasCreateUnit = false;
                 if (GoToStrategyPhase != null) GoToStrategyPhase();
