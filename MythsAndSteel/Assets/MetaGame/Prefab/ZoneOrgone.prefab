@@ -131,7 +131,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speedTiles: 29
   _tilesInRange: []
-  _centerOrgoneArea: {fileID: 0}
+  centerOrgoneArea: {fileID: 0}
   _targetTile: {fileID: 0}
   _redPlayerZone: 0
   _hasMoveOrgoneArea: 0
@@ -337,7 +337,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speedTiles: 29
   _tilesInRange: []
-  _centerOrgoneArea: {fileID: 0}
+  centerOrgoneArea: {fileID: 0}
   _targetTile: {fileID: 0}
   _redPlayerZone: 1
   _hasMoveOrgoneArea: 0
