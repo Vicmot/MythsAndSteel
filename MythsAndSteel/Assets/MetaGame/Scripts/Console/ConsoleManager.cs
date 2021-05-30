@@ -32,6 +32,7 @@ public class ConsoleManager : MonoSingleton<ConsoleManager>
         commandList.Add("GOD_MODE", "Exemple: GOD_MODE {int}player"); 
         commandList.Add("WIN", "Exemple: WIN {int}player");
         commandList.Add("GOTOPHASE", "Exemple: GOTOPHASE {int}phase (1: Début, 2: Activation, 3: OrgoneJ1, 4: ActionJ1, 5: OrgoneJ2, 6: ActionJ2, 7: Strategie");
+        commandList.Add("RESSOURCEPOINT", "Exemple: RESSOURCEPOINT {int}-999-999");
         commandList.Add("GIVE_EVENTCARDS", "Exemple: GIVE_EVENTCARDS {int}player {int}1-7");
     }
 
@@ -354,6 +355,21 @@ public class ConsoleManager : MonoSingleton<ConsoleManager>
                         case 2:
                             PlayerScript.Instance.BluePlayerInfos.dontTouchThis = true;
                             break;
+                    }
+                    break;
+                }
+            case "RESSOURCEPOINT":
+                {
+                    if (!CheckCmd(cmd, -999, 999, 1)[cmd])
+                    {
+                        return;
+                    }
+                    foreach (GameObject GO in TilesManager.Instance.TileList)
+                    {
+                        if (GO.GetComponent<TileScript>().TerrainEffectList.Contains(MYthsAndSteel_Enum.TerrainType.Point_de_ressource))
+                        {
+                            GO.GetComponent<TileScript>().ResourcesCounter += int.Parse(split[1]);
+                        }
                     }
                     break;
                 }

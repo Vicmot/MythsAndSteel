@@ -15,7 +15,19 @@ public class ZoneOrgone : MonoBehaviour
     //Case où la zone peut etre déplacée
     [Header("GAMEOBJECT IMPORTANTS")]
     [SerializeField] List<GameObject> _tilesInRange = new List<GameObject>();
-    [SerializeField] GameObject _centerOrgoneArea;
+    [SerializeField] GameObject centerOrgoneArea;
+    public GameObject _centerOrgoneArea
+    {
+        get
+        {
+            return centerOrgoneArea; 
+        }
+        set
+        {
+            centerOrgoneArea = value;            
+            OrgoneManager.Instance.CheckZoneOrgone();
+        }
+    }
     [SerializeField] GameObject _targetTile;
 
     //Variables propres à chaque Zone d'orgone à Assigner dans l'Inspecteur à mettre dans le Player Class
