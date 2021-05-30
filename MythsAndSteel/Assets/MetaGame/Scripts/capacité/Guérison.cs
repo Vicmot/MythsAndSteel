@@ -2,9 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Guérison : Capacity
+public class GuÃ©rison : Capacity
 {
-    [SerializeField] private int HealValue = 2;
+
+    [SerializeField] private int HealValue = 1;
+
 
 
     public override void StartCpty()
@@ -27,7 +29,7 @@ public class Guérison : Capacity
             }
             GameManager.Instance._eventCall += EndCpty;
             GameManager.Instance._eventCallCancel += StopCpty;
-            GameManager.Instance.StartEventModeTiles(1, GetComponent<UnitScript>().UnitSO.IsInRedArmy, tile, "Guérison", "Donne " + HealValue + " PV une unité adjacente. Voulez-vous vraiment effectuer cette action ?");
+            GameManager.Instance.StartEventModeTiles(1, GetComponent<UnitScript>().UnitSO.IsInRedArmy, tile, "GuÃ©rison", "Donne " + HealValue + " PV une unitÃ© adjacente. Voulez-vous vraiment effectuer cette action ?");
         }
     }
 
