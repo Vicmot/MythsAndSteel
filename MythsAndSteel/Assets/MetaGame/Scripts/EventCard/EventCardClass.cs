@@ -875,8 +875,8 @@ foreach (GameObject element in TilesManager.Instance.TileList)
             if(PlayerScript.Instance.RedPlayerInfos.Ressource >= 1 && player == 1 || PlayerScript.Instance.BluePlayerInfos.Ressource >= 1 && player == 2)
             {
 
-            LaunchEventUnit(1, player == 1? true : false, unitList, "Reproggramation", "Êtes-vous sur de vouloir activer cette unité adverse durant ce tour?");
             GameManager.Instance._eventCall += Reproggramation;
+            LaunchEventUnit(1, player == 1? true : false, unitList, "Reproggramation", "Êtes-vous sur de vouloir activer cette unité adverse durant ce tour?");
             }
         }
 
@@ -960,13 +960,13 @@ foreach (GameObject element in TilesManager.Instance.TileList)
          
 
          
-            GameManager.Instance._eventCall += VolDeRavitaillement;
 
             if (PlayerPrefs.GetInt("Avertissement") == 0)
             {
                GameManager.Instance._eventCall();
 
             }
+            GameManager.Instance._eventCall += VolDeRavitaillement;
             UIInstance.Instance.ShowValidationPanel("Vol de Ravitaillement", "Êtes-vous sur de vouloir de voler les ressources récupérées par votre adversaire pendant ce tour?");
         }
     }
@@ -1051,10 +1051,10 @@ foreach (GameObject element in TilesManager.Instance.TileList)
             {
               
 
-            GameManager.Instance._eventCall += Paralysie;
                
 
                 LaunchEventUnit(1, player == 1 ? true : false, unitList, "Paralysie", "Êtes-vous sur de vouloir empecher l'activation des unités ayant le même type que celle séléctionnée?");
+            GameManager.Instance._eventCall += Paralysie;
                
             }
         

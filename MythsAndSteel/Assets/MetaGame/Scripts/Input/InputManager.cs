@@ -32,7 +32,7 @@ public class InputManager : MonoBehaviour
 
         if (!GameManager.Instance.isGamePaused)
         {
-            if (Input.GetKeyDown(PauseGame))
+            if (Input.GetKeyDown(PauseGame) && GameManager.Instance.victoryScreen.t >= 7f)
             {
           
                 GameManager.Instance.Paused();
@@ -41,6 +41,7 @@ public class InputManager : MonoBehaviour
             if (Input.GetKeyDown(escapeEvent) && (GameManager.Instance.ChooseUnitForEvent || GameManager.Instance.ChooseTileForEvent))
             {
                 GameManager.Instance.CancelEvent();
+                
             }
 
             //Quand on shiftclic sur le plateau
@@ -171,8 +172,8 @@ public class InputManager : MonoBehaviour
                     }
                     else if (Attaque.Instance.Selected)
                     {
-
                         RaycastManager.Instance.SelectTileForAttack();
+                        UIInstance.Instance.DesactivateNextPhaseButton();
                     }
                 }
  

@@ -140,13 +140,13 @@ public class GameManagerSO : ScriptableObject
                 UIInstance.Instance.DesactiveOrgoneChargeButton();
                 if (GameManager.Instance.IsPlayerRedTurn)
                 {
-
-
                     UIInstance.Instance.ButtonRenfortJ1.GetComponent<Button>().interactable = true;
+                    UIInstance.Instance.RedRenfortCount = 0;
                 }
                 else
                 {
                     UIInstance.Instance.ButtonRenfortJ2.GetComponent<Button>().interactable = true;
+                    UIInstance.Instance.BlueRenfortCount = 0;
                 }
                 if (GameManager.Instance.SabotageStat == 1 && !GameManager.Instance.IsPlayerRedTurn)
                 {
@@ -160,12 +160,15 @@ public class GameManagerSO : ScriptableObject
                     GameManager.Instance.SabotageStat = 3;
                 }
                 UIInstance.Instance.UpdateActivationLeft();
-
+                RaycastManager.Instance.ActualUnitSelected = null;
+                RaycastManager.Instance.ActualTileSelected = null;
                 GoToActionJ1Phase();
                 break;
 
             case MYthsAndSteel_Enum.PhaseDeJeu.OrgoneJ2:
 
+                RaycastManager.Instance.ActualUnitSelected = null;
+                RaycastManager.Instance.ActualTileSelected = null;
                 if (GameManager.Instance.IsPlayerRedTurn)
                 {
 
@@ -350,15 +353,17 @@ public class GameManagerSO : ScriptableObject
                 break;
 
             case MYthsAndSteel_Enum.PhaseDeJeu.ActionJ2:
+                
                 UIInstance.Instance.DesactiveOrgoneChargeButton();
                 if(GameManager.Instance.IsPlayerRedTurn)
                 {
 
-
+                    UIInstance.Instance.RedRenfortCount = 0;
                 UIInstance.Instance.ButtonRenfortJ1.GetComponent<Button>().interactable = true;
                 }
                 else
                 {
+                    UIInstance.Instance.BlueRenfortCount = 0;
                     UIInstance.Instance.ButtonRenfortJ2.GetComponent<Button>().interactable = true;
                 }
                 if (GameManager.Instance.SabotageStat == 1 && !GameManager.Instance.IsPlayerRedTurn)
@@ -377,6 +382,8 @@ public class GameManagerSO : ScriptableObject
                 break;
 
             case MYthsAndSteel_Enum.PhaseDeJeu.Strategie:
+                RaycastManager.Instance.ActualUnitSelected = null;
+                RaycastManager.Instance.ActualTileSelected = null;
                 Debug.Log("End");
                 foreach (GameObject TS in TilesManager.Instance.TileList)
                 {

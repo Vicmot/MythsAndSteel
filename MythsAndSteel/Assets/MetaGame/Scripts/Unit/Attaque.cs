@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 using System;
 
@@ -638,8 +639,10 @@ public class Attaque : MonoSingleton<Attaque>
                    
                     _isInAttack = false;
                     StartAttack(tileId, _selectedUnit.GetComponent<UnitScript>().AttackRange + _selectedUnit.GetComponent<UnitScript>().AttackRangeBonus);
-                    
-                        
+
+                    UIInstance.Instance.ButtonRenfortJ1.GetComponent<Button>().interactable = false;
+
+
                 }
                 else
                 {
@@ -661,7 +664,8 @@ public class Attaque : MonoSingleton<Attaque>
                         _selected = true;
                         UpdateJauge(tileId);
                         StartAttack(tileSelected.GetComponent<TileScript>().TileId, _selectedUnit.GetComponent<UnitScript>().AttackRange + _selectedUnit.GetComponent<UnitScript>().AttackRangeBonus);
-                        
+                        UIInstance.Instance.ButtonRenfortJ1.GetComponent<Button>().interactable = false;
+
                     }
                     else
                     {
@@ -682,7 +686,8 @@ public class Attaque : MonoSingleton<Attaque>
                 {
                     _isInAttack = false;
                     StartAttack(tileId, _selectedUnit.GetComponent<UnitScript>().AttackRange + _selectedUnit.GetComponent<UnitScript>().AttackRangeBonus);
-                   
+                    UIInstance.Instance.ButtonRenfortJ2.GetComponent<Button>().interactable = false;
+
 
                 }
                 else
@@ -705,6 +710,7 @@ public class Attaque : MonoSingleton<Attaque>
                         GetStats();
                            UpdateJauge(tileId);
                         StartAttack(tileSelected.GetComponent<TileScript>().TileId, _selectedUnit.GetComponent<UnitScript>().AttackRange + _selectedUnit.GetComponent<UnitScript>().AttackRangeBonus);
+                        UIInstance.Instance.ButtonRenfortJ2.GetComponent<Button>().interactable = false;
                     }
                     else
                     {
@@ -899,11 +905,27 @@ public class Attaque : MonoSingleton<Attaque>
     /// </summary>
     public void StopAttack()
     {
+        if (GameManager.Instance.IsPlayerRedTurn)
+        {
+            if (UIInstance.Instance.RedRenfortCount == 0)
+            {
+
+            UIInstance.Instance.ButtonRenfortJ1.GetComponent<Button>().interactable = true;
+            }
+
+        }
+        else
+        {
+            if (UIInstance.Instance.BlueRenfortCount == 0)
+            {
+
+            UIInstance.Instance.ButtonRenfortJ2.GetComponent<Button>().interactable = true;
+            }
+        }
         attackselected = false;
         attackselected = false;
         selectedUnitEnnemy = null;
         _isInAttack = false;
-        _selected = false;
         PanelBlockant1.SetActive(false);
 
         PanelBlockant2.SetActive(false);
@@ -922,10 +944,16 @@ public class Attaque : MonoSingleton<Attaque>
         _numberRangeMin.y = 0;
         _numberRangeMax.x = 0;
         _numberRangeMax.y = 0;
-        
-  
-   
+
+
+        if(!CapacitySystem.Instance.capacityTryStart)
+        {
+
+        _selected = false;
         RaycastManager.Instance.ActualTileSelected = null;
+            Debug.Log("fdjks");
+        }
+   
     }
 
     /// <summary>
