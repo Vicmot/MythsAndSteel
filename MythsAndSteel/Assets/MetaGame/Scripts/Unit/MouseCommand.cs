@@ -103,6 +103,8 @@ public class MouseCommand : MonoBehaviour
                 break;
         }
 
+
+
         //Statistique de la Page 1 du Carnet.
         //Synchronise le texte du titre.
         UI.TitlePanelShiftClicPage1.GetComponent<TextMeshProUGUI>().text = unit.UnitSO.UnitName;
@@ -112,6 +114,8 @@ public class MouseCommand : MonoBehaviour
         UI.PageUnitStat._rangeGam.GetComponent<TextMeshProUGUI>().text = unit.AttackRange.ToString();
         //Synchronise le texte de la valeur de la vitesse de l'unité avec l'emplacement d'UI.
         UI.PageUnitStat._moveGam.GetComponent<TextMeshProUGUI>().text = unit.MoveSpeed.ToString();
+
+        //UpdateMiniJauge(unit);
 
         //Synchronise le texte de l'UI de la avec l'emplacement d'UI.
         UI.AttackStat._rangeMinDamageGam.GetComponent<TextMeshProUGUI>().text = unit.NumberRangeMin.x.ToString() + " - " + unit.NumberRangeMin.y.ToString();
@@ -231,6 +235,89 @@ public class MouseCommand : MonoBehaviour
     }
 
     #endregion UpdateStats
+
+    public void UpdateMiniJauge(UnitScript Unit)
+    {
+        bool Done = false;
+        List<int> Min = new List<int>();
+        List<int> Max = new List<int>();
+        List<int> Temp = new List<int>();
+
+        int StartMin = (int)Unit.NumberRangeMin.x;
+        int EndMin = (int)Unit.NumberRangeMin.y;
+        int StartMax = (int)Unit.NumberRangeMax.x;
+        int EndMax = (int)Unit.NumberRangeMax.y;
+        int DiceBonus = Unit.DiceBonus;
+
+        for (int u = 0; u < UIInstance.Instance.MiniJaugeSlot.Count; u++)
+        {
+            Temp.Add(u + 2);
+        }
+        if (StartMin >= 2 && EndMin <= 12)
+        {
+            for (int i = StartMin - DiceBonus; i <= EndMin - DiceBonus; i++)
+            {
+                int u = i;
+                if (i < 2)
+                {
+                    continue;
+                }
+                if (i > 12)
+                {
+                    continue;
+                }
+                if (!Done)
+                {
+                    Done = true;
+                    UIInstance.Instance.MinSlider.SetActive(true);
+                    UIInstance.Instance.MinSlider.transform.position = new Vector3(UIInstance.Instance.MiniJaugeSlot[u - 2].transform.position.x, UIInstance.Instance.MinSlider.transform.position.y, UIInstance.Instance.MinSlider.transform.position.z);
+                    UIInstance.Instance.MinSlider.GetComponentInChildren<TextMeshProUGUI>().text = Unit.DamageMinimum.ToString();
+                }
+                UIInstance.Instance.MiniJaugeSlot[u - 2].sprite = UIInstance.Instance.Minimum;
+                Min.Add(u);
+                Temp.Remove(u);
+            }
+        }
+        Done = false;
+        if (StartMax >= 2 && EndMax <= 12)
+        {
+            for (int i = StartMax - DiceBonus; i <= EndMax; i++)
+            {
+                int u = i;
+                if (i < 2)
+                {
+                    continue;
+                }
+                if (i > 12)
+                {
+                    continue;
+                }
+                if (!Done)
+                {
+                    Done = true;
+                    UIInstance.Instance.MaxSlider.SetActive(true);
+                    UIInstance.Instance.MaxSlider.transform.position = new Vector3(UIInstance.Instance.MiniJaugeSlot[u - 2].transform.position.x, UIInstance.Instance.MaxSlider.transform.position.y, UIInstance.Instance.MaxSlider.transform.position.z);
+                    UIInstance.Instance.MaxSlider.GetComponentInChildren<TextMeshProUGUI>().text = Unit.DamageMaximum.ToString();
+                }
+                UIInstance.Instance.MiniJaugeSlot[u - 2].sprite = UIInstance.Instance.Maximum;
+                Max.Add(u);
+                Temp.Remove(u);
+            }
+        }
+        foreach (int I in Temp)
+        {
+            UIInstance.Instance.MiniJaugeSlot[I - 2].sprite = UIInstance.Instance.None;
+        }
+
+        if (Max.Count == 0)
+        {
+            UIInstance.Instance.MaxSlider.SetActive(false);
+        }
+        if (Min.Count == 0)
+        {
+            UIInstance.Instance.MinSlider.SetActive(false);
+        }
+    }
 
     private void Update()
     {

@@ -156,7 +156,45 @@ public class TileScript : MonoBehaviour
     public int ResourcesCounter
     {
         get { return _resourcesCounter; }
-        set { _resourcesCounter = value; }
+        set 
+        { 
+            if(value < _resourcesCounter)
+            {
+                foreach(GameObject G in Child)
+                {
+                    if(G.TryGetComponent<ChildEffect>(out ChildEffect CH))
+                    {
+                        if (CH.Type == MYthsAndSteel_Enum.TerrainType.Point_de_ressource)
+                        {
+                            CH.gameObject.GetComponentInChildren<Animator>().SetTrigger("More");
+                        }
+                    }
+                }
+            }
+            if(value > _resourcesCounter)
+            {
+                foreach (GameObject G in Child)
+                {
+                    if (G.TryGetComponent<ChildEffect>(out ChildEffect CH))
+                    {
+                        if (CH.Type == MYthsAndSteel_Enum.TerrainType.Point_de_ressource)
+                        {
+                            CH.gameObject.GetComponentInChildren<Animator>().SetTrigger("More");
+                        }
+                    }
+                }
+            }
+            if(value > 999)
+            {
+                value = 999;
+            }
+            if(value < 0)
+            {
+                value = 0;
+            }
+            _resourcesCounter = value; 
+        
+        }
     }
 
     private void Start()
@@ -353,10 +391,10 @@ public class TileScript : MonoBehaviour
     /// <param name="value"></param>
     public void RemoveRessources(int value, int player)
     {
-        if (_resourcesCounter - value >= 0)
+        if (ResourcesCounter - value >= 0)
         {
             
-            _resourcesCounter -= value;
+            ResourcesCounter -= value;
             if (player == 1)
             {
               
@@ -370,7 +408,7 @@ public class TileScript : MonoBehaviour
         }
         else
         {
-            int ressourceToGice = value - (_resourcesCounter - value);
+            int ressourceToGice = value - (ResourcesCounter - value);
 
             if (player == 1)
             {
