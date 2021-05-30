@@ -14,8 +14,8 @@ public class SoundController : MonoSingleton<SoundController>
 
     public void PlaySound(AudioClip SoundPlay, string log = null)
     {
-        //Debug.Log("Son lancé");
-        for (int i = 0; i < _Source.Count; i++)
+        //Debug.Log("Son lancé"); 
+        for (int i = 0; i < _Source.Count; i++) 
         {
             //Debug.Log("Uraken");
             if (!_Source[i].isPlaying)
@@ -38,8 +38,18 @@ public class SoundController : MonoSingleton<SoundController>
 
     private void Start()
     {
-        PlaySound(_audioClip[1]);
+        if(_audioClip[1] != null) PlaySound(_audioClip[1]);
     }
+    public void ValidationSon()
+    {
+        PlaySound(_audioClip[12]);
+    }
+
+    public void UINav()
+    {
+        PlaySound(_audioClip[13]);
+    }
+
 
     public void nextPhaseSound()
     {

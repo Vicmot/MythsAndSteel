@@ -33,7 +33,7 @@ public class EndTurn : MonoBehaviour
         GameManager.Instance.ManagerSO.GoToStrategyPhase += EndTerrainEffect;
         GameManager.Instance.ManagerSO.GoToStrategyPhase += CheckResources;
         GameManager.Instance.ManagerSO.GoToStrategyPhase += CheckOwner;
-      
+
     }
 
     public void EndTerrainEffect()
@@ -96,30 +96,30 @@ public class EndTurn : MonoBehaviour
                 if (S.Unit != null)
                 {
                     UnitScript US = S.Unit.GetComponent<UnitScript>();
-                    if(GameManager.Instance.VolDeRavitaillementStat != 3)
+                    if (GameManager.Instance.VolDeRavitaillementStat != 3)
                     {
-                       if(S.Unit.GetComponent<UnitScript>().UnitSO.IsInRedArmy && GameManager.Instance.VolDeRavitaillementStat == 2)
+                        if (S.Unit.GetComponent<UnitScript>().UnitSO.IsInRedArmy && GameManager.Instance.VolDeRavitaillementStat == 2)
                         {
-                       
+                            SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[9]);
                             S.RemoveRessources(1, 2);
-                      
+
                         }
-                       else if (!S.Unit.GetComponent<UnitScript>().UnitSO.IsInRedArmy && GameManager.Instance.VolDeRavitaillementStat == 1)
+                        else if (!S.Unit.GetComponent<UnitScript>().UnitSO.IsInRedArmy && GameManager.Instance.VolDeRavitaillementStat == 1)
                         {
-                       
+                            SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[9]);
                             S.RemoveRessources(1, 1);
-                     
+
                         }
                         else
                         {
-
+                            SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[9]);
                             S.RemoveRessources(1, PlayerStatic.CheckIsUnitArmy(US.GetComponent<UnitScript>(), true) == true ? 1 : 2);
                         }
                     }
                     else
                     {
-
-                    S.RemoveRessources(1, PlayerStatic.CheckIsUnitArmy(US.GetComponent<UnitScript>(), true) == true ? 1 : 2);
+                        SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[9]);
+                        S.RemoveRessources(1, PlayerStatic.CheckIsUnitArmy(US.GetComponent<UnitScript>(), true) == true ? 1 : 2);
                     }
                 }
             }
@@ -224,7 +224,7 @@ public class EndTurn : MonoBehaviour
         }
     }
 
-    
+
     /// <summary>
     /// Called by CheckOwner();
     /// </summary>
@@ -243,7 +243,7 @@ public class EndTurn : MonoBehaviour
                 {
                     GameManager.Instance.VictoryForArmy(2);
                 }
-                    break;
+                break;
             case 2: // SHANGHAI
                 if (PlayerScript.Instance.RedPlayerInfos.GoalCapturePointsNumber == RedObjCount) /* RedObjCount = 2 */
                 {
@@ -254,9 +254,9 @@ public class EndTurn : MonoBehaviour
                 {
                     GameManager.Instance.VictoryForArmy(2);
                 }
-                    break;
+                break;
             case 3: // STALINGRAD
-                if (GameManager.Instance.ActualTurnNumber >= 6 && PlayerScript.Instance.RedPlayerInfos.GoalCapturePointsNumber > PlayerScript.Instance.BluePlayerInfos.GoalCapturePointsNumber) 
+                if (GameManager.Instance.ActualTurnNumber >= 6 && PlayerScript.Instance.RedPlayerInfos.GoalCapturePointsNumber > PlayerScript.Instance.BluePlayerInfos.GoalCapturePointsNumber)
                 {
                     GameManager.Instance.VictoryForArmy(1);
                 }
@@ -272,7 +272,7 @@ public class EndTurn : MonoBehaviour
                     GameManager.Instance.VictoryForArmy(2);
                 }
                 else { PlayerScript.Instance.BluePlayerInfos.GoalCapturePointsNumber = 0; }
-                    break;
+                break;
             case 4: // HUSKY
                 if (GameManager.Instance.ActualTurnNumber == 10)
                 {
@@ -287,7 +287,7 @@ public class EndTurn : MonoBehaviour
                     }
                     else { PlayerScript.Instance.BluePlayerInfos.GoalCapturePointsNumber = 0; }
                 }
-                    break;
+                break;
             case 5: // GUADALCANAL
                 if (GameManager.Instance.ActualTurnNumber == 12)
                 {
@@ -298,23 +298,23 @@ public class EndTurn : MonoBehaviour
                 {
                     GameManager.Instance.VictoryForArmy(2);
                 }
-                    break;
+                break;
             case 6: // EL ALAMEIN
                 if (PlayerScript.Instance.RedPlayerInfos.GoalCapturePointsNumber == RedObjCount) /* RedObjCount = 1 */
                 {
                     GameManager.Instance.VictoryForArmy(1);
                 }
 
-                if (!PlayerScript.Instance.UnitRef.UnitListRedPlayer.Find( Unit => Unit.name == "Mephisto") && !PlayerScript.Instance.UnitRef.UnitListRedPlayer.Find(Unit => Unit.name == "Rommel") && !PlayerScript.Instance.UnitRef.UnitListRedPlayer.Find(Unit => Unit.name == "MecaAll"))   /* Tuer la chaine de commandement */
+                if (!PlayerScript.Instance.UnitRef.UnitListRedPlayer.Find(Unit => Unit.name == "Mephisto") && !PlayerScript.Instance.UnitRef.UnitListRedPlayer.Find(Unit => Unit.name == "Rommel") && !PlayerScript.Instance.UnitRef.UnitListRedPlayer.Find(Unit => Unit.name == "MecaAll"))   /* Tuer la chaine de commandement */
                 {
                     GameManager.Instance.VictoryForArmy(2);
                 }
 
                 if (GameManager.Instance.ActualTurnNumber == 10)
                 {
-                    GameManager.Instance.VictoryForArmy(2); 
+                    GameManager.Instance.VictoryForArmy(2);
                 }
-                    break;
+                break;
             case 7: // ELSENBORN
                 if (PlayerScript.Instance.RedPlayerInfos.GoalCapturePointsNumber == RedObjCount) /* RedObjCount = 1 */
                 {
@@ -325,9 +325,9 @@ public class EndTurn : MonoBehaviour
                 {
                     GameManager.Instance.VictoryForArmy(2);
                 }
-                    break;
+                break;
         }
-        
+
         if (PlayerScript.Instance.UnitRef.UnitListBluePlayer.Count == 0)
         {
             GameManager.Instance.VictoryForArmy(1);

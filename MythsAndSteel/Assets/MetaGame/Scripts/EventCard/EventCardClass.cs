@@ -355,9 +355,12 @@ public class EventCardClass : ScriptableObject{
             LaunchEventTile(1, player == 1 ? true : false, gamList, "Déploiement accéléré", "Êtes-vous sur de vouloir créer une unité d'infanterie sur cette case?", false);
             GameManager.Instance._eventCall += DéploiementAccéléré;
         }
+        else
+        {
+            SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[14]);
+        }
     }
     #endregion Reprogrammation
-
     #region IllusionStratégique
     public void IllusionStratégique()
     {
@@ -413,11 +416,14 @@ public class EventCardClass : ScriptableObject{
             LaunchEventUnit(2, player == 1 ? true : false, unitList, "Illusion Stratégique", "Êtes-vous sur de vouloir échanger la position de ces deux unités sur le plateau?");
             GameManager.Instance._eventCall += IllusionStratégique;
         }
+        else
+        {
+            SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[14]);
+        }
         unitList.Clear();
       
     }
     #endregion IllusionStratégique
-
     #region OptimisationOrgone
     public void OptimisationOrgone()
     {
@@ -452,9 +458,12 @@ public class EventCardClass : ScriptableObject{
 
             UIInstance.Instance.ShowValidationPanel("Optimisation de l'orgone", "Êtes-vous sur de vouloir augmenter votre nombre d'utilisation de charge d'orgones de ");
         }
+        else
+        {
+            SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[14]);
+        }
     }
     #endregion OptimisationOrgone
-
     #region PillageOrgone
     public void PillageOrgone()
     {
@@ -485,6 +494,10 @@ public class EventCardClass : ScriptableObject{
         {
             LaunchEventTile(2, player == 1 ? true : false, tileList, "Pillage d'orgone", "Êtes-vous sur de vouloir voler deux Ressources sur ces cases?", true);
             GameManager.Instance._eventCall += PillageOrgone;
+        }
+        else
+        {
+            SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[14]);
         }
 
         tileList.Clear();
@@ -531,12 +544,15 @@ foreach (GameObject element in TilesManager.Instance.TileList)
                 GameManager.Instance.filBbarbelés = true;
                 GameManager.Instance._eventCall += Fils_Barbelés;
             }
+            else
+            {
+                SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[14]);
+            }
         }
 
         tileList.Clear();
     }
     #endregion
-
     #region Détonation d'Orgone
     public void Détonation_d_Orgone()
     {
@@ -582,12 +598,15 @@ foreach (GameObject element in TilesManager.Instance.TileList)
              
                 GameManager.Instance._eventCall += Détonation_d_Orgone;
             }
+            else
+            {
+                SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[14]);
+            }
         }
 
         tileList.Clear();
     }
     #endregion
-
     #region PointeursLaser
     public void PointeursLaserOptimisés()
     {
@@ -619,11 +638,14 @@ foreach (GameObject element in TilesManager.Instance.TileList)
             LaunchEventUnit(2, player == 1 ? true : false, unitList, "Pointeurs Laser Optimisé", "Êtes-vous sur de vouloir augmenter de 1 la portée de ces 2 unités?");
             GameManager.Instance._eventCall += PointeursLaserOptimisés;
         }
+        else
+        {
+            SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[14]);
+        }
 
         unitList.Clear();
     }
     #endregion PointeursLaser
-
     #region ArmeEpidemiologique
     public void ArmeEpidemiologique()
     {
@@ -654,11 +676,14 @@ foreach (GameObject element in TilesManager.Instance.TileList)
             LaunchEventUnit(1, player == 1 ? true : false, unitList, "Arme épidémiologique", "Êtes-vous sur de vouloir Infliger l'effet à cette unité? Toutes unités adjacentes à cette unité se verra perdre un point de vie à la fin du tour adverse ainsi que les unités adjacentes.");
             GameManager.Instance._eventCall += ArmeEpidemiologique;
         }
+        else
+        {
+            SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[14]);
+        }
 
         unitList.Clear();
     }
     #endregion ArmeEpidemiologique
-
     #region ManeouvreStratégique
     public void ManoeuvreStratégique()
     {
@@ -694,9 +719,12 @@ foreach (GameObject element in TilesManager.Instance.TileList)
             }
             UIInstance.Instance.ShowValidationPanel("Manoeuvre stratégique", "Êtes-vous sur de vouloir activer une unité supplémentaire durant ce tour?");
         }
+        else
+        {
+            SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[14]);
+        }
     }
     #endregion ManeouvreStratégique
-
     #region SerumExpérimental
     public void SerumExperimental()
     {
@@ -728,11 +756,14 @@ foreach (GameObject element in TilesManager.Instance.TileList)
             LaunchEventUnit(2, player == 1 ? true : false, unitList, "Sérum Expérimental", "Êtes-vous sur de vouloir augmenter d'1 point le déplacement de ces deux unités?");
             GameManager.Instance._eventCall += SerumExperimental;
         }
+        else
+        {
+            SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[14]);
+        }
 
         unitList.Clear();
     }
     #endregion SerumExpérimental
-
     #region ActivationDeNodus
     public void ActivationDeNodus()
     {
@@ -765,9 +796,12 @@ foreach (GameObject element in TilesManager.Instance.TileList)
             }
             UIInstance.Instance.ShowValidationPanel("Activation de Nodus", "Êtes-vous sur de vouloir utiliser un pouvoir orgonique durant votre phase d'action?");
         }
+        else
+        {
+            SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[14]);
+        }
     }
     #endregion ActivationDeNodus
-
     //Check si l'unité peut aller sur la case sinon faire un dégât à l'unité
     #region BombardementAerien
     public void BombardementAerien()
@@ -819,6 +853,10 @@ foreach (GameObject element in TilesManager.Instance.TileList)
             LaunchEventUnit(1, player == 1 ? true : false, unitList, "Bombardement Aérien", "Êtes-vous sur de vouloir infliger des dégâts à cette unité?");
             GameManager.Instance._eventCall += BombardementAerien;
         }
+        else
+        {
+            SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[14]);
+        }
 
         unitList.Clear();
     }
@@ -838,7 +876,6 @@ foreach (GameObject element in TilesManager.Instance.TileList)
         tileList.Clear();
     }
     #endregion Reprogrammation
-
     #region Reprogrammation
     public void Reproggramation(){
         UIInstance.Instance.ActivateNextPhaseButton();
@@ -870,12 +907,15 @@ foreach (GameObject element in TilesManager.Instance.TileList)
             LaunchEventUnit(1, player == 1? true : false, unitList, "Reproggramation", "Êtes-vous sur de vouloir activer cette unité adverse durant ce tour?");
             GameManager.Instance._eventCall += Reproggramation;
             }
+            else
+            {
+                SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[14]);
+            }
         }
 
         unitList.Clear();
     }
     #endregion Reprogrammation
-
     #region CessezLeFeu
     public void CessezLeFeu()
     {
@@ -913,13 +953,16 @@ foreach (GameObject element in TilesManager.Instance.TileList)
                 LaunchEventUnit(1, player == 1 ? true : false, unitList, "Cessez le feu!", "Êtes-vous sur de vouloir empêcher cette unité de prendre des dégâts, capturer un objectif et d'attaquer durant ce tour?");
             GameManager.Instance._eventCall += CessezLeFeu;
             }
+            else
+            {
+                SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[14]);
+            }
         }
 
         unitList.Clear();
     }
 
     #endregion Reprogrammation
-
     #region Vol de Ravitaillement
 
     public void VolDeRavitaillement()
@@ -961,6 +1004,10 @@ foreach (GameObject element in TilesManager.Instance.TileList)
             }
             UIInstance.Instance.ShowValidationPanel("Vol de Ravitaillement", "Êtes-vous sur de vouloir de voler les ressources récupérées par votre adversaire pendant ce tour?");
         }
+        else
+        {
+            SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[14]);
+        }
     }
     #endregion
     #region Sabotage
@@ -994,6 +1041,10 @@ foreach (GameObject element in TilesManager.Instance.TileList)
 
             }
             UIInstance.Instance.ShowValidationPanel("Sabotage", "Êtes-vous sur de vouloir de réduire la valeur d'activation de votre adversaire lors de sa prochaine phase d'action?");
+        }
+        else
+        {
+            SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[14]);
         }
     }
     #endregion
@@ -1047,10 +1098,14 @@ foreach (GameObject element in TilesManager.Instance.TileList)
                
 
                 LaunchEventUnit(1, player == 1 ? true : false, unitList, "Paralysie", "Êtes-vous sur de vouloir empecher l'activation des unités ayant le même type que celle séléctionnée?");
-               
+
             }
-        
+            else
+            {
+                SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[14]);
             }
+
+        }
         unitList.Clear();
     }
 
@@ -1095,13 +1150,16 @@ foreach (GameObject element in TilesManager.Instance.TileList)
             LaunchEventUnit(2, player == 1 ? true : false, unitList, "Réapprovisionnement", "Êtes-vous sur de vouloir soigner ces deux unités de 1 point de vie?");
             GameManager.Instance._eventCall += Reapprovisionnement;
 
-            
+
+        }
+        else
+        {
+            SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[14]);
         }
 
         unitList.Clear();
     }
     #endregion Réapprovisionnement
-
     #region ArmesPerforantes
     public void ArmesPerforantes()
     {
@@ -1134,11 +1192,14 @@ foreach (GameObject element in TilesManager.Instance.TileList)
             GameManager.Instance._eventCall += ArmesPerforantes;
 
         }
+        else
+        {
+            SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[14]);
+        }
 
         unitList.Clear();
     }
     #endregion ArmesPerforantes
-
     #region EntrainementRigoureux
     public void EntrainementRigoureux()
     {
@@ -1169,6 +1230,10 @@ foreach (GameObject element in TilesManager.Instance.TileList)
         {
             LaunchEventUnit(1, player == 1 ? true : false, unitList, "Entraînement rigoureux", "Êtes-vous sur de vouloir donner un bonus de 3 aux chances d'attaques de cette unité?");
             GameManager.Instance._eventCall += EntrainementRigoureux;
+        }
+        else
+        {
+            SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[14]);
         }
 
         unitList.Clear();

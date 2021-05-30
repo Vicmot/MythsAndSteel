@@ -29,7 +29,7 @@ public class ChargeBluePlayer : ChargeOrgone
 
         GameManager.Instance.UnitChooseList[0].GetComponent<UnitScript>().AddDiceToUnit(1);
         GameManager.Instance.UnitChooseList[0].GetComponent<UnitScript>().DoingCharg1Blue = true;
-
+        SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[7]);
 
         GameManager.Instance.UnitChooseList.Clear();
         EndOrgoneUpdateBlue(-1);
@@ -58,6 +58,7 @@ public class ChargeBluePlayer : ChargeOrgone
             gam.GetComponent<TileScript>().RemoveRessources(1, 2);
         }
         GameManager.Instance.TileChooseList.Clear();
+        SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[7]);
         EndOrgoneUpdateBlue(-3);
     }
 
@@ -112,6 +113,7 @@ public class ChargeBluePlayer : ChargeOrgone
         UIInstance.Instance.ActivateNextPhaseButton();
         GameManager.Instance.TileChooseList[0].GetComponent<TileScript>().AddUnitToTile(GameManager.Instance.UnitChooseList[0].gameObject);
         EndOrgoneUpdateBlue(-5);
+        SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[7]);
         GameManager.Instance.UnitChooseList.Clear();
         GameManager.Instance.TileChooseList.Clear();
 

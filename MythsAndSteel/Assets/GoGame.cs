@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class GoGame : MonoBehaviour
 {
+    [SerializeField] GameObject SoundController;
     // Start is called before the first frame update
 void Update()
     {
@@ -13,6 +14,7 @@ void Update()
             PlayerPrefs.SetInt("Avertissement", 1);
             PlayerPrefs.SetInt("Volume", 1);
             SceneManager.LoadScene(1);
+            DontDestroyOnLoad(SoundController);
         }
     }
 

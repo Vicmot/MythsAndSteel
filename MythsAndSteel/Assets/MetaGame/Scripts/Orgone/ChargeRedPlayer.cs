@@ -61,6 +61,7 @@ public class ChargeRedPlayer : ChargeOrgone
         UIInstance.Instance.ActivateNextPhaseButton();
         GameManager.Instance.TileChooseList.Clear();
         GameManager.Instance.UnitChooseList.Clear();
+        SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[7]);
         EndOrgoneUpdateRed(-1);
     }
     #endregion
@@ -88,7 +89,7 @@ public class ChargeRedPlayer : ChargeOrgone
             PlayerScript.Instance.RedPlayerInfos.EventUseLeft += 1;
          
             Debug.Log("R3 finish");
-         
+            SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[7]);
             EndOrgoneUpdateRed(-3);
         }
 
@@ -133,7 +134,7 @@ public class ChargeRedPlayer : ChargeOrgone
                 break;
             }
         }
-
+        SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[7]);
         EndOrgoneUpdateRed(-5);
         GameManager.Instance._eventCall -= UseCharge5RedPlayer;
      
