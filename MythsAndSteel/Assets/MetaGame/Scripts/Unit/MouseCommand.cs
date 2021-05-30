@@ -115,7 +115,7 @@ public class MouseCommand : MonoBehaviour
         //Synchronise le texte de la valeur de la vitesse de l'unité avec l'emplacement d'UI.
         UI.PageUnitStat._moveGam.GetComponent<TextMeshProUGUI>().text = unit.MoveSpeed.ToString();
 
-        UpdateMiniJauge(unit);
+        //UpdateMiniJauge(unit);
 
         //Synchronise le texte de l'UI de la avec l'emplacement d'UI.
         UI.AttackStat._rangeMinDamageGam.GetComponent<TextMeshProUGUI>().text = unit.NumberRangeMin.x.ToString() + " - " + unit.NumberRangeMin.y.ToString();
