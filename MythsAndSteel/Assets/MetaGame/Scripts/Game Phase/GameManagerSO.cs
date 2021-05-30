@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class GameManagerSO : ScriptableObject
 {
     public bool azer = false;
-    //Event pour quand le joueur clique sur un bouton pour passer à la phase en question
+    //Event pour quand le joueur clique sur un bouton pour passer Ã  la phase en question
     public delegate void ClickButtonSwitchPhase();
     public event ClickButtonSwitchPhase GoToDebutPhase;
     public event ClickButtonSwitchPhase GoToActivationPhase;
@@ -18,7 +18,7 @@ public class GameManagerSO : ScriptableObject
     public event ClickButtonSwitchPhase GoToStrategyPhase;
 
     /// <summary>
-    /// Aller à la phase de jeu renseigner en paramètre
+    /// Aller Ã  la phase de jeu renseigner en paramÃ¨tre
     /// </summary>
     /// <param name="phaseToGoTo"></param>
     public void GoToPhase(MYthsAndSteel_Enum.PhaseDeJeu phase = MYthsAndSteel_Enum.PhaseDeJeu.Debut, bool randomPhase = false)
@@ -58,7 +58,7 @@ public class GameManagerSO : ScriptableObject
     }
 
     /// <summary>
-    /// Aller à la phase de jeu renseigner en paramètre POUR LE BOUTON
+    /// Aller Ã  la phase de jeu renseigner en paramÃ¨tre POUR LE BOUTON
     /// </summary>
     /// <param name="phaseToGoTo"></param>
     public void GoToPhase()
@@ -274,10 +274,28 @@ public class GameManagerSO : ScriptableObject
                             GameManager.Instance.armeEpidemelogiqueStat = 0;
                             refunit3 = null;
 
-                        }
+
                     }
 
+
                 }
+                else if (!GameManager.Instance.IsPlayerRedTurn)
+                {
+
+                    foreach (GameObject unit in refunit)
+                    {
+
+                        if (unit.GetComponent<UnitScript>().ParalysieStat == 1)
+                        {
+                            unit.GetComponent<UnitScript>().RemoveStatutToUnit(MYthsAndSteel_Enum.UnitStatut.Paralysie);
+                            unit.GetComponent<UnitScript>().ParalysieStat = 3;
+                        }
+
+                    }
+
+
+                }
+
 
                 List<GameObject> refunit = new List<GameObject>();
                 refunit.AddRange(PlayerScript.Instance.UnitRef.UnitListRedPlayer);
@@ -289,12 +307,14 @@ public class GameManagerSO : ScriptableObject
                     {
 
                         if (unit.GetComponent<UnitScript>().ParalysieStat == 2)
+
                         {
                             unit.GetComponent<UnitScript>().RemoveStatutToUnit(MYthsAndSteel_Enum.UnitStatut.Paralysie);
                             unit.GetComponent<UnitScript>().ParalysieStat = 3;
                         }
 
                     }
+
 
 
                 }
@@ -326,6 +346,7 @@ public class GameManagerSO : ScriptableObject
 
                         foreach (GameObject unit in refunit4)
                         {
+
 
                             if (unit.GetComponent<UnitScript>().UnitStatuts.Contains(MYthsAndSteel_Enum.UnitStatut.Immobilisation))
                             {
@@ -548,6 +569,7 @@ public class GameManagerSO : ScriptableObject
                         GameManager.Instance.statetImmobilisation = 3;
                     }
                 }
+
                 if (GameManager.Instance.IsPlayerRedTurn)
                 {
 
@@ -559,6 +581,7 @@ public class GameManagerSO : ScriptableObject
                     UIInstance.Instance.ButtonRenfortJ2.GetComponent<Button>().interactable = false;
                 }
            
+
                 PlayerScript.Instance.RedPlayerInfos.HasCreateUnit = false;
                 PlayerScript.Instance.BluePlayerInfos.HasCreateUnit = false;
                 if (GoToStrategyPhase != null) GoToStrategyPhase();
@@ -567,7 +590,7 @@ public class GameManagerSO : ScriptableObject
     }
         
     /// <summary>
-    /// Est ce que l'event de début possède des fonctions à appeler
+    /// Est ce que l'event de dÃ©but possÃ¨de des fonctions Ã  appeler
     /// </summary>
     /// <returns></returns>
     public bool GetDebutFunction()
