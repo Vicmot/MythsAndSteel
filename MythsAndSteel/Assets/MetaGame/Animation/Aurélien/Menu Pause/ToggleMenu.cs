@@ -9,11 +9,11 @@ public class ToggleMenu : MonoBehaviour
     {
         if (Value == false)
         {
-            Grille.GetComponent<SpriteRenderer>().color = new Color(255,255,255,0);
+            Grille.SetActive(false);
         }
         if (Value == true)
         {
-            Grille.GetComponent<SpriteRenderer>().color = new Color(255, 255, 255, 50);
+            Grille.SetActive(true);        
         }
     }
 }

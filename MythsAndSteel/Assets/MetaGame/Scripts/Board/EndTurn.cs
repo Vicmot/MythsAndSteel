@@ -13,7 +13,7 @@ public class EndTurn : MonoBehaviour
 
     [Header("Nombre d'objectif à capturer pour la victoire par l'équipe Bleu.")]
     [SerializeField] List<GameObject> BluegoalTileList = new List<GameObject>();
-
+    [Space]
     [SerializeField] private GameObject AnimResourcesRed;
     [SerializeField] private GameObject AnimResourcesBlue;
     private void Start()

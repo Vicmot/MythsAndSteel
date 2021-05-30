@@ -61,6 +61,34 @@ public class PlayerScript : MonoSingleton<PlayerScript>
         BlueAnim.SetActive(false);
     }
 
+    [SerializeField] private GameObject UseResourcesAnimRed;
+    [SerializeField] private GameObject UseResourcesAnimBlue;
+    IEnumerator WaitResRed(float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+        UseResourcesAnimRed.SetActive(false);
+    }
+    IEnumerator WaitResBlue(float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+        UseResourcesAnimBlue.SetActive(false);
+    }
+
+    public void AnimRessource(int player)
+    {
+        
+        if (player == 1)
+        {
+            UseResourcesAnimRed.SetActive(true);
+            StartCoroutine(WaitResRed(1.5f));
+        }
+
+        else if (player == 2)
+        {
+            UseResourcesAnimBlue.SetActive(true);
+            StartCoroutine(WaitResBlue(1.5f));
+        }
+    }
 
     #region DesactivationUnitType
     /// <summary>
