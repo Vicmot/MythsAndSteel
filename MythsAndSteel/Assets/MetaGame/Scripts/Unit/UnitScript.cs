@@ -373,6 +373,7 @@ public bool MélodieSinistre = false;
     public virtual void GiveLife(int Lifeadd)
     {
         SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[3]);
+        SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[3], "doublon");
         _life += Lifeadd;
         if (_shield > 0)
         {

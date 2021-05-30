@@ -135,10 +135,12 @@ public class OrgoneManager : MonoSingleton<OrgoneManager>
         if(Player == 1)
         {
            Explodered.SetTrigger("explode");
+            Debug.Log("exoplsionn");
         }
         else
         {
            Explodeblue.SetTrigger("explode");
+            Debug.Log("exoplsionn");
         }
         
         StartCoroutine(UpdateOrgoneUI(Player, 4, 0));
