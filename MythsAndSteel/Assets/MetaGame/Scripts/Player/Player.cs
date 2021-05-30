@@ -38,7 +38,7 @@ public class Player
     //Tile qui correspond au centre de la zone d'Orgone
     public GameObject TileCentreZoneOrgone;
     //Save Le joueur dont la jauge explose
-    int PLayerOrgoneExplose; 
+    int PLayerOrgoneExplose;
 
     [Header("RESSOURCE")]
     //Nombre de Ressources actuel
@@ -51,6 +51,19 @@ public class Player
         }
         set
         {
+            
+            if (_Ressource > value)
+            {
+                if (GameManager.Instance.IsPlayerRedTurn)
+                {
+                    PlayerScript.Instance.AnimRessource(1);
+                }
+                else if (!GameManager.Instance.IsPlayerRedTurn)
+                {
+                    PlayerScript.Instance.AnimRessource(2);
+                }
+            }
+
             _Ressource = value;
             UIInstance.Instance.UpdateRessourceLeft();
         }
