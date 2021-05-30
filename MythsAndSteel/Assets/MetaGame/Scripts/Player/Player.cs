@@ -51,6 +51,12 @@ public class Player
         }
         set
         {
+            
+            if (_Ressource > value)
+            {
+                Debug.Log("-?");
+            }
+
             _Ressource = value;
             UIInstance.Instance.UpdateRessourceLeft();
         }
