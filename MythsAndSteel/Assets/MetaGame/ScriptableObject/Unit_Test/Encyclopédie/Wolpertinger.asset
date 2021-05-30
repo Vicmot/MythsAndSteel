@@ -18,10 +18,10 @@ MonoBehaviour:
     des ailes, des bois et des crocs. Sa petite taille ne l\u2019emp\xEAche pas d\u2019\xEAtre
     une f\xE9roce machine \xE0 tuer. "
   typeUnite: 0
-  LifeMax: 0
+  LifeMax: 1
   ShieldMax: 0
-  AttackRange: 0
-  MoveSpeed: 0
+  AttackRange: 3
+  MoveSpeed: 4
   CreationCost: 0
   numberOfUnitToAttack: 0
   DamageMinimum: 0
