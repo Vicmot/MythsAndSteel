@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class VictoryScreen : MonoBehaviour
 {
+    public float t = 0;
     #region Variables
     // Infos globales de la partie
     [SerializeField] private TextMeshProUGUI TimeCounterM;
@@ -21,7 +22,7 @@ public class VictoryScreen : MonoBehaviour
     [SerializeField] private TextMeshProUGUI RedResourcesUsed;
     public int redRessourcesUsed = 0;
     public bool RedWin = false;
-    public float t;
+
     //Infos du joueur Bleu
     [SerializeField] private TextMeshProUGUI BlueDeadUnits;
     public int blueDeadUnits = 0;
@@ -49,7 +50,7 @@ public class VictoryScreen : MonoBehaviour
 
     void Timer()
     {
-      
+        
         t = Time.time - startTime;
         string minutes = ((int)t / 60).ToString();
         string seconds = (t % 60).ToString("f0");
@@ -67,7 +68,9 @@ public class VictoryScreen : MonoBehaviour
         if (IsVictoryScreenActive)
         {
             DisplayVictoryScreen();
-            Time.timeScale = 0;       
+            TimeCounterM.text = TimeCounterM.text;
+            TimeCounterS.text = TimeCounterS.text;
+
         }
     }
 

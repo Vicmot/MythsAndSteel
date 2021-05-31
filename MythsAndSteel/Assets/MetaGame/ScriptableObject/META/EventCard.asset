@@ -189,7 +189,7 @@ MonoBehaviour:
   - _eventName: Transfusion d'orgone
     _description: "Transf\xE9rez autant de PV que vous le souhaitez d'une unit\xE9
       alli\xE9e \xE0 une unit\xE9 adjacente. La cible ne peut pas d\xE9passer ses
-      PV max et ces alt\xE9rations de points de vie ne g\xE9n\xE8rent pas d\u2019Orgone."
+      PV max."
     _eventType: 9
     _eventCost: 0
     _isEventInFinalGame: 1
