@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class Encyclopedie : MonoBehaviour
 {
@@ -11,8 +13,6 @@ public class Encyclopedie : MonoBehaviour
 
     [SerializeField] GameObject Layer1;
     [SerializeField] GameObject Layer2;
-
-
 
     private void Start()
     {
@@ -29,7 +29,8 @@ public class Encyclopedie : MonoBehaviour
             Layer2.transform.position = SaveTransform;
             isLayer1Right = false;
             Layer2.GetComponent<Canvas>().sortingOrder = 2;
-            
+            Layer1.GetComponent<Canvas>().sortingOrder = 0;
+
         }
         else if (!isLayer1Right & index <= 3)
         {
@@ -37,6 +38,7 @@ public class Encyclopedie : MonoBehaviour
             Layer1.transform.position = Layer2.transform.position;
             Layer2.transform.position = SaveTransform;
             isLayer1Right = true;
+            Layer1.GetComponent<Canvas>().sortingOrder = 2;
             Layer2.GetComponent<Canvas>().sortingOrder = 0;
 
         }
