@@ -161,7 +161,6 @@ public class RaycastManager : MonoSingleton<RaycastManager>
                     if (!GameManager.Instance.IllusionStratégique)
                     {
                         GameManager.Instance.AddUnitToList(_unitInTile);
-                        SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[10]);
                     }
 
                     //Pour la carte événement Illusion Stratégique
@@ -173,14 +172,12 @@ public class RaycastManager : MonoSingleton<RaycastManager>
                             if (GameManager.Instance.UnitChooseList[0].GetComponent<UnitScript>().UnitSO.IsInRedArmy == _unitInTile.GetComponent<UnitScript>().UnitSO.IsInRedArmy)
                             {
                                 GameManager.Instance.AddUnitToList(_unitInTile);
-                                SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[10]);
                             }
                             else { }
                         }
                         else
                         {
                             GameManager.Instance.AddUnitToList(_unitInTile);
-                            SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[10]);
                         }
                     }
                 }

@@ -510,18 +510,22 @@ public class GameManager : MonoSingleton<GameManager>
 
                     _unitChooseList.Add(unit);
                     TilesManager.Instance.TileList[unit.GetComponent<UnitScript>().ActualTiledId].GetComponent<TileScript>().ActiveChildObj(MYthsAndSteel_Enum.ChildTileType.EventSelect, _selectedTileSprite);
+                    SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[10]);
 
                 }
                 else
                 {
+
                     _unitChooseList.Add(unit);
                     TilesManager.Instance.TileList[unit.GetComponent<UnitScript>().ActualTiledId].GetComponent<TileScript>().ActiveChildObj(MYthsAndSteel_Enum.ChildTileType.EventSelect, _selectedTileSprite);
+                    SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[10]);
                 }
             }
             else if (!_canSelectMultiples && !_unitChooseList.Contains(unit))
             {
                 _unitChooseList.Add(unit);
                 TilesManager.Instance.TileList[unit.GetComponent<UnitScript>().ActualTiledId].GetComponent<TileScript>().ActiveChildObj(MYthsAndSteel_Enum.ChildTileType.EventSelect, _selectedTileSprite);
+                SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[10]);
             }
             //Pour la carte événement illusion stratégique
             if (IllusionStratégique)

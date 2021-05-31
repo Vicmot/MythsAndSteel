@@ -134,7 +134,7 @@ public class Attaque : MonoSingleton<Attaque>
         firstDiceInt = Random.Range(1, 7);
         secondDiceInt = Random.Range(1, 7);
 
-        DiceResult = firstDiceInt + secondDiceInt + RaycastManager.Instance.ActualUnitSelected.GetComponent<UnitScript>().DiceBonus + 12;
+        DiceResult = firstDiceInt + secondDiceInt + RaycastManager.Instance.ActualUnitSelected.GetComponent<UnitScript>().DiceBonus;
         //DiceResult = firstDiceInt + secondDiceInt;
 
         RandomMore();

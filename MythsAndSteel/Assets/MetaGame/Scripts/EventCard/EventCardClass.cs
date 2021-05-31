@@ -637,9 +637,11 @@ foreach (GameObject element in TilesManager.Instance.TileList)
         {
             LaunchEventUnit(2, player == 1 ? true : false, unitList, "Pointeurs Laser Optimisé", "Êtes-vous sur de vouloir augmenter de 1 la portée de ces 2 unités?");
             GameManager.Instance._eventCall += PointeursLaserOptimisés;
+            Debug.Log("Oui");
         }
         else
         {
+            Debug.Log("Non");
             SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[14]);
         }
 
