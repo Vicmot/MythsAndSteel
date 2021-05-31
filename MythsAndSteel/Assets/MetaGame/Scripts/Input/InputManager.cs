@@ -50,6 +50,7 @@ public class InputManager : MonoBehaviour
             {
                 if (GameManager.Instance.activationDone == false)
                 {
+                    SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[13]);
                     RaycastManager.Instance._mouseCommand.QuitShiftPanel();
                     RaycastManager.Instance._mouseCommand._checkIfPlayerAsClic = true;
                     RaycastManager.Instance._mouseCommand._hasCheckUnit = false;
@@ -225,7 +226,7 @@ public class InputManager : MonoBehaviour
             {
               
                 GameManager.Instance.CliCToChangePhase();
-                EventSystem.current.SetSelectedGameObject(null);
+                //EventSystem.current.SetSelectedGameObject(null);
                 GameManager.Instance._eventCallCancel += CancelSkipPhase;
                 GameManager.Instance._eventCall += SkipPhaseFunc;
                 hasShowPanel = true;

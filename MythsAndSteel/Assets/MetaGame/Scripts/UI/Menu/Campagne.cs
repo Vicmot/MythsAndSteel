@@ -213,7 +213,14 @@ public class Campagne : MonoBehaviour
     /// </summary>
     public void ChangeScene(int sceneID)
     {
-        Destroy(GameObject.Find("SplashController"));
+        if(GameObject.Find("SplashController"))
+        {
+            PlayerPrefs.SetInt("MusicSplash", 1);
+
+
+            Destroy(GameObject.Find("SplashController"));
+
+        }
         SceneManager.LoadScene(sceneID);
         switch (sceneID)
         {

@@ -17,15 +17,18 @@ public class MenuTransition : ScriptableObject
     public void LoadScene(int sceneId)
     {
        SceneManager.LoadSceneAsync(sceneId, LoadSceneMode.Additive);
+        SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[13]);
     }
     public void LoadSceneOptionInGame(int sceneId)
     {
        GameManager.Instance.menuOptionOuvert = true;
         SceneManager.LoadSceneAsync(sceneId, LoadSceneMode.Additive);
+        SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[13]);
 
     }
     public void DesactivMenuOptionInGame(int sceneId)
     {
+        SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[13]);
         Scene[] eho = SceneManager.GetAllScenes();
         if (eho[0].buildIndex != 1)
         {
@@ -40,7 +43,8 @@ public class MenuTransition : ScriptableObject
     /// </summary>
     /// <param name="sceneId"></param>
     public void DesactivMenu(int sceneId)
-    { 
+    {
+        SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[13]);
         SceneManager.UnloadSceneAsync(sceneId);
     }
 }

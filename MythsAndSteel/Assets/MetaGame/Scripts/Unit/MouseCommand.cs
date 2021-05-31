@@ -931,6 +931,7 @@ public class MouseCommand : MonoBehaviour
         _checkIfPlayerAsClic = false;
         ShiftUI[0].SetActive(false);
         ShiftUI[1].SetActive(false);
+
     }
 
     /// <summary>
@@ -941,6 +942,7 @@ public class MouseCommand : MonoBehaviour
         //J'active le Panneau 2 car le joueur a cliqué sur le bouton permettant de transitionner de la page 1 à la page 2. De plus, je masque la page 1.
         ActivateUI(ShiftUI[1], ShiftUI[0].transform.position.x, ShiftUI[0].transform.position.y, true);
         ShiftUI[0].SetActive(false);
+        SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[13]);
     }
 
     /// <summary>
@@ -951,6 +953,7 @@ public class MouseCommand : MonoBehaviour
         //J'active le Panneau 1 car le joueur a cliqué sur le bouton permettant de transitionner de la page 2 à la page 1. De plus, je masque la page 2.
         ActivateUI(ShiftUI[0], ShiftUI[1].transform.position.x, ShiftUI[1].transform.position.y, true);
         ShiftUI[1].SetActive(false);
+        SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[13]);
     }
     #endregion SwitchPages
 
@@ -998,6 +1001,7 @@ public class MouseCommand : MonoBehaviour
 
         RenfortUI.SetActive(false);
         UIInstance.Instance.RenfortBlockant.SetActive(false);
+      
     }
 
     /// <summary>

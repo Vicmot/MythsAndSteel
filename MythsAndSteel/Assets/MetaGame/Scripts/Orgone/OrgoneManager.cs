@@ -97,11 +97,13 @@ public class OrgoneManager : MonoSingleton<OrgoneManager>
         if(GameManager.Instance.IsPlayerRedTurn && !_redPlayerZone.GetComponent<ZoneOrgone>().HasMoveOrgoneArea && !_redPlayerZone.GetComponent<ZoneOrgone>().IsInValidation)
         {
             _redPlayerZone.GetComponent<ZoneOrgone>().AddOrgoneAtRange();
+            SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[13]);
             _selected = true;
         }
         else if(!GameManager.Instance.IsPlayerRedTurn && !_bluePlayerZone.GetComponent<ZoneOrgone>().HasMoveOrgoneArea && !_bluePlayerZone.GetComponent<ZoneOrgone>().IsInValidation)
         {
             _bluePlayerZone.GetComponent<ZoneOrgone>().AddOrgoneAtRange();
+            SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[13]);
             _selected = true;
         }
     }

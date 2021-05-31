@@ -26,6 +26,7 @@ public class Encyclopedie : MonoBehaviour
     {
         if (isLayer1Right & index > 3)
         {
+         
             Vector2 SaveTransform = Layer1.transform.position;
             Layer1.transform.position = Layer2.transform.position;
             Layer2.transform.position = SaveTransform;
@@ -36,6 +37,7 @@ public class Encyclopedie : MonoBehaviour
         }
         else if (!isLayer1Right & index <= 3)
         {
+           
             Vector2 SaveTransform = Layer1.transform.position;
             Layer1.transform.position = Layer2.transform.position;
             Layer2.transform.position = SaveTransform;
@@ -47,6 +49,7 @@ public class Encyclopedie : MonoBehaviour
 
         if (CurrentButtonIndex != index)
         {
+            SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[13]);
             ArmyPanel[index].SetActive(true);
             ArmyPanel[CurrentButtonIndex].SetActive(false);
 

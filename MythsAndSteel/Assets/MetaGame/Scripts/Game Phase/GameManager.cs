@@ -615,6 +615,7 @@ public class GameManager : MonoSingleton<GameManager>
         _unitChooseList.Remove(unit);
         if (!_unitChooseList.Contains(unit))
         {
+            SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[10]);
             TilesManager.Instance.TileList[unit.GetComponent<UnitScript>().ActualTiledId].GetComponent<TileScript>().ActiveChildObj(MYthsAndSteel_Enum.ChildTileType.EventSelect, _normalEventSprite);
         }
 
@@ -622,6 +623,7 @@ public class GameManager : MonoSingleton<GameManager>
         {
             foreach (GameObject gam in _selectableUnit)
             {
+                SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[10]);
                 GameObject tile = TilesManager.Instance.TileList[gam.GetComponent<UnitScript>().ActualTiledId].gameObject;
                 tile.GetComponent<TileScript>().ActiveChildObj(MYthsAndSteel_Enum.ChildTileType.EventSelect, _normalEventSprite);
             }
@@ -728,28 +730,45 @@ public class GameManager : MonoSingleton<GameManager>
                 if (_canSelectMultiples)
                 {
                     _tileChooseList.Add(tile);
+                    SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[10]);
                     tile.GetComponent<TileScript>().ActiveChildObj(MYthsAndSteel_Enum.ChildTileType.EventSelect, _selectedTileSprite);
                 }
                 else if (!_tileChooseList.Contains(tile) && !_canSelectMultiples)
                 {
                     _tileChooseList.Add(tile);
+                    SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[10]);
                     tile.GetComponent<TileScript>().ActiveChildObj(MYthsAndSteel_Enum.ChildTileType.EventSelect, _selectedTileSprite);
                 }
 
                 if (_tileChooseList.Count == _numberOfTilesToChoose)
                 {
                     _chooseTileForEvent = false;
-                    if (PlayerPrefs.GetInt("Avertissement") == 0 || OrgoneManager.Instance.DoingOrgoneCharge)
+                    if (PlayerPrefs.GetInt("Avertissement") == 0)
                     {
                         _eventCall();
-                    }
                     UIInstance.Instance.ShowValidationPanel(_titleValidation, _descriptionValidation);
+         
+                       
+     
+                    }
+                    else
+                    {
+                        if(OrgoneManager.Instance.DoingOrgoneCharge)
+                        {
+                            _eventCall();
+                        }
+                        else
+                        {
+                            UIInstance.Instance.ShowValidationPanel(_titleValidation, _descriptionValidation);
+                        }
+                    }
                 }
             }
             if (filBbarbelés && _tileChooseList.Count >= 1)
             {
                 if (_tileChooseList.Count == 1)
                 {
+                    SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[10]);
                     _tileChooseList[0].GetComponent<TileScript>().ActiveChildObj(MYthsAndSteel_Enum.ChildTileType.EventSelect, _normalEventSprite);
                     _selectableTiles.Clear();
 
@@ -764,6 +783,7 @@ public class GameManager : MonoSingleton<GameManager>
 
                 else if (_tileChooseList.Count == 2)
                 {
+                    SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[10]);
                     foreach (GameObject element in _selectableTiles)
                     {
                         element.GetComponent<TileScript>().ActiveChildObj(MYthsAndSteel_Enum.ChildTileType.EventSelect, _normalEventSprite);
@@ -780,13 +800,15 @@ public class GameManager : MonoSingleton<GameManager>
     /// <param name="tile"></param>
     public void RemoveTileToList(GameObject tile)
     {
+
         if(!filBbarbelés)
         {
-
-        _tileChooseList.Remove(tile);
+         
+            _tileChooseList.Remove(tile);
         if (!_tileChooseList.Contains(tile))
         {
-            tile.GetComponent<TileScript>().ActiveChildObj(MYthsAndSteel_Enum.ChildTileType.EventSelect, _normalEventSprite);
+                SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[10]);
+                tile.GetComponent<TileScript>().ActiveChildObj(MYthsAndSteel_Enum.ChildTileType.EventSelect, _normalEventSprite);
         }
         }
 
@@ -794,6 +816,7 @@ public class GameManager : MonoSingleton<GameManager>
         {
             if (_tileChooseList.Contains(tile))
             {
+            SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[10]);
                 _selectableTiles.Clear();
                 _selectableTiles.AddRange(TilesManager.Instance.TileList);
             Debug.Log("test3");
@@ -841,7 +864,7 @@ public class GameManager : MonoSingleton<GameManager>
                 }
         }
         _eventCall();
-
+    
         DoingEpxlosionOrgone = false;
     }
 

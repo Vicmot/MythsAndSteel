@@ -766,10 +766,9 @@ public class Mouvement : MonoSingleton<Mouvement>
             TilesManager.Instance.TileList[ID].GetComponent<TileScript>().DesActiveChildObj(MYthsAndSteel_Enum.ChildTileType.MoveArrow);
         }
 
-        if (!SoundController.Instance.Source.isPlaying)
-        {
+       
             SoundController.Instance.PlaySound(RaycastManager.Instance.ActualUnitSelected.GetComponent<UnitScript>().SonDeplacement);
-        }
+       
 
         Attaque.Instance.RemoveTileSprite(true);
 
