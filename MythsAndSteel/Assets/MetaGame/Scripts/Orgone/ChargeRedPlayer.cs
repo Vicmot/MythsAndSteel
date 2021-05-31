@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.EventSystems;
 public class ChargeRedPlayer : ChargeOrgone
 {
     [SerializeField] GameObject mouseCommand;
@@ -61,6 +61,7 @@ public class ChargeRedPlayer : ChargeOrgone
         UIInstance.Instance.ActivateNextPhaseButton();
         GameManager.Instance.TileChooseList.Clear();
         GameManager.Instance.UnitChooseList.Clear();
+        SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[7]);
         EndOrgoneUpdateRed(-1);
     }
     #endregion
@@ -79,6 +80,7 @@ public class ChargeRedPlayer : ChargeOrgone
                 GameManager.Instance._eventCall();
             }
             UIInstance.Instance.ShowValidationPanel("Charge 3", "Êtes vous sûr de vouloir d'utiliser la charge 3 d'orgone ?");
+           
         }
 
         void UseCharge3RedPlayer()
@@ -88,7 +90,8 @@ public class ChargeRedPlayer : ChargeOrgone
             PlayerScript.Instance.RedPlayerInfos.EventUseLeft += 1;
          
             Debug.Log("R3 finish");
-         
+            SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[7]);
+            GameManager.Instance._eventCall -= UseCharge3RedPlayer;
             EndOrgoneUpdateRed(-3);
         }
 
@@ -136,11 +139,11 @@ public class ChargeRedPlayer : ChargeOrgone
                 break;
             }
         }
-
-        EndOrgoneUpdateRed(-5);
         GameManager.Instance._eventCall -= UseCharge5RedPlayer;
-     
-    
+        SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[7]);
+        EndOrgoneUpdateRed(-5);
+  
+
     }
     #endregion
 }

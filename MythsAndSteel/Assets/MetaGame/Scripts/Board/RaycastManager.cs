@@ -215,8 +215,8 @@ public class RaycastManager : MonoSingleton<RaycastManager>
                         
                         _actualTileSelected = _tile;
                         ActualUnitSelected = _unitInTile;
-                     
-                        Mouvement.Instance.StartMvmtForSelectedUnit();
+                            SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[10]);
+                            Mouvement.Instance.StartMvmtForSelectedUnit();
                         Attaque.Instance.StartAttackSelectionUnit();
                     }
                     }
@@ -233,6 +233,7 @@ public class RaycastManager : MonoSingleton<RaycastManager>
                         else
                         {
                             UIInstance.Instance.ActivationUnitPanel.CloseMovementPanel();
+                            SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[10]);
                             Mouvement.Instance.StopMouvement(true);
                         }
                     }

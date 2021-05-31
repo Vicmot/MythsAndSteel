@@ -565,6 +565,7 @@ public class RenfortPhase : MonoSingleton<RenfortPhase>
     /// Crée une nouvelle unité sur le terrain au niveau de la tile sélectionnée
     /// </summary>
     void CreateNewUnit(){
+      
         if(redPlayerCreation)
         {
             GameObject obj = Instantiate(PlayerScript.Instance.UnitRef.UnitClassCreableListRedPlayer[idCreate], GameManager.Instance.TileChooseList[0].transform.position, Quaternion.identity);
@@ -610,10 +611,11 @@ public class RenfortPhase : MonoSingleton<RenfortPhase>
 
             GameManager.Instance.victoryScreen.blueResourcesUsed += PlayerScript.Instance.UnitRef.UnitClassCreableListBluePlayer[idCreate].GetComponent<UnitScript>().UnitSO.CreationCost;
         }
-
+        SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[8]);
         GameManager.Instance.TileChooseList.Clear();
         OrgoneManager.Instance.DoingOrgoneCharge = false;
         UIInstance.Instance.boutonAnnulerRenfort.SetActive(true);
+
     }
     #endregion CréerUnité
 }

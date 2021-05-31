@@ -98,6 +98,7 @@ public class GameManagerSO : ScriptableObject
         switch (nextPhase)
         {
             case MYthsAndSteel_Enum.PhaseDeJeu.Debut:
+                SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[5]);
                 if (GoToDebutPhase != null)
                 {
                     GameManager.Instance.GoPhase(MYthsAndSteel_Enum.PhaseDeJeu.Debut);
@@ -109,7 +110,7 @@ public class GameManagerSO : ScriptableObject
                     GoToActivationPhase();
                 }
                 break;
-
+                
             case MYthsAndSteel_Enum.PhaseDeJeu.Activation:
                 GameManager.Instance.GoPhase(MYthsAndSteel_Enum.PhaseDeJeu.Activation);
                 GoToActivationPhase();
@@ -385,6 +386,7 @@ public class GameManagerSO : ScriptableObject
                 RaycastManager.Instance.ActualUnitSelected = null;
                 RaycastManager.Instance.ActualTileSelected = null;
                 Debug.Log("End");
+                
                 foreach (GameObject TS in TilesManager.Instance.TileList)
                 {
                     foreach (MYthsAndSteel_Enum.TerrainType T1 in TS.GetComponent<TileScript>().TerrainEffectList)

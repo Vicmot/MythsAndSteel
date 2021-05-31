@@ -144,6 +144,9 @@ public bool MélodieSinistre = false;
     private AudioSource _SourceAudio;
     public AudioSource SourceAudio => _SourceAudio;
 
+    [SerializeField] AudioClip _VoiceLine;
+    public AudioClip VoiceLine => _VoiceLine;
+
     [Header("------------------- CASE DE L'UNITE -------------------")]
     //Valeur (id) de la case sur laquelle se trouve l'unité
     [SerializeField] int _actualTileld;
@@ -370,6 +373,8 @@ public bool MélodieSinistre = false;
     /// <param name="Lifeadd"></param>
     public virtual void GiveLife(int Lifeadd)
     {
+        SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[3]);
+        SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[3], "doublon");
         _life += Lifeadd;
         if (_shield > 0)
         {
@@ -655,6 +660,7 @@ public bool MélodieSinistre = false;
     /// <returns></returns>
     IEnumerator DeathAnimation()
     {
+        SoundController.Instance.PlaySound(_SonMort);
         if (Animation != null)
         {
             
@@ -664,7 +670,6 @@ public bool MélodieSinistre = false;
         }
 
         Destroy(gameObject);
-        SoundController.Instance.PlaySound(_SonMort);
     }
 
     /// <summary>
@@ -770,6 +775,7 @@ public bool MélodieSinistre = false;
         _SonAttaque = _unitSO.SonAttaque;
         _SonDeplacement = _unitSO.SonDeplacement;
         _SonMort = _unitSO.SonMort;
+        _VoiceLine = _unitSO.VoiceLine;
         _SourceAudio = GetComponent<AudioSource>();
 
         ResetTurn();

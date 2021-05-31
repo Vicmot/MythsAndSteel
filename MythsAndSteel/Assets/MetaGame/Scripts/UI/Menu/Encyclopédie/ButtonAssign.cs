@@ -47,6 +47,7 @@ public class ButtonAssign : MonoBehaviour
 
     public void UnitButton()
     {
+        SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[13]);
         /*if (informationPanel != null)
         {
             informationPanel.SetActive(false);
