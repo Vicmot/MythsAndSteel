@@ -119,14 +119,17 @@ public class EndTurn : MonoBehaviour
                     {
                        if(S.Unit.GetComponent<UnitScript>().UnitSO.IsInRedArmy && GameManager.Instance.VolDeRavitaillementStat == 2)
                        {
+                            SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[9]);
                             S.RemoveRessources(1, 2);
                             AnimResourcesBlue.SetActive(true);
+
                             StartCoroutine(WaitAnimResourceRed(1.5f));
 
                         }
                        else if (!S.Unit.GetComponent<UnitScript>().UnitSO.IsInRedArmy && GameManager.Instance.VolDeRavitaillementStat == 1)
                        {
-                       
+
+                            SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[9]);
                             S.RemoveRessources(1, 1);
                             AnimResourcesRed.SetActive(true);
                             StartCoroutine(WaitAnimResourceRed(1.5f));
@@ -134,7 +137,7 @@ public class EndTurn : MonoBehaviour
                        }
                        else
                        {
-
+                            SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[9]);
                             S.RemoveRessources(1, PlayerStatic.CheckIsUnitArmy(US.GetComponent<UnitScript>(), true) == true ? 1 : 2);
                             AnimResourcesRed.SetActive(true);
                             StartCoroutine(WaitAnimResourceRed(1.5f));
@@ -143,6 +146,7 @@ public class EndTurn : MonoBehaviour
                     }
                     else
                     {
+                        SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[9]);
                         S.RemoveRessources(1, PlayerStatic.CheckIsUnitArmy(US.GetComponent<UnitScript>(), true) == true ? 1 : 2);
                         AnimResourcesBlue.SetActive(true);
                         StartCoroutine(WaitAnimResourceBlue(1.5f));

@@ -184,7 +184,8 @@ public class ZoneOrgone : MonoBehaviour
     /// Quand le joueur clique sur valider sur le panneau de validation
     /// </summary>
     public void WhenValidate(){
-        foreach(GameObject gam in _tilesInRange)
+        SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[13]);
+        foreach (GameObject gam in _tilesInRange)
         {
             gam.GetComponent<TileScript>().DesActiveChildObj(MYthsAndSteel_Enum.ChildTileType.EventSelect);
         }
