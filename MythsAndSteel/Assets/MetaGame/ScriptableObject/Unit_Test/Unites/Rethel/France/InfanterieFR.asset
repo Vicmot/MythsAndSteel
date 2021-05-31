@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c815bdbd83982254eb2da5fbe95df910, type: 3}
   m_Name: InfanterieFR
   m_EditorClassIdentifier: 
-  UnitName: 
-  Description: 
+  UnitName: Escouade d'Infanterie
+  Description: "Youpi c'est moi que je suis l'infanterie h\xE9h\xE9"
   typeUnite: 0
   LifeMax: 0
   ShieldMax: 0
@@ -28,7 +28,7 @@ MonoBehaviour:
   SonAttaque: {fileID: 0}
   SonDeplacement: {fileID: 0}
   SonMort: {fileID: 0}
-  Sprite: {fileID: 0}
+  Sprite: {fileID: 21300000, guid: 1882c7651ecbdd24c9325861a0e0dc03, type: 3}
   CanAttackEmptyTile: 0
   UsefullToWin: 0
   IsInRedArmy: 1

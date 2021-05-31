@@ -20,6 +20,7 @@ public class ButtonAssign : MonoBehaviour
     [SerializeField] TextMeshProUGUI UnitLife;
     [SerializeField] TextMeshProUGUI UnitRange;
     [SerializeField] TextMeshProUGUI UnitMovement;
+    [SerializeField] TextMeshProUGUI UnitType;
 
     public void showArmy1()
     {
@@ -56,6 +57,7 @@ public class ButtonAssign : MonoBehaviour
         UnitLife.SetText(UnitShown.LifeMax.ToString());
         UnitRange.SetText(UnitShown.AttackRange.ToString());
         UnitMovement.SetText(UnitShown.MoveSpeed.ToString());
+        UnitType.SetText(UnitShown.typeUnite.ToString());
 
     }
 

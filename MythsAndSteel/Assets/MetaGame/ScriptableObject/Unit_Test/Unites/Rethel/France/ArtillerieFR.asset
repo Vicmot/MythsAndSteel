@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UnitName: 
   Description: 
-  typeUnite: 0
+  typeUnite: 2
   LifeMax: 0
   ShieldMax: 0
   AttackRange: 0
@@ -28,7 +28,7 @@ MonoBehaviour:
   SonAttaque: {fileID: 0}
   SonDeplacement: {fileID: 0}
   SonMort: {fileID: 0}
-  Sprite: {fileID: 0}
+  Sprite: {fileID: 21300000, guid: 28609512a625b4b4592facda107fc0c3, type: 3}
   CanAttackEmptyTile: 0
   UsefullToWin: 0
   IsInRedArmy: 1

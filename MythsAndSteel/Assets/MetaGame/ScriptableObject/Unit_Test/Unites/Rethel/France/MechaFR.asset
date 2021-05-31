@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UnitName: 
   Description: 
-  typeUnite: 0
+  typeUnite: 5
   LifeMax: 0
   ShieldMax: 0
   AttackRange: 0
