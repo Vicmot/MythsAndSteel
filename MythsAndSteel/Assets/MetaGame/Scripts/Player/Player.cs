@@ -57,10 +57,12 @@ public class Player
                 if (GameManager.Instance.IsPlayerRedTurn)
                 {
                     PlayerScript.Instance.AnimRessource(1);
+                    
                 }
                 else if (!GameManager.Instance.IsPlayerRedTurn)
                 {
                     PlayerScript.Instance.AnimRessource(2);
+                
                 }
             }
 

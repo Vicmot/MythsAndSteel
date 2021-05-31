@@ -80,12 +80,14 @@ public class PlayerScript : MonoSingleton<PlayerScript>
         if (player == 1)
         {
             UseResourcesAnimRed.SetActive(true);
+
             StartCoroutine(WaitResRed(1.5f));
         }
 
         else if (player == 2)
         {
             UseResourcesAnimBlue.SetActive(true);
+        
             StartCoroutine(WaitResBlue(1.5f));
         }
     }

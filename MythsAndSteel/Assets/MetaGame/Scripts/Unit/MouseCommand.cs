@@ -111,17 +111,12 @@ public class MouseCommand : MonoBehaviour
         //Synchronise le texte de la vie avec l'emplacement d'UI.
         UI.PageUnitStat._lifeGam.GetComponent<TextMeshProUGUI>().text = unit.Life.ToString();
         //Synchronise le texte de la valeur de la distance d'attaque de l'unité avec l'emplacement d'UI.
-        UI.PageUnitStat._rangeGam.GetComponent<TextMeshProUGUI>().text = unit.AttackRange.ToString();
+      //  UI.PageUnitStat._rangeGam.GetComponent<TextMeshProUGUI>().text = unit.AttackRange.ToString();
         //Synchronise le texte de la valeur de la vitesse de l'unité avec l'emplacement d'UI.
         UI.PageUnitStat._moveGam.GetComponent<TextMeshProUGUI>().text = unit.MoveSpeed.ToString();
 
-        //UpdateMiniJauge(unit);
+        UpdateMiniJauge(unit);
 
-        //Synchronise le texte de l'UI de la avec l'emplacement d'UI.
-        UI.AttackStat._rangeMinDamageGam.GetComponent<TextMeshProUGUI>().text = unit.NumberRangeMin.x.ToString() + " - " + unit.NumberRangeMin.y.ToString();
-        UI.AttackStat._rangeMaxDamageGam.GetComponent<TextMeshProUGUI>().text = unit.NumberRangeMax.x.ToString() + " - " + unit.NumberRangeMax.y.ToString();
-        UI.AttackStat._minDamageValueGam.GetComponent<TextMeshProUGUI>().text = unit.DamageMinimum.ToString();
-        UI.AttackStat._maxDamageValueGam.GetComponent<TextMeshProUGUI>().text = unit.DamageMaximum.ToString();
 
         for (int i = UI.capacityList.Count - 1; i >= 0; i--)
         {

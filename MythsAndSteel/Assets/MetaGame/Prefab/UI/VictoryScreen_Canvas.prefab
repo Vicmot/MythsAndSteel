@@ -469,6 +469,7 @@ GameObject:
   - component: {fileID: 7990618277267041066}
   - component: {fileID: 7990618277267041064}
   - component: {fileID: 7990618277267041065}
+  - component: {fileID: 634190084177409149}
   m_Layer: 0
   m_Name: RedWin
   m_TagString: Untagged
@@ -523,7 +524,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 6d3add4e70b75b94fa28ba4965878146, type: 3}
+  m_Sprite: {fileID: 1548063610141170191, guid: ff75506240293554c9b82ec10f03c84d, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -533,6 +534,25 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!95 &634190084177409149
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7990618277267041067}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 69e65d65017f1c54684aae99b46aae01, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &7990618277324169116
 GameObject:
   m_ObjectHideFlags: 0
@@ -1104,6 +1124,7 @@ GameObject:
   - component: {fileID: 7990618277762212338}
   - component: {fileID: 7990618277762212336}
   - component: {fileID: 7990618277762212337}
+  - component: {fileID: 5231316443881429914}
   m_Layer: 0
   m_Name: BlueWin
   m_TagString: Untagged
@@ -1158,7 +1179,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 6d3add4e70b75b94fa28ba4965878146, type: 3}
+  m_Sprite: {fileID: 4785670164605583872, guid: cdb529109ceade7468e063fc5c20cf0c, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1168,6 +1189,25 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!95 &5231316443881429914
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7990618277762212339}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: d311a0395b73ad843890c7ccc8249624, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &7990618277796163809
 GameObject:
   m_ObjectHideFlags: 0
