@@ -15,16 +15,16 @@ MonoBehaviour:
   UnitName: Escouade d'Infanterie
   Description: "Youpi c'est moi que je suis l'infanterie h\xE9h\xE9"
   typeUnite: 0
-  LifeMax: 0
+  LifeMax: 4
   ShieldMax: 0
   AttackRange: 0
-  MoveSpeed: 0
+  MoveSpeed: 2
   CreationCost: 0
   numberOfUnitToAttack: 0
-  DamageMinimum: 0
-  NumberRangeMin: {x: 0, y: 0}
-  DamageMaximum: 0
-  NumberRangeMax: {x: 0, y: 0}
+  DamageMinimum: 2
+  NumberRangeMin: {x: 2, y: 10}
+  DamageMaximum: 3
+  NumberRangeMax: {x: 11, y: 12}
   SonAttaque: {fileID: 0}
   SonDeplacement: {fileID: 0}
   SonMort: {fileID: 0}
