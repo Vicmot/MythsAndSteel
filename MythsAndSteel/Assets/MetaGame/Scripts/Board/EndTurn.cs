@@ -13,7 +13,9 @@ public class EndTurn : MonoBehaviour
 
     [Header("Nombre d'objectif à capturer pour la victoire par l'équipe Bleu.")]
     [SerializeField] List<GameObject> BluegoalTileList = new List<GameObject>();
-
+    [Space]
+    [SerializeField] private GameObject AnimResourcesRed;
+    [SerializeField] private GameObject AnimResourcesBlue;
     private void Start()
     {
         foreach (GameObject Tile in TilesManager.Instance.TileList)
@@ -81,16 +83,33 @@ public class EndTurn : MonoBehaviour
         }
     }
 
+    
+
 
     /// <summary>
     /// Check si des ressources doivent être distribuées.
     /// </summary>
     public void CheckResources()
     {
+
         Debug.Log("Ressources");
         foreach (GameObject Tile in TilesManager.Instance.ResourcesList)
         {
             TileScript S = Tile.GetComponent<TileScript>();
+            
+
+            IEnumerator WaitAnimResourceRed(float waitTime)
+            {
+                yield return new WaitForSeconds(waitTime);
+                AnimResourcesRed.SetActive(false);
+            }
+
+            IEnumerator WaitAnimResourceBlue(float waitTime)
+            {
+                yield return new WaitForSeconds(waitTime);
+                AnimResourcesBlue.SetActive(false);
+            }
+
             if (S.ResourcesCounter != 0)
             {
                 if (S.Unit != null)
@@ -99,27 +118,35 @@ public class EndTurn : MonoBehaviour
                     if(GameManager.Instance.VolDeRavitaillementStat != 3)
                     {
                        if(S.Unit.GetComponent<UnitScript>().UnitSO.IsInRedArmy && GameManager.Instance.VolDeRavitaillementStat == 2)
-                        {
-                       
+                       {
                             S.RemoveRessources(1, 2);
-                      
+                            AnimResourcesBlue.SetActive(true);
+                            StartCoroutine(WaitAnimResourceRed(1.5f));
+
                         }
                        else if (!S.Unit.GetComponent<UnitScript>().UnitSO.IsInRedArmy && GameManager.Instance.VolDeRavitaillementStat == 1)
-                        {
+                       {
                        
                             S.RemoveRessources(1, 1);
-                     
-                        }
-                        else
-                        {
+                            AnimResourcesRed.SetActive(true);
+                            StartCoroutine(WaitAnimResourceRed(1.5f));
+
+                       }
+                       else
+                       {
 
                             S.RemoveRessources(1, PlayerStatic.CheckIsUnitArmy(US.GetComponent<UnitScript>(), true) == true ? 1 : 2);
-                        }
+                            AnimResourcesRed.SetActive(true);
+                            StartCoroutine(WaitAnimResourceRed(1.5f));
+
+                       }
                     }
                     else
                     {
+                        S.RemoveRessources(1, PlayerStatic.CheckIsUnitArmy(US.GetComponent<UnitScript>(), true) == true ? 1 : 2);
+                        AnimResourcesBlue.SetActive(true);
+                        StartCoroutine(WaitAnimResourceBlue(1.5f));
 
-                    S.RemoveRessources(1, PlayerStatic.CheckIsUnitArmy(US.GetComponent<UnitScript>(), true) == true ? 1 : 2);
                     }
                 }
             }
