@@ -216,7 +216,6 @@ public class RaycastManager : MonoSingleton<RaycastManager>
                         ActualUnitSelected = null;
 
                     }
-                    SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[14]);
                 }
                 else if (!Mouvement.Instance.Selected && !Attaque.Instance.Selected && UnitInTile != null)
                 {
@@ -235,11 +234,10 @@ public class RaycastManager : MonoSingleton<RaycastManager>
                             Attaque.Instance.StartAttackSelectionUnit();
                         }
                     }
-                    SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[14]);
                 }
                 else if (Mouvement.Instance.Selected)
                 {
-                    SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[10]);
+                    
                     if (Mouvement.Instance.IsInMouvement && !Mouvement.Instance.MvmtRunning)
                     {
                         if (_tile != _actualTileSelected)
@@ -250,11 +248,10 @@ public class RaycastManager : MonoSingleton<RaycastManager>
                         else
                         {
                             UIInstance.Instance.ActivationUnitPanel.CloseMovementPanel();
-                            SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[14]);
+                            SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[10]);
                             Mouvement.Instance.StopMouvement(true);
                         }
                     }
-                    SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[14]);
                 }
             }
             else if (GameManager.Instance.ActualTurnPhase == MYthsAndSteel_Enum.PhaseDeJeu.OrgoneJ1 || GameManager.Instance.ActualTurnPhase == MYthsAndSteel_Enum.PhaseDeJeu.OrgoneJ2)
@@ -267,7 +264,7 @@ public class RaycastManager : MonoSingleton<RaycastManager>
                 {
                     OrgoneManager.Instance.StartToMoveZone();
                 }
-                SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[14]);
+
             }
         }
     }

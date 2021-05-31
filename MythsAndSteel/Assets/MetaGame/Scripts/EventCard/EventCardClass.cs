@@ -1152,7 +1152,7 @@ foreach (GameObject element in TilesManager.Instance.TileList)
 
 
         }
-        else
+        else if ((player == 1 && GameManager.Instance.IsPlayerRedTurn && PlayerScript.Instance.RedPlayerInfos.EventUseLeft > 0) || (player == 2 && !GameManager.Instance.IsPlayerRedTurn && PlayerScript.Instance.RedPlayerInfos.EventUseLeft > 0))
         {
             SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[14]);
         }

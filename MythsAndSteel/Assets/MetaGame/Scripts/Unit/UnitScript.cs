@@ -659,6 +659,7 @@ public bool MélodieSinistre = false;
     /// <returns></returns>
     IEnumerator DeathAnimation()
     {
+        SoundController.Instance.PlaySound(_SonMort);
         if (Animation != null)
         {
             
@@ -668,7 +669,6 @@ public bool MélodieSinistre = false;
         }
 
         Destroy(gameObject);
-        SoundController.Instance.PlaySound(_SonMort);
     }
 
     /// <summary>

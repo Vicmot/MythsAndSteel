@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.12731749, g: 0.13414757, b: 0.1210787, a: 1}
+  m_IndirectSpecularColor: {r: 0.1273174, g: 0.13414761, b: 0.12107885, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -6888,6 +6888,18 @@ MonoBehaviour:
       - m_Target: {fileID: 1965578499}
         m_TargetAssemblyTypeName: ChangeActivPhase, Assembly-CSharp
         m_MethodName: ChangeSpriteButtonPhase
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1968846222}
+        m_TargetAssemblyTypeName: SoundController, Assembly-CSharp
+        m_MethodName: UINav
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -19354,6 +19366,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1968846222}
+        m_TargetAssemblyTypeName: SoundController, Assembly-CSharp
+        m_MethodName: UINav
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1318259199
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28258,7 +28282,7 @@ MonoBehaviour:
     OrgonePowerLeft: 0
     _LastKnownOrgoneValue: 0
     TileCentreZoneOrgone: {fileID: 1321010384}
-    _Ressource: 3
+    _Ressource: 0
     GoalCapturePointsNumber: 0
     HasCreateUnit: 0
     dontTouchThis: 0
@@ -28950,7 +28974,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 6fb417fecd3676246a332da182e22bac, type: 3}
   - {fileID: 8300000, guid: 58a013653de08ca4e9b0b6813f3e671b, type: 3}
   - {fileID: 8300000, guid: a9d08a6a01da42848acdc98a33e67777, type: 3}
-  - {fileID: 8300000, guid: 3762bcbab864ec541bdb36c528e65d66, type: 3}
+  - {fileID: 8300000, guid: fabb10955420f6e40954c29726c15e9d, type: 3}
   - {fileID: 8300000, guid: ea895759a7e6e2042a4145d02c5246eb, type: 3}
 --- !u!82 &1968846223
 AudioSource:
