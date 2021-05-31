@@ -36,6 +36,7 @@ public class InputManager : MonoBehaviour
             {
           
                 GameManager.Instance.Paused();
+                SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[6]);
             }
             //Pour quitter la phase d'événement qui permet de choisir une case ou une unité
             if (Input.GetKeyDown(escapeEvent) && (GameManager.Instance.ChooseUnitForEvent || GameManager.Instance.ChooseTileForEvent))

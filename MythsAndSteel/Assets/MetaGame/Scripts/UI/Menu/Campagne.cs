@@ -30,6 +30,8 @@ public class Campagne : MonoBehaviour
     [SerializeField] int redPlayerVictories;
     [SerializeField] int bluePlayerVictories;
 
+    [SerializeField] GameObject SoundController;
+
     private void Start()
     {
         PlayerPrefs.SetInt("RethelDone", 0);
@@ -211,6 +213,7 @@ public class Campagne : MonoBehaviour
     /// </summary>
     public void ChangeScene(int sceneID)
     {
+        Destroy(GameObject.Find("SplashController"));
         SceneManager.LoadScene(sceneID);
         switch (sceneID)
         {

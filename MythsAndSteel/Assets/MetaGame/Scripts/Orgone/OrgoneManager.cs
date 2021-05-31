@@ -123,8 +123,10 @@ public class OrgoneManager : MonoSingleton<OrgoneManager>
     public void StartOrgoneAnimation(int Player, int LastOrgoneValue, int ActualOrgoneValue)
     {
         StartCoroutine(UpdateOrgoneUI(Player, LastOrgoneValue, ActualOrgoneValue));
+        SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[3]);
+        if(LastOrgoneValue == 4) SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[4]);
     }
-
+    
     public IEnumerator UpdateOrgoneUI(int Player, int LastOrgoneValue, int ActualOrgoneValue)
     {
         if (Player == 1)
@@ -149,12 +151,17 @@ public class OrgoneManager : MonoSingleton<OrgoneManager>
     {
         if(Player == 1)
         {
-            Explodered.SetTrigger("explode");
+           Explodered.SetTrigger("explode");
+            SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[2]);
+            Debug.Log("exoplsionn");
         }
         else
         {
-            Explodeblue.SetTrigger("explode");
+           Explodeblue.SetTrigger("explode");
+            SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[2]);
+            Debug.Log("exoplsionn");
         }
+        
         StartCoroutine(UpdateOrgoneUI(Player, 4, 0));
     }
 
@@ -183,6 +190,7 @@ public class OrgoneManager : MonoSingleton<OrgoneManager>
                         if (!OrgoneManager.Instance.RedPlayerCharge[u].GetBool("Increase"))
                         {
                             OrgoneManager.Instance.RedPlayerCharge[u].SetBool("Increase", true);
+                            SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[3]);
                             yield return new WaitForSeconds(.75f);
                         }
                     }
@@ -335,7 +343,7 @@ namespace MythsAndSteel.Orgone{
                     }
                 }
             }
-
+            if (!canUse) SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[14]);
             return canUse;
         }
     }

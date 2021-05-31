@@ -610,7 +610,7 @@ public class RenfortPhase : MonoSingleton<RenfortPhase>
 
             GameManager.Instance.victoryScreen.blueResourcesUsed += PlayerScript.Instance.UnitRef.UnitClassCreableListBluePlayer[idCreate].GetComponent<UnitScript>().UnitSO.CreationCost;
         }
-
+        SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[8]);
         GameManager.Instance.TileChooseList.Clear();
         OrgoneManager.Instance.DoingOrgoneCharge = false;
         UIInstance.Instance.boutonAnnulerRenfort.SetActive(true);

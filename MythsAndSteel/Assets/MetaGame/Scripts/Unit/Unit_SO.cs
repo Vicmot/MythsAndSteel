@@ -45,6 +45,7 @@ public class Unit_SO : ScriptableObject{
     public AudioClip SonAttaque; //Son d'Attaque de l'unité
     public AudioClip SonDeplacement;//Son de déplacement de l'unité
     public AudioClip SonMort; //Son de mort de l'unité
+    public AudioClip VoiceLine; 
 
     [Header("Sprite de l'unité")]
     [Tooltip("Sprite de base de l'unité")]
