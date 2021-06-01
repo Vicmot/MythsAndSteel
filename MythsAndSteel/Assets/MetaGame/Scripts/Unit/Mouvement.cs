@@ -890,7 +890,7 @@ public class Mouvement : MonoSingleton<Mouvement>
     {
         Unit.GetComponent<UnitScript>().Animation.SetFloat("X", EndPos.transform.position.x - Unit.transform.position.x);
         Unit.GetComponent<UnitScript>().Animation.SetFloat("Y", EndPos.transform.position.y - Unit.transform.position.y);
-        Unit.GetComponent<SpriteRenderer>().flipX = Unit.GetComponent<UnitScript>().Animation.GetFloat("X") > 0;
+        Unit.GetComponent<SpriteRenderer>().flipX = Unit.GetComponent<UnitScript>().Animation.GetFloat("X") < 0 ;
     }
     public List<int> GetNeighbourDirect(int tileId, int Range)
     {
