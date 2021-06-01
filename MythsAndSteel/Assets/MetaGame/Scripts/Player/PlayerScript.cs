@@ -4,10 +4,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.Animations;
 
 public class PlayerScript : MonoSingleton<PlayerScript>
 {
-    [SerializeField ]
+    [SerializeField]
    List<MYthsAndSteel_Enum.EventCard> eventWithCostRessource;
     [SerializeField]
     GameObject prefabIconRessource; 
@@ -34,14 +35,61 @@ public class PlayerScript : MonoSingleton<PlayerScript>
     [SerializeField] private EventCardList _eventCardList = null;
     public EventCardList EventCardList => _eventCardList;
 
-   public List<MYthsAndSteel_Enum.EventCard> _cardObtain = new List<MYthsAndSteel_Enum.EventCard>();
+    public List<MYthsAndSteel_Enum.EventCard> _cardObtain = new List<MYthsAndSteel_Enum.EventCard>();
+
+    [SerializeField] private GameObject RedAnim;
+    [SerializeField] private GameObject BlueAnim;
+
 
     private void Start(){        
         EventCardList._eventSO.UpdateVisualUI(_eventCardList._eventGamBluePlayer, 2);
         EventCardList._eventSO.UpdateVisualUI(_eventCardList._eventGamRedPlayer, 1);
         RedPlayerInfos.UpdateOrgoneUI(1);
         BluePlayerInfos.UpdateOrgoneUI(2);
+        
 
+    }
+
+    IEnumerator WaitEventRed(float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+        RedAnim.SetActive(false);
+    }
+    IEnumerator WaitEventBlue(float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+        BlueAnim.SetActive(false);
+    }
+
+    [SerializeField] private GameObject UseResourcesAnimRed;
+    [SerializeField] private GameObject UseResourcesAnimBlue;
+    IEnumerator WaitResRed(float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+        UseResourcesAnimRed.SetActive(false);
+    }
+    IEnumerator WaitResBlue(float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+        UseResourcesAnimBlue.SetActive(false);
+    }
+
+    public void AnimRessource(int player)
+    {
+        
+        if (player == 1)
+        {
+            UseResourcesAnimRed.SetActive(true);
+
+            StartCoroutine(WaitResRed(1.5f));
+        }
+
+        else if (player == 2)
+        {
+            UseResourcesAnimBlue.SetActive(true);
+        
+            StartCoroutine(WaitResBlue(1.5f));
+        }
     }
 
     #region DesactivationUnitType
@@ -83,6 +131,16 @@ public class PlayerScript : MonoSingleton<PlayerScript>
 
             AddEventCard(player, newCard);
             _cardObtain.Add(newCard);
+            if (player == 1){
+                RedAnim.SetActive(true);
+               StartCoroutine(WaitEventRed(0.8f));
+           
+            }
+            else if (player == 2){
+                BlueAnim.SetActive(true);
+                StartCoroutine(WaitEventBlue(0.8f));
+                 
+            }
         }
         else{
             Debug.Log("Il n'y a plus de cartes events");
@@ -115,6 +173,8 @@ public class PlayerScript : MonoSingleton<PlayerScript>
     /// <param name="player"></param>
     /// <param name="card"></param>
     void CreateEventCard(int player, MYthsAndSteel_Enum.EventCard card){
+        if (player == 1) GameManager.Instance.EventCardSO.ResetEventParentPos(1);
+        else if (player == 2) GameManager.Instance.EventCardSO.ResetEventParentPos(2);
         GameObject newCard = Instantiate(player == 1? UIInstance.Instance.EventCardObjectRed : UIInstance.Instance.EventCardObjectBlue,
                                          player == 1 ? UIInstance.Instance.RedPlayerEventtransf.GetChild(0).transform.position : UIInstance.Instance.BluePlayerEventtransf.GetChild(0).transform.position,
                                          Quaternion.identity,
@@ -176,7 +236,12 @@ public class PlayerScript : MonoSingleton<PlayerScript>
                 cardGam.transform.GetChild(0).GetComponent<Button>().onClick.AddListener(_eventCardList._eventSO.LaunchDéploiementAccéléré);
                 break;
 
+            case MYthsAndSteel_Enum.EventCard.Vol_de_ravitaillement:
+                cardGam.transform.GetChild(0).GetComponent<Button>().onClick.AddListener(_eventCardList._eventSO.LaunchVolDeRavitaillement);
+                break;
+
             case MYthsAndSteel_Enum.EventCard.Détonation_d_orgone:
+                cardGam.transform.GetChild(0).GetComponent<Button>().onClick.AddListener(_eventCardList._eventSO.LaunchDétonation_d_Orgone);
                 break;
 
             case MYthsAndSteel_Enum.EventCard.Entraînement_rigoureux:
@@ -184,6 +249,7 @@ public class PlayerScript : MonoSingleton<PlayerScript>
                 break;
 
             case MYthsAndSteel_Enum.EventCard.Fil_barbelé:
+                cardGam.transform.GetChild(0).GetComponent<Button>().onClick.AddListener(_eventCardList._eventSO.LaunchFils_Barbelés);
                 break;
 
             case MYthsAndSteel_Enum.EventCard.Illusion_stratégique:
@@ -199,6 +265,7 @@ public class PlayerScript : MonoSingleton<PlayerScript>
                 break;
 
             case MYthsAndSteel_Enum.EventCard.Paralysie:
+                cardGam.transform.GetChild(0).GetComponent<Button>().onClick.AddListener(_eventCardList._eventSO.LaunchParalysie);
                 break;
 
             case MYthsAndSteel_Enum.EventCard.Pillage_orgone:
@@ -218,6 +285,7 @@ public class PlayerScript : MonoSingleton<PlayerScript>
                 break;
 
             case MYthsAndSteel_Enum.EventCard.Sabotage:
+                cardGam.transform.GetChild(0).GetComponent<Button>().onClick.AddListener(_eventCardList._eventSO.LaunchSabotage);
                 break;
 
             case MYthsAndSteel_Enum.EventCard.Sérum_expérimental:

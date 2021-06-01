@@ -18,14 +18,25 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoSingleton<GameManager>
 {
 
+
     #region Variables
+    public int statetImmobilisation = 3;
+    [SerializeField] private SaveData saveData;
+    public GameObject détonationPrefab;
     public VictoryScreen victoryScreen;
+   
     [Header("INFO TOUR ACTUEL")]
     //Correspond à la valeur du tour actuel
+  public  int armeEpidemelogiqueStat = 0;
+    public bool filBbarbelés = false;
+    public int VolDeRavitaillementStat = 3;
+    public bool possesion = false;
+    public int SabotageStat = 3;
 
     [SerializeField]
     GameObject pauseMenu;
-
+    /// <param name="sceneId"></param>
+   public  bool menuOptionOuvert = false;
     [SerializeField]
     GameObject backgroundActivation;
     public bool isGamePaused = false;
@@ -44,7 +55,7 @@ public class GameManager : MonoSingleton<GameManager>
             _actualTurnNumber = value;
         }
     }
-    public bool CessezlefeuUsed = false;
+  
     [SerializeField] TextMeshProUGUI _TurnNumber;
 
     //Permet de savoir si c'est le joueur 1 (TRUE) ou le joueur 2 (FALSE) qui commence durant ce tour
@@ -128,7 +139,7 @@ public class GameManager : MonoSingleton<GameManager>
     public bool RedPlayerUseEvent => _redPlayerUseEvent;
 
     [SerializeField] private Sprite _selectedTileSprite = null;
-    [SerializeField] private Sprite _normalEventSprite = null;
+    public Sprite _normalEventSprite = null;
 
     [HideInInspector] public bool IllusionStratégique = false;
 
@@ -184,6 +195,7 @@ public class GameManager : MonoSingleton<GameManager>
         _managerSO.GoToOrgoneJ1Phase += DetermineWhichPlayerplay;
         _managerSO.GoToOrgoneJ2Phase += DetermineWhichPlayerplay;
         _isInTurn = true;
+        activationDone = false;
     }
 
     private void Update()
@@ -203,6 +215,7 @@ public class GameManager : MonoSingleton<GameManager>
 
         _eventCallCancel += CancelSkipPhase;
         _eventCall += ChangePhase;
+        _eventCall += SoundController.Instance.nextPhaseSound;
 
         if (PlayerPrefs.GetInt("Avertissement") == 0)
         {
@@ -247,6 +260,12 @@ public class GameManager : MonoSingleton<GameManager>
             UIInstance.Instance.VictoryScreen.SetActive(true);
             victoryScreen.IsVictoryScreenActive = true;
             victoryScreen.RedWin = true;
+            saveData.redPlayerVictories += 1;
+            PlayerPrefs.SetInt("RedPlayerVictories", saveData.redPlayerVictories);
+            Debug.Log(PlayerPrefs.GetInt("RedPlayerVictories"));
+            saveData.unlockCampaign += 1;
+            PlayerPrefs.SetInt("UnlockCampaign", saveData.unlockCampaign);
+            Debug.Log(PlayerPrefs.GetInt("UnlockCampaign"));
             Debug.Log("Red win.");
         }
         else if (armeeGagnante == 2)
@@ -254,6 +273,10 @@ public class GameManager : MonoSingleton<GameManager>
             UIInstance.Instance.VictoryScreen.SetActive(true);
             victoryScreen.IsVictoryScreenActive = true;
             victoryScreen.BlueWin = true;
+            saveData.bluePlayerVictories += 1;
+            PlayerPrefs.SetInt("BluePlayerVictories", saveData.bluePlayerVictories);
+            saveData.unlockCampaign += 1;
+            PlayerPrefs.SetInt("UnlockCampaign", saveData.unlockCampaign);
             Debug.Log("Blue win.");
         }
     }
@@ -390,29 +413,87 @@ public class GameManager : MonoSingleton<GameManager>
     /// <param name="armyUnit"></param>
     public void StartEventModeUnit(int numberUnit, bool redPlayer, List<GameObject> _unitSelectable, string title, string description, bool multiplesUnit = false)
     {
+        if (IsPlayerRedTurn && ActualTurnPhase == MYthsAndSteel_Enum.PhaseDeJeu.ActionJ1 || ActualTurnPhase == MYthsAndSteel_Enum.PhaseDeJeu.ActionJ2)
+        {
+
+            UIInstance.Instance.ButtonRenfortJ1.GetComponent<Button>().interactable = false;
+
+        }
+        else if (!IsPlayerRedTurn && ActualTurnPhase == MYthsAndSteel_Enum.PhaseDeJeu.ActionJ1 || ActualTurnPhase == MYthsAndSteel_Enum.PhaseDeJeu.ActionJ2)
+        {
+
+            UIInstance.Instance.ButtonRenfortJ2.GetComponent<Button>().interactable = false;
+        }
+
         UIInstance.Instance.DesactivateNextPhaseButton();
         _titleValidation = title;
         _descriptionValidation = description;
-
+        Attaque.Instance.PanelBlockant1.SetActive(true);
+        Attaque.Instance.PanelBlockant2.SetActive(true);
+        Attaque.Instance.PanelBlockantOrgone1.SetActive(true);
+        Attaque.Instance.PanelBlockantOrgone2.SetActive(true);
         _numberOfUnitToChoose = numberUnit;
         _chooseUnitForEvent = true;
         _selectableUnit.AddRange(_unitSelectable);
         _redPlayerUseEvent = redPlayer;
         _canSelectMultiples = multiplesUnit;
+        if(!DoingEpxlosionOrgone)
+        {
 
         foreach (GameObject gam in _selectableUnit)
         {
             TilesManager.Instance.TileList[gam.GetComponent<UnitScript>().ActualTiledId].GetComponent<TileScript>().ActiveChildObj(MYthsAndSteel_Enum.ChildTileType.EventSelect);
         }
+        }
+        else
+        {
+            foreach (GameObject gam in _selectableUnit)
+            {
+                if (gam.GetComponent<UnitScript>()._hasStartMove && Mouvement.Instance._selectedTileId != null)
+                {
+                    TilesManager.Instance.TileList[Mouvement.Instance._selectedTileId[Mouvement.Instance._selectedTileId.Count - 1]].GetComponent<TileScript>().ActiveChildObj(MYthsAndSteel_Enum.ChildTileType.EventSelect);
+
+                }
+                else
+                {
+
+                     TilesManager.Instance.TileList[gam.GetComponent<UnitScript>().ActualTiledId].GetComponent<TileScript>().ActiveChildObj(MYthsAndSteel_Enum.ChildTileType.EventSelect);
+                }
+            }
+        }
+       if(!DoingEpxlosionOrgone && PlayerPrefs.GetInt("Avertissement") == 0 || PlayerPrefs.GetInt("Avertissement") == 1)
+        {
 
         _eventCall += StopEventModeUnit;
+          
+        }
+       
+
+        
+
     }
 
     /// <summary>
     /// Arrete le choix d'unité
     /// </summary>
-    void StopEventModeUnit()
+ public   void StopEventModeUnit()
     {
+        if (GameManager.Instance.IsPlayerRedTurn)
+        {
+            if (UIInstance.Instance.RedRenfortCount == 0)
+            {
+
+            UIInstance.Instance.ButtonRenfortJ1.GetComponent<Button>().interactable = true;
+            }
+        }
+        else
+        {
+            if (UIInstance.Instance.BlueRenfortCount == 0)
+            {
+
+            UIInstance.Instance.ButtonRenfortJ2.GetComponent<Button>().interactable = true;
+            }
+        }
         _titleValidation = "";
         _descriptionValidation = "";
 
@@ -422,7 +503,10 @@ public class GameManager : MonoSingleton<GameManager>
         _redPlayerUseEvent = false;
         IllusionStratégique = false;
         _canSelectMultiples = false;
-
+        Attaque.Instance.PanelBlockant1.SetActive(false);
+        Attaque.Instance.PanelBlockant2.SetActive(false);
+        Attaque.Instance.PanelBlockantOrgone1.SetActive(false);
+        Attaque.Instance.PanelBlockantOrgone2.SetActive(false);
         _eventCall = null;
 
         foreach (GameObject gam in _selectableUnit)
@@ -472,18 +556,22 @@ public class GameManager : MonoSingleton<GameManager>
 
                     _unitChooseList.Add(unit);
                     TilesManager.Instance.TileList[unit.GetComponent<UnitScript>().ActualTiledId].GetComponent<TileScript>().ActiveChildObj(MYthsAndSteel_Enum.ChildTileType.EventSelect, _selectedTileSprite);
+                    SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[10]);
 
                 }
                 else
                 {
+
                     _unitChooseList.Add(unit);
                     TilesManager.Instance.TileList[unit.GetComponent<UnitScript>().ActualTiledId].GetComponent<TileScript>().ActiveChildObj(MYthsAndSteel_Enum.ChildTileType.EventSelect, _selectedTileSprite);
+                    SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[10]);
                 }
             }
             else if (!_canSelectMultiples && !_unitChooseList.Contains(unit))
             {
                 _unitChooseList.Add(unit);
                 TilesManager.Instance.TileList[unit.GetComponent<UnitScript>().ActualTiledId].GetComponent<TileScript>().ActiveChildObj(MYthsAndSteel_Enum.ChildTileType.EventSelect, _selectedTileSprite);
+                SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[10]);
             }
             //Pour la carte événement illusion stratégique
             if (IllusionStratégique)
@@ -503,8 +591,16 @@ public class GameManager : MonoSingleton<GameManager>
                 _chooseUnitForEvent = false;
                 if (PlayerPrefs.GetInt("Avertissement") == 0)
                 {
+                    if(DoingEpxlosionOrgone)
+                    {
+                        _eventCall += StopEventModeUnit;
+
+                       DoingEpxlosionOrgone = false;
+                    }
                     _eventCall();
+         
                 }
+               
                 UIInstance.Instance.ShowValidationPanel(_titleValidation, _descriptionValidation);
             }
         }
@@ -519,6 +615,7 @@ public class GameManager : MonoSingleton<GameManager>
         _unitChooseList.Remove(unit);
         if (!_unitChooseList.Contains(unit))
         {
+            SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[10]);
             TilesManager.Instance.TileList[unit.GetComponent<UnitScript>().ActualTiledId].GetComponent<TileScript>().ActiveChildObj(MYthsAndSteel_Enum.ChildTileType.EventSelect, _normalEventSprite);
         }
 
@@ -526,6 +623,7 @@ public class GameManager : MonoSingleton<GameManager>
         {
             foreach (GameObject gam in _selectableUnit)
             {
+                SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[10]);
                 GameObject tile = TilesManager.Instance.TileList[gam.GetComponent<UnitScript>().ActualTiledId].gameObject;
                 tile.GetComponent<TileScript>().ActiveChildObj(MYthsAndSteel_Enum.ChildTileType.EventSelect, _normalEventSprite);
             }
@@ -540,9 +638,21 @@ public class GameManager : MonoSingleton<GameManager>
     /// <param name="_tileSelectable"></param>
     public void StartEventModeTiles(int numberOfTile, bool redPlayer, List<GameObject> _tileSelectable, string title, string description, bool multiplesTile = false)
     {
-        //
-        UIInstance.Instance.DesactivateNextPhaseButton();
+        if (GameManager.Instance.IsPlayerRedTurn)
+        {
+            UIInstance.Instance.ButtonRenfortJ1.GetComponent<Button>().interactable = false;
 
+        }
+        else
+        {
+
+            UIInstance.Instance.ButtonRenfortJ2.GetComponent<Button>().interactable = false;
+        }
+        UIInstance.Instance.DesactivateNextPhaseButton();
+        Attaque.Instance.PanelBlockant1.SetActive(true);
+        Attaque.Instance.PanelBlockant2.SetActive(true);
+        Attaque.Instance.PanelBlockantOrgone1.SetActive(true);
+        Attaque.Instance.PanelBlockantOrgone2.SetActive(true);
         _titleValidation = title;
         _descriptionValidation = description;
 
@@ -563,8 +673,26 @@ public class GameManager : MonoSingleton<GameManager>
     /// <summary>
     /// Arrete le choix de case
     /// </summary>
-    void StopEventModeTile()
+    public void StopEventModeTile()
     {
+        if (IsPlayerRedTurn && ActualTurnPhase == MYthsAndSteel_Enum.PhaseDeJeu.ActionJ1 || ActualTurnPhase == MYthsAndSteel_Enum.PhaseDeJeu.ActionJ2)
+        {
+            if (UIInstance.Instance.RedRenfortCount == 0)
+            {
+
+            UIInstance.Instance.ButtonRenfortJ1.GetComponent<Button>().interactable = true;
+            }
+
+        }
+        else if(!IsPlayerRedTurn && ActualTurnPhase == MYthsAndSteel_Enum.PhaseDeJeu.ActionJ1 || ActualTurnPhase == MYthsAndSteel_Enum.PhaseDeJeu.ActionJ2)
+        {
+            if (UIInstance.Instance.BlueRenfortCount == 0)
+            {
+
+            UIInstance.Instance.ButtonRenfortJ2.GetComponent<Button>().interactable = true;
+            }
+
+        }
         _titleValidation = "";
         _descriptionValidation = "";
 
@@ -574,7 +702,10 @@ public class GameManager : MonoSingleton<GameManager>
         _redPlayerUseEvent = false;
         IllusionStratégique = false;
         _canSelectMultiples = false;
-
+        Attaque.Instance.PanelBlockant1.SetActive(false);
+        Attaque.Instance.PanelBlockant2.SetActive(false);
+        Attaque.Instance.PanelBlockantOrgone1.SetActive(false);
+        Attaque.Instance.PanelBlockantOrgone2.SetActive(false);
         _eventCall = null;
 
         foreach (GameObject gam in _selectableTiles)
@@ -599,11 +730,13 @@ public class GameManager : MonoSingleton<GameManager>
                 if (_canSelectMultiples)
                 {
                     _tileChooseList.Add(tile);
+                    SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[10]);
                     tile.GetComponent<TileScript>().ActiveChildObj(MYthsAndSteel_Enum.ChildTileType.EventSelect, _selectedTileSprite);
                 }
                 else if (!_tileChooseList.Contains(tile) && !_canSelectMultiples)
                 {
                     _tileChooseList.Add(tile);
+                    SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[10]);
                     tile.GetComponent<TileScript>().ActiveChildObj(MYthsAndSteel_Enum.ChildTileType.EventSelect, _selectedTileSprite);
                 }
 
@@ -613,9 +746,50 @@ public class GameManager : MonoSingleton<GameManager>
                     if (PlayerPrefs.GetInt("Avertissement") == 0)
                     {
                         _eventCall();
-                    }
                     UIInstance.Instance.ShowValidationPanel(_titleValidation, _descriptionValidation);
+         
+                       
+     
+                    }
+                    else
+                    {
+                        if(OrgoneManager.Instance.DoingOrgoneCharge)
+                        {
+                            _eventCall();
+                        }
+                        else
+                        {
+                            UIInstance.Instance.ShowValidationPanel(_titleValidation, _descriptionValidation);
+                        }
+                    }
                 }
+            }
+            if (filBbarbelés && _tileChooseList.Count >= 1)
+            {
+                if (_tileChooseList.Count == 1)
+                {
+                    SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[10]);
+                    _tileChooseList[0].GetComponent<TileScript>().ActiveChildObj(MYthsAndSteel_Enum.ChildTileType.EventSelect, _normalEventSprite);
+                    _selectableTiles.Clear();
+
+                    foreach (int element in PlayerStatic.GetNeighbourDiag(_tileChooseList[0].GetComponent<TileScript>().TileId, _tileChooseList[0].GetComponent<TileScript>().Line, false))
+                    {
+                        TilesManager.Instance.TileList[element].GetComponent<TileScript>().ActiveChildObj(MYthsAndSteel_Enum.ChildTileType.EventSelect, _selectedTileSprite);
+                        _selectableTiles.Add(TilesManager.Instance.TileList[element]);
+
+                    }
+
+                }
+
+                else if (_tileChooseList.Count == 2)
+                {
+                    SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[10]);
+                    foreach (GameObject element in _selectableTiles)
+                    {
+                        element.GetComponent<TileScript>().ActiveChildObj(MYthsAndSteel_Enum.ChildTileType.EventSelect, _normalEventSprite);
+                    }
+                }
+                
             }
         }
     }
@@ -626,10 +800,36 @@ public class GameManager : MonoSingleton<GameManager>
     /// <param name="tile"></param>
     public void RemoveTileToList(GameObject tile)
     {
-        _tileChooseList.Remove(tile);
+
+        if(!filBbarbelés)
+        {
+         
+            _tileChooseList.Remove(tile);
         if (!_tileChooseList.Contains(tile))
         {
-            tile.GetComponent<TileScript>().ActiveChildObj(MYthsAndSteel_Enum.ChildTileType.EventSelect, _normalEventSprite);
+                SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[10]);
+                tile.GetComponent<TileScript>().ActiveChildObj(MYthsAndSteel_Enum.ChildTileType.EventSelect, _normalEventSprite);
+        }
+        }
+
+        if (filBbarbelés)
+        {
+            if (_tileChooseList.Contains(tile))
+            {
+            SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[10]);
+                _selectableTiles.Clear();
+                _selectableTiles.AddRange(TilesManager.Instance.TileList);
+            Debug.Log("test3");
+            foreach (int element in PlayerStatic.GetNeighbourDiag(_tileChooseList[0].GetComponent<TileScript>().TileId, _tileChooseList[0].GetComponent<TileScript>().Line, false))
+            {
+               
+          TilesManager.Instance.TileList[element].GetComponent<TileScript>().ActiveChildObj(MYthsAndSteel_Enum.ChildTileType.EventSelect, _normalEventSprite);
+                Debug.Log("test4");
+                _tileChooseList.Remove(tile);
+            }
+            }
+
+            
         }
     }
 
@@ -664,7 +864,7 @@ public class GameManager : MonoSingleton<GameManager>
                 }
         }
         _eventCall();
-
+    
         DoingEpxlosionOrgone = false;
     }
 
@@ -677,6 +877,7 @@ public class GameManager : MonoSingleton<GameManager>
         {
             if (!_selectableUnit.Contains(gam)) _selectableUnit.Add(gam);
         }
+        UIInstance.Instance.ActivateNextPhaseButton();
         StopEventModeTile();
         StopEventModeUnit();
 
@@ -701,15 +902,9 @@ public class GameManager : MonoSingleton<GameManager>
         _TurnNumber.text = _actualTurnNumber.ToString();
         victoryScreen.turnCounter = _actualTurnNumber;
     }
-    public void LoadMainMenu()
-    {
-        Time.timeScale = 1;
-        SceneManager.LoadScene(1);
-    }
+
     public void Paused()
     {
-
-
         Time.timeScale = 0;
         pauseMenu.SetActive(true);
         BackgroundPaused.SetActive(true);
@@ -736,19 +931,5 @@ public class GameManager : MonoSingleton<GameManager>
         BackgroundPaused.SetActive(false);
 
     }
-    public void DesactiveStatutCessezLeFeu(GameObject unit)
-    {
-        if (CessezlefeuUsed )
-        {
 
-            List<MYthsAndSteel_Enum.UnitStatut> currentunitstatut = new List<MYthsAndSteel_Enum.UnitStatut>();
-           
-            unit.GetComponent<UnitScript>().UnitStatus.Remove(MYthsAndSteel_Enum.UnitStatut.PeutPasCombattre);
-            unit.GetComponent<UnitScript>().UnitStatus.Remove(MYthsAndSteel_Enum.UnitStatut.Invincible);
-            CessezlefeuUsed = false;
-        }
-
-
-    
-    }
 }

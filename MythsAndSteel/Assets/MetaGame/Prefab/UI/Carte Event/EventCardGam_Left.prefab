@@ -34,7 +34,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.73049927, y: -6.2}
+  m_AnchoredPosition: {x: 0.73049927, y: -7.5}
   m_SizeDelta: {x: 26.7308, y: -21.6467}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7811816650336455039
@@ -68,8 +68,8 @@ MonoBehaviour:
   m_text: "Vous \xE9changez la position de 2 unit\xE9s alli\xE9es d\xE9j\xE0 activ\xE9es
     durant ce tour ou de 2 unit\xE9s ennemies sur le plateau de jeu."
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 27edcde133aa50b448a4c8e5d5845859, type: 2}
+  m_sharedMaterial: {fileID: -7314658397477919478, guid: 27edcde133aa50b448a4c8e5d5845859, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -93,8 +93,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 17.2
-  m_fontSizeBase: 17.2
+  m_fontSize: 18.6
+  m_fontSizeBase: 18.6
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -489,6 +489,7 @@ MonoBehaviour:
     _isEventInFinalGame: 1
     _eventSprite: {fileID: 0}
     _effectToSpawn: {fileID: 0}
+    victoryScreen: {fileID: 0}
   _spriteObject: {fileID: 5249351300832772906}
   _titleText: {fileID: 5386236300946098238}
   _descriptionText: {fileID: 4525756030019988953}
@@ -533,14 +534,14 @@ RectTransform:
   m_GameObject: {fileID: 6763498198633086487}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.8722248, y: 0.7236227, z: 0.7236227}
+  m_LocalScale: {x: 0.89839154, y: 0.74533135, z: 0.74533135}
   m_Children: []
   m_Father: {fileID: 6725172486396141303}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.25810242, y: 27.1}
+  m_AnchoredPosition: {x: -0.25810242, y: 25.8}
   m_SizeDelta: {x: 26.3632, y: -57.5534}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6721297503987560833
@@ -573,8 +574,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: JE SUIS UN TITRE
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 27edcde133aa50b448a4c8e5d5845859, type: 2}
+  m_sharedMaterial: {fileID: -7314658397477919478, guid: 27edcde133aa50b448a4c8e5d5845859, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

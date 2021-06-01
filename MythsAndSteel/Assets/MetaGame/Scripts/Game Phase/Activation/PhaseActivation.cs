@@ -15,11 +15,7 @@ Ce script renvoie comme principals informations :
 
 public class PhaseActivation : MonoBehaviour
 {
-    private void Awake()
-    {
-        
-    }
-
+ 
     //Variables pour le joueur avec les cartes bleu
     //Carte du joueur 1
     [SerializeField] private List<CarteActivation> RedCartesActivation = new List<CarteActivation>();
@@ -288,7 +284,7 @@ public class PhaseActivation : MonoBehaviour
     /// </summary>
     public void ShowResult()
     {
-
+        SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[11]);
         float InitiativeValeur = J1DernièreValeurActivation - J2DernièreValeurActivation;
         float rgb = 0.2f;
         if(InitiativeValeur < 0)
