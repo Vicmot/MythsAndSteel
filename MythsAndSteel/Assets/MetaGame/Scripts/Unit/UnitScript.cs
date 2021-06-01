@@ -664,9 +664,9 @@ public bool MélodieSinistre = false;
         if (Animation != null)
         {
             
-            Animation.SetBool("Dead", true); 
-
-            yield return new WaitForSeconds(Animation.runtimeAnimatorController.animationClips[0].length);
+            Animation.SetBool("Dead", true);
+            yield return new WaitForEndOfFrame();
+            yield return new WaitForSeconds(Animation.GetCurrentAnimatorStateInfo(0).length);
         }
 
         Destroy(gameObject);
