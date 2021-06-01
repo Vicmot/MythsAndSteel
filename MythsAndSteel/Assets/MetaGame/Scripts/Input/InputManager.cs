@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
-
+using UnityEngine.UI;
 public class InputManager : MonoBehaviour
 {
     
@@ -32,15 +32,17 @@ public class InputManager : MonoBehaviour
 
         if (!GameManager.Instance.isGamePaused)
         {
-            if (Input.GetKeyDown(PauseGame))
+            if (Input.GetKeyDown(PauseGame) && GameManager.Instance.victoryScreen.t >= 7f)
             {
           
                 GameManager.Instance.Paused();
+                SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[6]);
             }
             //Pour quitter la phase d'événement qui permet de choisir une case ou une unité
             if (Input.GetKeyDown(escapeEvent) && (GameManager.Instance.ChooseUnitForEvent || GameManager.Instance.ChooseTileForEvent))
             {
                 GameManager.Instance.CancelEvent();
+                
             }
 
             //Quand on shiftclic sur le plateau
@@ -48,6 +50,7 @@ public class InputManager : MonoBehaviour
             {
                 if (GameManager.Instance.activationDone == false)
                 {
+                    SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[13]);
                     RaycastManager.Instance._mouseCommand.QuitShiftPanel();
                     RaycastManager.Instance._mouseCommand._checkIfPlayerAsClic = true;
                     RaycastManager.Instance._mouseCommand._hasCheckUnit = false;
@@ -106,7 +109,7 @@ public class InputManager : MonoBehaviour
                         Mouvement.Instance.DeleteChildWhenMove();
                     }
                 }
-                else if (Attaque.Instance.SelectedTiles.Count == 1)
+                else if (Attaque.Instance._selectedTiles.Count == 1)
                 {
                     Mouvement.Instance.StopMouvement(true);
                     Attaque.Instance.Attack();
@@ -172,11 +175,13 @@ public class InputManager : MonoBehaviour
                     else if (Attaque.Instance.Selected)
                     {
                         RaycastManager.Instance.SelectTileForAttack();
+                        UIInstance.Instance.DesactivateNextPhaseButton();
                     }
                 }
  
                 else
                 {
+
                     RaycastManager.Instance.Deselect();
                 }
             }
@@ -199,7 +204,7 @@ public class InputManager : MonoBehaviour
 
         else
         {
-            if(Input.GetKeyDown(PauseGame))
+            if(Input.GetKeyDown(PauseGame) && !GameManager.Instance.menuOptionOuvert)
             {
 
             GameManager.Instance.StopPaused();
@@ -221,7 +226,7 @@ public class InputManager : MonoBehaviour
             {
               
                 GameManager.Instance.CliCToChangePhase();
-                EventSystem.current.SetSelectedGameObject(null);
+                //EventSystem.current.SetSelectedGameObject(null);
                 GameManager.Instance._eventCallCancel += CancelSkipPhase;
                 GameManager.Instance._eventCall += SkipPhaseFunc;
                 hasShowPanel = true;

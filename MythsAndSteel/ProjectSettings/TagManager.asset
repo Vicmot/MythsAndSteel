@@ -9,6 +9,7 @@ TagManager:
   - MoveSelectable
   - AttackSelectable
   - DisplayArrowForMove
+  - DisplayMovePath
   layers:
   - Default
   - TransparentFX
@@ -16,9 +17,9 @@ TagManager:
   - Tile
   - Water
   - UI
-  - 
-  - 
-  - 
+  - fluxorgone
+  - fluxorgone2
+  - backencyclopedie
   - 
   - 
   - 

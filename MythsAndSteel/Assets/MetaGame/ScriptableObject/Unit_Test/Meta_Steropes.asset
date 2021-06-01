@@ -15,21 +15,22 @@ MonoBehaviour:
   UnitName: Canon T90
   Description: Cette unite ne sert a rien
   typeUnite: 0
-  LifeMax: 5
+  LifeMax: 6
   ShieldMax: 2
-  AttackRange: 1
+  AttackRange: 2
   MoveSpeed: 5
-  CreationCost: 4
+  CreationCost: 2
   numberOfUnitToAttack: 1
-  DamageMinimum: 2
-  NumberRangeMin: {x: 2, y: 3}
-  DamageMaximum: 2
-  NumberRangeMax: {x: 4, y: 12}
-  SonAttaque: {fileID: 8300000, guid: e909c0d798388184293656b9a8942cf5, type: 3}
-  SonDeplacement: {fileID: 8300000, guid: a65650c6f0bf9b4458a477962ed2e53f, type: 3}
-  SonMort: {fileID: 8300000, guid: a8eb69e6a02dc7f4e87ff9de4fe71233, type: 3}
-  Sprite: {fileID: 5601724313049997956, guid: a50948e13bd96eb4099118ef8c1813aa, type: 3}
+  DamageMinimum: 3
+  NumberRangeMin: {x: 2, y: 8}
+  DamageMaximum: 3
+  NumberRangeMax: {x: 9, y: 12}
+  SonAttaque: {fileID: 8300000, guid: bbefc3cac45f4c646af6e2a46dd64824, type: 3}
+  SonDeplacement: {fileID: 8300000, guid: d5e0547e38e1d844495258dc71712295, type: 3}
+  SonMort: {fileID: 8300000, guid: fabb10955420f6e40954c29726c15e9d, type: 3}
+  VoiceLine: {fileID: 8300000, guid: 1a0dcdcd3e8ff83499e019e0d51ae38a, type: 3}
+  Sprite: {fileID: -3923386695713308534, guid: 25cf721631c628a4299551d62e5ec7af, type: 3}
   CanAttackEmptyTile: 0
   UsefullToWin: 0
   IsInRedArmy: 1
-  UnitAttributs: 080000000500000006000000
+  UnitAttributs: 000000000000000000000000
