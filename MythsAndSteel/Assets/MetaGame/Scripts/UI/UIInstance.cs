@@ -6,6 +6,9 @@ using TMPro;
 
 public class UIInstance : MonoSingleton<UIInstance>
 {
+    public int RedRenfortCount = 0;
+    public int BlueRenfortCount = 0;
+    public GameObject boutonAnnulerRenfort;
     public Animator DownSliderJauge;
     public bool skiPhaseTouche = true;
     #region PhaseDeJeu
@@ -137,8 +140,16 @@ public class UIInstance : MonoSingleton<UIInstance>
     public List<TextSpriteAttributUnit> textSpriteAttributUnit = new List<TextSpriteAttributUnit>();
     //Array comportant les ObjectsAttributs. A ne pas modifier !
     public ObjectsAttributs[] objectsAttributs = new ObjectsAttributs[3];
+
+    public List<Image> MiniJaugeSlot = new List<Image>();
+    public Sprite Maximum;
+    public Sprite Minimum;
+    public Sprite None;
+    public GameObject MinSlider;
+    public GameObject MaxSlider;
+
     #endregion ShiftClicPanelP1
-    
+
     #region ShiftClicPanelP2
     [Header("LISTES DES ELEMENTS UI POUR LE SHIFT CLIC DE LA PAGE 2")]
     [Tooltip("Tous les éléments qui composent l'UI pour le Shift Clic de la Page 2")]
@@ -151,6 +162,17 @@ public class UIInstance : MonoSingleton<UIInstance>
 
     [SerializeField] private List<GameObject> _effetDeTerrain;
     public List<GameObject> effetDeTerrain => _effetDeTerrain;
+
+    // ------------------------------------------
+
+    [SerializeField] private GameObject _prefabSlotStatuts;
+    public GameObject prefabSlotStatuts => _prefabSlotStatuts;
+
+    [SerializeField] private GameObject _parentSlotStatuts;
+    public GameObject parentSlotStatuts => _parentSlotStatuts;
+
+    [SerializeField] private List<GameObject> _Statuts;
+    public List<GameObject> Statuts => _Statuts;
 
     #endregion ShiftClicPanelP2
 
@@ -205,7 +227,7 @@ public class UIInstance : MonoSingleton<UIInstance>
     /// <param name="description"></param>
     public void ShowValidationPanel(string title, string description){
        
-        if (PlayerPrefs.GetInt("Avertissement") == 1)
+        if (PlayerPrefs.GetInt("Avertissement") == 1 && !OrgoneManager.Instance.DoingOrgoneCharge)
         {
 
         _validationPanel.SetActive(true);
@@ -223,13 +245,14 @@ public class UIInstance : MonoSingleton<UIInstance>
     public void QuitValidationPanel(){
         _validationPanel.SetActive(false);
     }
-
+    
     #region UITile
     [Header("Tile's infos update")]
     [SerializeField] private TileTypeClass _typeTileList;
 
     //Variable du Scriptable.
     public TerrainTypeClass Terrain;
+    public ScriptableStatus StatusSc;
 
     public void CallUpdateUI(GameObject Tile)
     {
@@ -285,7 +308,7 @@ public class UIInstance : MonoSingleton<UIInstance>
     [Tooltip("ensemble des textes pour le menu Statistiques des renforts")]
     [SerializeField] private TextRenfortMenu _pageUnitéRenfort;
     public TextRenfortMenu PageUnitéRenfort => _pageUnitéRenfort;
-
+    public GameObject RenfortBlockant;
     [Tooltip("Ensemble des Emplacements pour les images du menu Statistiques des renforts")]
     [SerializeField] private EmplacementImageMenuRenfort _emplacementImageMenuRenfort;
     public EmplacementImageMenuRenfort EmplacementImageMenuRenfort => _emplacementImageMenuRenfort;

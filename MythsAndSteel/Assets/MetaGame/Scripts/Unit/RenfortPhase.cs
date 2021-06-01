@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-
+using UnityEngine.UI;
 public class RenfortPhase : MonoSingleton<RenfortPhase>
 {
     #region AppelDeScript
@@ -72,6 +72,7 @@ public class RenfortPhase : MonoSingleton<RenfortPhase>
             GameManager.Instance.ActualTurnPhase == MYthsAndSteel_Enum.PhaseDeJeu.ActionJ2 || OrgoneManager.Instance.DoingOrgoneCharge)
         {
             AroundCreateTileUsine(playerRed);
+            
             AroundLeader(playerRed);
             ChangeButtonStatut(true, playerRed);
         }
@@ -515,13 +516,22 @@ public class RenfortPhase : MonoSingleton<RenfortPhase>
                 List<GameObject> tileList = new List<GameObject>();
                 tileList.AddRange(GameManager.Instance.RenfortPhase.CreateLeader1);
                 tileList.AddRange(GameManager.Instance.RenfortPhase.CreateTileJ1);
-
+                if(tileList.Count != 0)
+                {
                 idCreate = unitId;
-                redPlayerCreation = true;
 
+                redPlayerCreation = true;
+                
                 GameManager.Instance.StartEventModeTiles(1, true, tileList, "Création d'unité", "Êtes-vous sur de vouloir créer une unité sur cette case");
                 GameManager.Instance._eventCall += CreateNewUnit;
                 GameManager.Instance._eventCall += UIInstance.Instance.ActivateNextPhaseButton;
+
+                }
+                else if (tileList.Count == 0)
+                {
+           
+                    UIInstance.Instance.ActivateNextPhaseButton();
+                }
                 RaycastManager.Instance._mouseCommand.QuitRenfortPanel();
             }
         }
@@ -529,13 +539,23 @@ public class RenfortPhase : MonoSingleton<RenfortPhase>
         {
             if (PlayerScript.Instance.UnitRef.UnitClassCreableListBluePlayer[unitId].GetComponent<UnitScript>().UnitSO.CreationCost <= PlayerScript.Instance.RedPlayerInfos.Ressource)
             {
+                
                 List<GameObject> tileList = new List<GameObject>();
                 tileList.AddRange(GameManager.Instance.RenfortPhase.CreateLeader2);
                 tileList.AddRange(GameManager.Instance.RenfortPhase.CreateTileJ2);
+                if(tileList.Count != 0)
+                {
+
                 idCreate = unitId;
                 redPlayerCreation = false;
                 GameManager.Instance.StartEventModeTiles(1, false, tileList, "Création d'unité", "Êtes-vous sur de vouloir créer une unité sur cette case");
                 GameManager.Instance._eventCall += CreateNewUnit;
+               GameManager.Instance._eventCall += UIInstance.Instance.ActivateNextPhaseButton;
+                }
+                else if (tileList.Count == 0)
+                {
+                    UIInstance.Instance.ActivateNextPhaseButton();
+                }
                 RaycastManager.Instance._mouseCommand.QuitRenfortPanel();
             }
         }
@@ -545,6 +565,7 @@ public class RenfortPhase : MonoSingleton<RenfortPhase>
     /// Crée une nouvelle unité sur le terrain au niveau de la tile sélectionnée
     /// </summary>
     void CreateNewUnit(){
+      
         if(redPlayerCreation)
         {
             GameObject obj = Instantiate(PlayerScript.Instance.UnitRef.UnitClassCreableListRedPlayer[idCreate], GameManager.Instance.TileChooseList[0].transform.position, Quaternion.identity);
@@ -555,9 +576,14 @@ public class RenfortPhase : MonoSingleton<RenfortPhase>
             {
                 PlayerScript.Instance.RedPlayerInfos.Ressource -= PlayerScript.Instance.UnitRef.UnitClassCreableListRedPlayer[idCreate].GetComponent<UnitScript>().UnitSO.CreationCost;
                 UIInstance.Instance.UpdateRessourceLeft();
+            UIInstance.Instance.RedRenfortCount += 1;
+                if (UIInstance.Instance.RedRenfortCount == 1)
+                {
+                    UIInstance.Instance.ButtonRenfortJ1.GetComponent<Button>().interactable = false;
+                    Debug.Log("fdljs");
+                }
             }
             GameManager.Instance.victoryScreen.redRessourcesUsed += PlayerScript.Instance.UnitRef.UnitClassCreableListRedPlayer[idCreate].GetComponent<UnitScript>().UnitSO.CreationCost;
-
         }
         else
         {
@@ -565,11 +591,19 @@ public class RenfortPhase : MonoSingleton<RenfortPhase>
             GameManager.Instance.TileChooseList[0].GetComponent<TileScript>().AddUnitToTile(obj);
             PlayerScript.Instance.BluePlayerInfos.HasCreateUnit = true;
             PlayerScript.Instance.UnitRef.UnitListBluePlayer.Add(obj);
+            
             if (!OrgoneManager.Instance.DoingOrgoneCharge)
             {
+                UIInstance.Instance.BlueRenfortCount += 1;
                 PlayerScript.Instance.BluePlayerInfos.Ressource -= PlayerScript.Instance.UnitRef.UnitClassCreableListBluePlayer[idCreate].GetComponent<UnitScript>().UnitSO.CreationCost;
                 UIInstance.Instance.UpdateRessourceLeft();
+                if(UIInstance.Instance.BlueRenfortCount == 1)
+                {
+                    UIInstance.Instance.ButtonRenfortJ2.GetComponent<Button>().interactable = false;
+
+                }
             }
+            
             else
             {
                 OrgoneManager.Instance.DoingOrgoneCharge = false;
@@ -577,8 +611,11 @@ public class RenfortPhase : MonoSingleton<RenfortPhase>
 
             GameManager.Instance.victoryScreen.blueResourcesUsed += PlayerScript.Instance.UnitRef.UnitClassCreableListBluePlayer[idCreate].GetComponent<UnitScript>().UnitSO.CreationCost;
         }
-
+        SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[8]);
         GameManager.Instance.TileChooseList.Clear();
+        OrgoneManager.Instance.DoingOrgoneCharge = false;
+        UIInstance.Instance.boutonAnnulerRenfort.SetActive(true);
+
     }
     #endregion CréerUnité
 }

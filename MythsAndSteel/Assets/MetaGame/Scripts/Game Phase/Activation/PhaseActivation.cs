@@ -284,7 +284,7 @@ public class PhaseActivation : MonoBehaviour
     /// </summary>
     public void ShowResult()
     {
-
+        SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[11]);
         float InitiativeValeur = J1DernièreValeurActivation - J2DernièreValeurActivation;
         float rgb = 0.2f;
         if(InitiativeValeur < 0)

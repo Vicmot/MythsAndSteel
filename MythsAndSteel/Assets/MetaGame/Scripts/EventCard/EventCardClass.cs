@@ -212,7 +212,7 @@ public class EventCardClass : ScriptableObject{
     /// Reset la position du parent des cartes events d'un joueur
     /// </summary>
     /// <param name="player"></param>
-    void ResetEventParentPos(int player)
+ public   void ResetEventParentPos(int player)
     {
         if(player == 1)
         {
@@ -288,9 +288,11 @@ public class EventCardClass : ScriptableObject{
         GameManager.Instance.TileChooseList.Clear();
         RemovePlayerRessource(MYthsAndSteel_Enum.EventCard.Déploiement_accéléré);
         RemoveEvents(MYthsAndSteel_Enum.EventCard.Déploiement_accéléré);
+        EventCardUse();
     }
 
     public void LaunchDéploiementAccéléré(){
+
         UIInstance.Instance.ActivateNextPhaseButton();
 
         int player = DeterminArmy(MYthsAndSteel_Enum.EventCard.Déploiement_accéléré);
@@ -305,7 +307,7 @@ public class EventCardClass : ScriptableObject{
             {
                 //Obtient la direction de la case par rapport à l'unité
                 MYthsAndSteel_Enum.Direction dir = PlayerStatic.CheckDirection(unit.GetComponent<UnitScript>().ActualTiledId, i);
-                if (PlayerScript.Instance.RedPlayerInfos.Ressource >= 1 && player == 1 || PlayerScript.Instance.BluePlayerInfos.Ressource >= 1 && player == 2)
+                if (PlayerScript.Instance.RedPlayerInfos.Ressource >= 1 && player == 1 && PlayerScript.Instance.RedPlayerInfos.EventUseLeft > 0 || PlayerScript.Instance.BluePlayerInfos.Ressource >= 1 && player == 2 && PlayerScript.Instance.BluePlayerInfos.EventUseLeft > 0)
                 {
 
 
@@ -345,12 +347,17 @@ public class EventCardClass : ScriptableObject{
                     }
                     
                 }
+                else
+                {
+                    SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[14]);
+                }
             }
         }
 
-        if((GameManager.Instance.ActualTurnPhase == MYthsAndSteel_Enum.PhaseDeJeu.ActionJ1 && Attaque.Instance.IsInAttack|| GameManager.Instance.ActualTurnPhase == MYthsAndSteel_Enum.PhaseDeJeu.ActionJ2) && 
-            ((player == 1 && GameManager.Instance.IsPlayerRedTurn) || (player == 2 && !GameManager.Instance.IsPlayerRedTurn))){
+        if((GameManager.Instance.ActualTurnPhase == MYthsAndSteel_Enum.PhaseDeJeu.ActionJ1 || GameManager.Instance.ActualTurnPhase == MYthsAndSteel_Enum.PhaseDeJeu.ActionJ2) && 
+            ((player == 1 && GameManager.Instance.IsPlayerRedTurn && PlayerScript.Instance.RedPlayerInfos.EventUseLeft > 0) || (player == 2 && !GameManager.Instance.IsPlayerRedTurn && PlayerScript.Instance.BluePlayerInfos.EventUseLeft > 0))){
             RenfortPhase.Instance.craftUnit(1);
+            Debug.Log("fdkjls");
             LaunchEventTile(1, player == 1 ? true : false, gamList, "Déploiement accéléré", "Êtes-vous sur de vouloir créer une unité d'infanterie sur cette case?", false);
             GameManager.Instance._eventCall += DéploiementAccéléré;
         }
@@ -372,6 +379,7 @@ public class EventCardClass : ScriptableObject{
 
         //Remove la carte event chez le bon joueur
         RemoveEvents(MYthsAndSteel_Enum.EventCard.Illusion_stratégique);
+        EventCardUse();
     }
 
     public void LaunchIllusionStratégique()
@@ -406,10 +414,14 @@ public class EventCardClass : ScriptableObject{
         GameManager.Instance.IllusionStratégique = true;
 
         if((GameManager.Instance.ActualTurnPhase == MYthsAndSteel_Enum.PhaseDeJeu.ActionJ1 || GameManager.Instance.ActualTurnPhase == MYthsAndSteel_Enum.PhaseDeJeu.ActionJ2) &&
-            ((player == 1 && GameManager.Instance.IsPlayerRedTurn) || (player == 2 && !GameManager.Instance.IsPlayerRedTurn)))
+            ((player == 1 && GameManager.Instance.IsPlayerRedTurn && PlayerScript.Instance.RedPlayerInfos.EventUseLeft > 0) || (player == 2 && !GameManager.Instance.IsPlayerRedTurn && PlayerScript.Instance.BluePlayerInfos.EventUseLeft > 0)))
         {
             LaunchEventUnit(2, player == 1 ? true : false, unitList, "Illusion Stratégique", "Êtes-vous sur de vouloir échanger la position de ces deux unités sur le plateau?");
             GameManager.Instance._eventCall += IllusionStratégique;
+        }
+        else
+        {
+            SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[14]);
         }
         unitList.Clear();
       
@@ -431,6 +443,7 @@ public class EventCardClass : ScriptableObject{
 
         //Remove la carte event chez le bon joueur
         RemoveEvents(MYthsAndSteel_Enum.EventCard.Optimisation_de_l_orgone);
+        EventCardUse();
     }
 
     public void LaunchOptimisationOrgone()
@@ -438,7 +451,7 @@ public class EventCardClass : ScriptableObject{
         int player = DeterminArmy(MYthsAndSteel_Enum.EventCard.Optimisation_de_l_orgone);
 
         if((GameManager.Instance.ActualTurnPhase == MYthsAndSteel_Enum.PhaseDeJeu.OrgoneJ1 || GameManager.Instance.ActualTurnPhase == MYthsAndSteel_Enum.PhaseDeJeu.OrgoneJ2) &&
-            ((player == 1 && GameManager.Instance.IsPlayerRedTurn) || (player == 2 && !GameManager.Instance.IsPlayerRedTurn)))
+            ((player == 1 && GameManager.Instance.IsPlayerRedTurn && PlayerScript.Instance.RedPlayerInfos.EventUseLeft > 0) || (player == 2 && !GameManager.Instance.IsPlayerRedTurn && PlayerScript.Instance.BluePlayerInfos.EventUseLeft > 0)))
         {
                 GameManager.Instance._eventCall += OptimisationOrgone;
             if (PlayerPrefs.GetInt("Avertissement") == 0)
@@ -448,6 +461,10 @@ public class EventCardClass : ScriptableObject{
             }
 
             UIInstance.Instance.ShowValidationPanel("Optimisation de l'orgone", "Êtes-vous sur de vouloir augmenter votre nombre d'utilisation de charge d'orgones de ");
+        }
+        else
+        {
+            SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[14]);
         }
     }
     #endregion OptimisationOrgone
@@ -467,6 +484,7 @@ public class EventCardClass : ScriptableObject{
 
         //Remove la carte event chez le bon joueur
         RemoveEvents(MYthsAndSteel_Enum.EventCard.Pillage_orgone);
+        EventCardUse();
     }
 
     public void LaunchPillageOrgone()
@@ -477,12 +495,15 @@ public class EventCardClass : ScriptableObject{
         tileList.AddRange(TilesManager.Instance.ResourcesList);
 
         if((GameManager.Instance.ActualTurnPhase == MYthsAndSteel_Enum.PhaseDeJeu.ActionJ1 || GameManager.Instance.ActualTurnPhase == MYthsAndSteel_Enum.PhaseDeJeu.ActionJ2) &&
-            ((player == 1 && GameManager.Instance.IsPlayerRedTurn) || (player == 2 && !GameManager.Instance.IsPlayerRedTurn)))
+            ((player == 1 && GameManager.Instance.IsPlayerRedTurn && PlayerScript.Instance.RedPlayerInfos.EventUseLeft > 0) || (player == 2 && !GameManager.Instance.IsPlayerRedTurn && PlayerScript.Instance.BluePlayerInfos.EventUseLeft > 0)))
         {
             LaunchEventTile(2, player == 1 ? true : false, tileList, "Pillage d'orgone", "Êtes-vous sur de vouloir voler deux Ressources sur ces cases?", true);
             GameManager.Instance._eventCall += PillageOrgone;
         }
-
+        else
+        {
+            SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[14]);
+        }
         tileList.Clear();
     }
 
@@ -508,6 +529,7 @@ foreach (GameObject element in TilesManager.Instance.TileList)
         GameManager.Instance.filBbarbelés = false;
         barbelposition =MYthsAndSteel_Enum.Direction.None;
         RemoveEvents(MYthsAndSteel_Enum.EventCard.Fil_barbelé);
+        EventCardUse();
     }
 
     public void LaunchFils_Barbelés()
@@ -518,7 +540,7 @@ foreach (GameObject element in TilesManager.Instance.TileList)
         tileList.AddRange(TilesManager.Instance.TileList);
 
         if ((GameManager.Instance.ActualTurnPhase == MYthsAndSteel_Enum.PhaseDeJeu.ActionJ1 || GameManager.Instance.ActualTurnPhase == MYthsAndSteel_Enum.PhaseDeJeu.ActionJ2) &&
-            ((player == 1 && GameManager.Instance.IsPlayerRedTurn) || (player == 2 && !GameManager.Instance.IsPlayerRedTurn)))
+            ((player == 1 && GameManager.Instance.IsPlayerRedTurn && PlayerScript.Instance.RedPlayerInfos.EventUseLeft > 0) || (player == 2 && !GameManager.Instance.IsPlayerRedTurn && PlayerScript.Instance.BluePlayerInfos.EventUseLeft > 0)))
         {
             if (PlayerScript.Instance.RedPlayerInfos.Ressource >= 1 && player == 1 || PlayerScript.Instance.BluePlayerInfos.Ressource >= 1 && player == 2)
             {
@@ -526,6 +548,14 @@ foreach (GameObject element in TilesManager.Instance.TileList)
                 GameManager.Instance.filBbarbelés = true;
                 GameManager.Instance._eventCall += Fils_Barbelés;
             }
+            else
+            {
+                SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[14]);
+            }
+        }
+        else
+        {
+            SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[14]);
         }
 
         tileList.Clear();
@@ -558,6 +588,7 @@ foreach (GameObject element in TilesManager.Instance.TileList)
    
       
         RemoveEvents(MYthsAndSteel_Enum.EventCard.Détonation_d_orgone);
+        EventCardUse();
     }
 
     public void LaunchDétonation_d_Orgone()
@@ -568,7 +599,7 @@ foreach (GameObject element in TilesManager.Instance.TileList)
         tileList.AddRange(TilesManager.Instance.TileList);
 
         if ((GameManager.Instance.ActualTurnPhase == MYthsAndSteel_Enum.PhaseDeJeu.ActionJ1 || GameManager.Instance.ActualTurnPhase == MYthsAndSteel_Enum.PhaseDeJeu.ActionJ2) &&
-            ((player == 1 && GameManager.Instance.IsPlayerRedTurn) || (player == 2 && !GameManager.Instance.IsPlayerRedTurn)))
+            ((player == 1 && GameManager.Instance.IsPlayerRedTurn && PlayerScript.Instance.RedPlayerInfos.EventUseLeft > 0) || (player == 2 && !GameManager.Instance.IsPlayerRedTurn && PlayerScript.Instance.BluePlayerInfos.EventUseLeft > 0)))
         {
             if (PlayerScript.Instance.RedPlayerInfos.Ressource >= 1 && player == 1 || PlayerScript.Instance.BluePlayerInfos.Ressource >= 1 && player == 2)
             {
@@ -576,6 +607,14 @@ foreach (GameObject element in TilesManager.Instance.TileList)
              
                 GameManager.Instance._eventCall += Détonation_d_Orgone;
             }
+            else
+            {
+                SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[14]);
+            }
+        }
+        else
+        {
+            SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[14]);
         }
 
         tileList.Clear();
@@ -596,6 +635,7 @@ foreach (GameObject element in TilesManager.Instance.TileList)
 
         //Remove la carte event chez le bon joueur
         RemoveEvents(MYthsAndSteel_Enum.EventCard.Pointeurs_laser_optimisés);
+        EventCardUse();
     }
 
     public void LaunchPointeursLaserOptimisés()
@@ -607,10 +647,14 @@ foreach (GameObject element in TilesManager.Instance.TileList)
         unitList.AddRange(player == 2 ? PlayerScript.Instance.UnitRef.UnitListBluePlayer : PlayerScript.Instance.UnitRef.UnitListRedPlayer);
 
         if((GameManager.Instance.ActualTurnPhase == MYthsAndSteel_Enum.PhaseDeJeu.ActionJ1 || GameManager.Instance.ActualTurnPhase == MYthsAndSteel_Enum.PhaseDeJeu.ActionJ2) &&
-            ((player == 1 && GameManager.Instance.IsPlayerRedTurn) || (player == 2 && !GameManager.Instance.IsPlayerRedTurn)))
+            ((player == 1 && GameManager.Instance.IsPlayerRedTurn && PlayerScript.Instance.RedPlayerInfos.EventUseLeft > 0) || (player == 2 && !GameManager.Instance.IsPlayerRedTurn && PlayerScript.Instance.BluePlayerInfos.EventUseLeft > 0)))
         {
             LaunchEventUnit(2, player == 1 ? true : false, unitList, "Pointeurs Laser Optimisé", "Êtes-vous sur de vouloir augmenter de 1 la portée de ces 2 unités?");
             GameManager.Instance._eventCall += PointeursLaserOptimisés;
+        }
+        else
+        {
+            SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[14]);
         }
 
         unitList.Clear();
@@ -630,6 +674,8 @@ foreach (GameObject element in TilesManager.Instance.TileList)
 
         //Remove la carte event chez le bon joueur
         RemoveEvents(MYthsAndSteel_Enum.EventCard.Arme_épidémiologique);
+        EventCardUse
+            ();
     }
 
     public void LaunchArmeEpidemiologique()
@@ -640,10 +686,14 @@ foreach (GameObject element in TilesManager.Instance.TileList)
         unitList.AddRange(player == 2? PlayerScript.Instance.UnitRef.UnitListRedPlayer : PlayerScript.Instance.UnitRef.UnitListBluePlayer);
 
         if((GameManager.Instance.ActualTurnPhase == MYthsAndSteel_Enum.PhaseDeJeu.ActionJ1 || GameManager.Instance.ActualTurnPhase == MYthsAndSteel_Enum.PhaseDeJeu.ActionJ2) &&
-            ((player == 1 && GameManager.Instance.IsPlayerRedTurn) || (player == 2 && !GameManager.Instance.IsPlayerRedTurn)))
+            ((player == 1 && GameManager.Instance.IsPlayerRedTurn && PlayerScript.Instance.RedPlayerInfos.EventUseLeft > 0) || (player == 2 && !GameManager.Instance.IsPlayerRedTurn && PlayerScript.Instance.BluePlayerInfos.EventUseLeft > 0)))
         {
             LaunchEventUnit(1, player == 1 ? true : false, unitList, "Arme épidémiologique", "Êtes-vous sur de vouloir Infliger l'effet à cette unité? Toutes unités adjacentes à cette unité se verra perdre un point de vie à la fin du tour adverse ainsi que les unités adjacentes.");
             GameManager.Instance._eventCall += ArmeEpidemiologique;
+        }
+        else
+        {
+            SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[14]);
         }
 
         unitList.Clear();
@@ -668,6 +718,7 @@ foreach (GameObject element in TilesManager.Instance.TileList)
 
         //Remove la carte event chez le bon joueur
         RemoveEvents(MYthsAndSteel_Enum.EventCard.Manoeuvre_stratégique);
+        EventCardUse();
     }
 
     public void LaunchManoeuvreStratégique()
@@ -675,7 +726,7 @@ foreach (GameObject element in TilesManager.Instance.TileList)
         int player = DeterminArmy(MYthsAndSteel_Enum.EventCard.Manoeuvre_stratégique);
 
         if((GameManager.Instance.ActualTurnPhase == MYthsAndSteel_Enum.PhaseDeJeu.ActionJ1 || GameManager.Instance.ActualTurnPhase == MYthsAndSteel_Enum.PhaseDeJeu.ActionJ2) &&
-            ((player == 1 && GameManager.Instance.IsPlayerRedTurn) || (player == 2 && !GameManager.Instance.IsPlayerRedTurn)))
+            ((player == 1 && GameManager.Instance.IsPlayerRedTurn && PlayerScript.Instance.RedPlayerInfos.EventUseLeft > 0) || (player == 2 && !GameManager.Instance.IsPlayerRedTurn && PlayerScript.Instance.BluePlayerInfos.EventUseLeft > 0)))
         {
             GameManager.Instance._eventCall += ManoeuvreStratégique;
             if(PlayerPrefs.GetInt("Avertissement") == 0)
@@ -683,6 +734,10 @@ foreach (GameObject element in TilesManager.Instance.TileList)
                 GameManager.Instance._eventCall();
             }
             UIInstance.Instance.ShowValidationPanel("Manoeuvre stratégique", "Êtes-vous sur de vouloir activer une unité supplémentaire durant ce tour?");
+        }
+        else
+        {
+            SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[14]);
         }
     }
     #endregion ManeouvreStratégique
@@ -701,6 +756,7 @@ foreach (GameObject element in TilesManager.Instance.TileList)
 
         //Remove la carte event chez le bon joueur
         RemoveEvents(MYthsAndSteel_Enum.EventCard.Sérum_expérimental);
+        EventCardUse();
     }
 
     public void LaunchSerumExperimental()
@@ -712,10 +768,14 @@ foreach (GameObject element in TilesManager.Instance.TileList)
         unitList.AddRange(player == 2 ? PlayerScript.Instance.UnitRef.UnitListBluePlayer : PlayerScript.Instance.UnitRef.UnitListRedPlayer);
 
         if((GameManager.Instance.ActualTurnPhase == MYthsAndSteel_Enum.PhaseDeJeu.ActionJ1 || GameManager.Instance.ActualTurnPhase == MYthsAndSteel_Enum.PhaseDeJeu.ActionJ2) &&
-            ((player == 1 && GameManager.Instance.IsPlayerRedTurn) || (player == 2 && !GameManager.Instance.IsPlayerRedTurn)))
+            ((player == 1 && GameManager.Instance.IsPlayerRedTurn && PlayerScript.Instance.RedPlayerInfos.EventUseLeft > 0) || (player == 2 && !GameManager.Instance.IsPlayerRedTurn && PlayerScript.Instance.BluePlayerInfos.EventUseLeft > 0)))
         {
             LaunchEventUnit(2, player == 1 ? true : false, unitList, "Sérum Expérimental", "Êtes-vous sur de vouloir augmenter d'1 point le déplacement de ces deux unités?");
             GameManager.Instance._eventCall += SerumExperimental;
+        }
+        else
+        {
+            SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[14]);
         }
 
         unitList.Clear();
@@ -737,6 +797,7 @@ foreach (GameObject element in TilesManager.Instance.TileList)
 
         //Remove la carte event chez le bon joueur
         RemoveEvents(MYthsAndSteel_Enum.EventCard.Activation_de_nodus);
+        EventCardUse();
     }
 
     public void LaunchActivationDeNodus()
@@ -744,7 +805,7 @@ foreach (GameObject element in TilesManager.Instance.TileList)
         int player = DeterminArmy(MYthsAndSteel_Enum.EventCard.Activation_de_nodus);
 
         if((GameManager.Instance.ActualTurnPhase == MYthsAndSteel_Enum.PhaseDeJeu.ActionJ1 || GameManager.Instance.ActualTurnPhase == MYthsAndSteel_Enum.PhaseDeJeu.ActionJ2) &&
-            ((player == 1 && GameManager.Instance.IsPlayerRedTurn) || (player == 2 && !GameManager.Instance.IsPlayerRedTurn)))
+            ((player == 1 && GameManager.Instance.IsPlayerRedTurn && PlayerScript.Instance.RedPlayerInfos.EventUseLeft > 0) || (player == 2 && !GameManager.Instance.IsPlayerRedTurn && PlayerScript.Instance.BluePlayerInfos.EventUseLeft > 0)))
         {
             GameManager.Instance._eventCall += ActivationDeNodus;
             if (PlayerPrefs.GetInt("Avertissement") == 0)
@@ -752,6 +813,10 @@ foreach (GameObject element in TilesManager.Instance.TileList)
                 GameManager.Instance._eventCall();
             }
             UIInstance.Instance.ShowValidationPanel("Activation de Nodus", "Êtes-vous sur de vouloir utiliser un pouvoir orgonique durant votre phase d'action?");
+        }
+        else
+        {
+            SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[14]);
         }
     }
     #endregion ActivationDeNodus
@@ -791,6 +856,7 @@ foreach (GameObject element in TilesManager.Instance.TileList)
         GameManager.Instance.UnitChooseList.Clear();
 
         RemoveEvents(MYthsAndSteel_Enum.EventCard.Bombardement_aérien);
+        EventCardUse();
     }
 
     public void LaunchBombardementAerien()
@@ -801,10 +867,14 @@ foreach (GameObject element in TilesManager.Instance.TileList)
         unitList.AddRange(player == 1 ? PlayerScript.Instance.UnitRef.UnitListBluePlayer : PlayerScript.Instance.UnitRef.UnitListRedPlayer);
 
         if((GameManager.Instance.ActualTurnPhase == MYthsAndSteel_Enum.PhaseDeJeu.ActionJ1 || GameManager.Instance.ActualTurnPhase == MYthsAndSteel_Enum.PhaseDeJeu.ActionJ2) &&
-            ((player == 1 && GameManager.Instance.IsPlayerRedTurn) || (player == 2 && !GameManager.Instance.IsPlayerRedTurn)))
+            ((player == 1 && GameManager.Instance.IsPlayerRedTurn && PlayerScript.Instance.RedPlayerInfos.EventUseLeft > 0) || (player == 2 && !GameManager.Instance.IsPlayerRedTurn && PlayerScript.Instance.BluePlayerInfos.EventUseLeft > 0)))
         {
             LaunchEventUnit(1, player == 1 ? true : false, unitList, "Bombardement Aérien", "Êtes-vous sur de vouloir infliger des dégâts à cette unité?");
             GameManager.Instance._eventCall += BombardementAerien;
+        }
+        else
+        {
+            SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[14]);
         }
 
         unitList.Clear();
@@ -839,23 +909,38 @@ foreach (GameObject element in TilesManager.Instance.TileList)
         RemovePlayerRessource(MYthsAndSteel_Enum.EventCard.Reprogrammation);
         //Remove la carte event chez le bon joueur
         RemoveEvents(MYthsAndSteel_Enum.EventCard.Reprogrammation);
+        EventCardUse();
     }
 
     public void LaunchReproggramation(){
         int player = DeterminArmy(MYthsAndSteel_Enum.EventCard.Reprogrammation);
         List<GameObject> unitList = new List<GameObject>();
 
-        unitList.AddRange(player == 1 ? PlayerScript.Instance.UnitRef.UnitListBluePlayer : PlayerScript.Instance.UnitRef.UnitListRedPlayer);
-
-        if((GameManager.Instance.ActualTurnPhase == MYthsAndSteel_Enum.PhaseDeJeu.ActionJ1 || GameManager.Instance.ActualTurnPhase == MYthsAndSteel_Enum.PhaseDeJeu.ActionJ2) &&
-            ((player == 1 && GameManager.Instance.IsPlayerRedTurn) || (player == 2 && !GameManager.Instance.IsPlayerRedTurn)))
+       
+        foreach(GameObject T in player == 1 ? PlayerScript.Instance.UnitRef.UnitListBluePlayer : PlayerScript.Instance.UnitRef.UnitListRedPlayer)
+        {
+            if(!T.GetComponent<UnitScript>().UnitStatuts.Contains(MYthsAndSteel_Enum.UnitStatut.Possédé))
+            {
+                unitList.Add(T);
+            }
+        }
+        if ((GameManager.Instance.ActualTurnPhase == MYthsAndSteel_Enum.PhaseDeJeu.ActionJ1 || GameManager.Instance.ActualTurnPhase == MYthsAndSteel_Enum.PhaseDeJeu.ActionJ2) &&
+            ((player == 1 && GameManager.Instance.IsPlayerRedTurn && PlayerScript.Instance.RedPlayerInfos.EventUseLeft > 0) || (player == 2 && !GameManager.Instance.IsPlayerRedTurn && PlayerScript.Instance.BluePlayerInfos.EventUseLeft > 0)))
         {
             if(PlayerScript.Instance.RedPlayerInfos.Ressource >= 1 && player == 1 || PlayerScript.Instance.BluePlayerInfos.Ressource >= 1 && player == 2)
             {
 
-            LaunchEventUnit(1, player == 1? true : false, unitList, "Reproggramation", "Êtes-vous sur de vouloir activer cette unité adverse durant ce tour?");
             GameManager.Instance._eventCall += Reproggramation;
+            LaunchEventUnit(1, player == 1? true : false, unitList, "Reproggramation", "Êtes-vous sur de vouloir activer cette unité adverse durant ce tour?");
             }
+            else
+            {
+                SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[14]);
+            }
+        }
+        else
+        {
+            SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[14]);
         }
 
         unitList.Clear();
@@ -878,6 +963,7 @@ foreach (GameObject element in TilesManager.Instance.TileList)
         RemovePlayerRessource(MYthsAndSteel_Enum.EventCard.Cessez_le_feu);
         //Remove la carte event chez le bon joueur
         RemoveEvents(MYthsAndSteel_Enum.EventCard.Cessez_le_feu);
+        EventCardUse();
     }
 
     public void LaunchCessezLeFeu()
@@ -889,7 +975,7 @@ foreach (GameObject element in TilesManager.Instance.TileList)
         unitList.AddRange(PlayerScript.Instance.UnitRef.UnitListRedPlayer);
 
         if((GameManager.Instance.ActualTurnPhase == MYthsAndSteel_Enum.PhaseDeJeu.ActionJ1 || GameManager.Instance.ActualTurnPhase == MYthsAndSteel_Enum.PhaseDeJeu.ActionJ2) &&
-            ((player == 1 && GameManager.Instance.IsPlayerRedTurn) || (player == 2 && !GameManager.Instance.IsPlayerRedTurn)))
+            ((player == 1 && GameManager.Instance.IsPlayerRedTurn && PlayerScript.Instance.RedPlayerInfos.EventUseLeft > 0) || (player == 2 && !GameManager.Instance.IsPlayerRedTurn && PlayerScript.Instance.BluePlayerInfos.EventUseLeft > 0)))
 
         {
             if (PlayerScript.Instance.RedPlayerInfos.Ressource >= 1 && player == 1 || PlayerScript.Instance.BluePlayerInfos.Ressource >= 1 && player == 2)
@@ -898,6 +984,14 @@ foreach (GameObject element in TilesManager.Instance.TileList)
                 LaunchEventUnit(1, player == 1 ? true : false, unitList, "Cessez le feu!", "Êtes-vous sur de vouloir empêcher cette unité de prendre des dégâts, capturer un objectif et d'attaquer durant ce tour?");
             GameManager.Instance._eventCall += CessezLeFeu;
             }
+            else
+            {
+                SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[14]);
+            }
+        }
+        else
+        {
+            SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[14]);
         }
 
         unitList.Clear();
@@ -923,6 +1017,7 @@ foreach (GameObject element in TilesManager.Instance.TileList)
       
         //Remove la carte event chez le bon joueur
         RemoveEvents(MYthsAndSteel_Enum.EventCard.Vol_de_ravitaillement);
+        EventCardUse();
 
     }
         
@@ -931,19 +1026,23 @@ foreach (GameObject element in TilesManager.Instance.TileList)
         int player = DeterminArmy(MYthsAndSteel_Enum.EventCard.Vol_de_ravitaillement);
 
        if ((GameManager.Instance.ActualTurnPhase == MYthsAndSteel_Enum.PhaseDeJeu.ActionJ1 || GameManager.Instance.ActualTurnPhase == MYthsAndSteel_Enum.PhaseDeJeu.ActionJ2) &&
-            ((player == 1 && GameManager.Instance.IsPlayerRedTurn) || (player == 2 && !GameManager.Instance.IsPlayerRedTurn)))
+            ((player == 1 && GameManager.Instance.IsPlayerRedTurn && PlayerScript.Instance.RedPlayerInfos.EventUseLeft > 0) || (player == 2 && !GameManager.Instance.IsPlayerRedTurn && PlayerScript.Instance.BluePlayerInfos.EventUseLeft > 0)))
         {
          
 
          
-            GameManager.Instance._eventCall += VolDeRavitaillement;
 
             if (PlayerPrefs.GetInt("Avertissement") == 0)
             {
                GameManager.Instance._eventCall();
 
             }
+            GameManager.Instance._eventCall += VolDeRavitaillement;
             UIInstance.Instance.ShowValidationPanel("Vol de Ravitaillement", "Êtes-vous sur de vouloir de voler les ressources récupérées par votre adversaire pendant ce tour?");
+        }
+        else
+        {
+            SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[14]);
         }
     }
     #endregion
@@ -963,12 +1062,13 @@ foreach (GameObject element in TilesManager.Instance.TileList)
 
         //Remove la carte event chez le bon joueur
         RemoveEvents(MYthsAndSteel_Enum.EventCard.Sabotage);
+        EventCardUse();
     }
     public void LaunchSabotage()
     {
         int player = DeterminArmy(MYthsAndSteel_Enum.EventCard.Sabotage);
         if ((GameManager.Instance.ActualTurnPhase == MYthsAndSteel_Enum.PhaseDeJeu.ActionJ1 || GameManager.Instance.ActualTurnPhase == MYthsAndSteel_Enum.PhaseDeJeu.ActionJ2) &&
-      ((player == 1 && GameManager.Instance.IsPlayerRedTurn) || (player == 2 && !GameManager.Instance.IsPlayerRedTurn)))
+      ((player == 1 && GameManager.Instance.IsPlayerRedTurn && PlayerScript.Instance.RedPlayerInfos.EventUseLeft > 0) || (player == 2 && !GameManager.Instance.IsPlayerRedTurn && PlayerScript.Instance.BluePlayerInfos.EventUseLeft > 0)))
         {
             GameManager.Instance._eventCall += Sabotage;
             if (PlayerPrefs.GetInt("Avertissement") == 0)
@@ -977,6 +1077,10 @@ foreach (GameObject element in TilesManager.Instance.TileList)
 
             }
             UIInstance.Instance.ShowValidationPanel("Sabotage", "Êtes-vous sur de vouloir de réduire la valeur d'activation de votre adversaire lors de sa prochaine phase d'action?");
+        }
+        else
+        {
+            SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[14]);
         }
     }
     #endregion
@@ -994,22 +1098,23 @@ foreach (GameObject element in TilesManager.Instance.TileList)
             {
                 unit.GetComponent<UnitScript>().AddStatutToUnit(MYthsAndSteel_Enum.UnitStatut.Paralysie);
             }
-        }
         if (GameManager.Instance.IsPlayerRedTurn)
         {
 
-            GameManager.Instance.ParalysieStat = 1;
+            unit.GetComponent<UnitScript>().ParalysieStat = 1;
         }
         else
         {
-            GameManager.Instance.ParalysieStat = 2;
+           unit.GetComponent<UnitScript>().ParalysieStat = 2;
+        }
         }
         RemovePlayerRessource(MYthsAndSteel_Enum.EventCard.Paralysie);
         unitList.Clear();
         typeUnitChoose = MYthsAndSteel_Enum.TypeUnite.Autre;
         GameManager.Instance.UnitChooseList.Clear();
         //Remove la carte event chez le bon joueur
-        RemoveEvents(MYthsAndSteel_Enum.EventCard.Sabotage);
+        RemoveEvents(MYthsAndSteel_Enum.EventCard.Paralysie);
+        EventCardUse();
     }
     public void LaunchParalysie()
     {
@@ -1019,20 +1124,28 @@ foreach (GameObject element in TilesManager.Instance.TileList)
         unitList.AddRange(PlayerScript.Instance.UnitRef.UnitListBluePlayer);
         unitList.AddRange(PlayerScript.Instance.UnitRef.UnitListRedPlayer);
         if ((GameManager.Instance.ActualTurnPhase == MYthsAndSteel_Enum.PhaseDeJeu.OrgoneJ1 || GameManager.Instance.ActualTurnPhase == MYthsAndSteel_Enum.PhaseDeJeu.OrgoneJ2) &&
-      ((player == 1 && GameManager.Instance.IsPlayerRedTurn) || (player == 2 && !GameManager.Instance.IsPlayerRedTurn)))
+      ((player == 1 && GameManager.Instance.IsPlayerRedTurn && PlayerScript.Instance.RedPlayerInfos.EventUseLeft > 0) || (player == 2 && !GameManager.Instance.IsPlayerRedTurn && PlayerScript.Instance.BluePlayerInfos.EventUseLeft > 0)))
         {
-            if ((player == 1 && PlayerScript.Instance.RedPlayerInfos.Ressource > 0) || (player == 2 && PlayerScript.Instance.BluePlayerInfos.Ressource > 0))
+            if ((player == 1 && PlayerScript.Instance.RedPlayerInfos.Ressource >= 0) || (player == 2 && PlayerScript.Instance.BluePlayerInfos.Ressource >= 0))
             {
               
 
-            GameManager.Instance._eventCall += Paralysie;
                
 
                 LaunchEventUnit(1, player == 1 ? true : false, unitList, "Paralysie", "Êtes-vous sur de vouloir empecher l'activation des unités ayant le même type que celle séléctionnée?");
+            GameManager.Instance._eventCall += Paralysie;
                
             }
-        
+            else
+            {
+                SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[14]);
             }
+
+        }
+        else
+        {
+            SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[14]);
+        }
         unitList.Clear();
     }
 
@@ -1055,6 +1168,7 @@ foreach (GameObject element in TilesManager.Instance.TileList)
 
         //Remove la carte event chez le bon joueur
         RemoveEvents(MYthsAndSteel_Enum.EventCard.Réapprovisionnement);
+        EventCardUse();
     }
 
     public void LaunchReapprovisionnement()
@@ -1066,7 +1180,7 @@ foreach (GameObject element in TilesManager.Instance.TileList)
         unitList.AddRange(player == 2 ? PlayerScript.Instance.UnitRef.UnitListBluePlayer : PlayerScript.Instance.UnitRef.UnitListRedPlayer);
 
         if ((GameManager.Instance.ActualTurnPhase == MYthsAndSteel_Enum.PhaseDeJeu.ActionJ1 || GameManager.Instance.ActualTurnPhase == MYthsAndSteel_Enum.PhaseDeJeu.ActionJ2) &&
-            ((player == 1 && GameManager.Instance.IsPlayerRedTurn) || (player == 2 && !GameManager.Instance.IsPlayerRedTurn)))
+            ((player == 1 && GameManager.Instance.IsPlayerRedTurn && PlayerScript.Instance.RedPlayerInfos.EventUseLeft > 0) || (player == 2 && !GameManager.Instance.IsPlayerRedTurn && PlayerScript.Instance.BluePlayerInfos.EventUseLeft > 0)))
         {
         
                 
@@ -1075,7 +1189,12 @@ foreach (GameObject element in TilesManager.Instance.TileList)
 
             LaunchEventUnit(2, player == 1 ? true : false, unitList, "Réapprovisionnement", "Êtes-vous sur de vouloir soigner ces deux unités de 1 point de vie?");
             GameManager.Instance._eventCall += Reapprovisionnement;
+
             
+        }
+        else
+        {
+            SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[14]);
         }
 
         unitList.Clear();
@@ -1096,6 +1215,7 @@ foreach (GameObject element in TilesManager.Instance.TileList)
 
         //Remove la carte event chez le bon joueur
         RemoveEvents(MYthsAndSteel_Enum.EventCard.Armes_perforantes);
+        EventCardUse();
     }
 
     public void LaunchArmesPerforantes()
@@ -1107,12 +1227,16 @@ foreach (GameObject element in TilesManager.Instance.TileList)
         unitList.AddRange(player == 1 ? PlayerScript.Instance.UnitRef.UnitListRedPlayer : PlayerScript.Instance.UnitRef.UnitListBluePlayer);
 
         if((GameManager.Instance.ActualTurnPhase == MYthsAndSteel_Enum.PhaseDeJeu.ActionJ1 || GameManager.Instance.ActualTurnPhase == MYthsAndSteel_Enum.PhaseDeJeu.ActionJ2) &&
-            ((player == 1 && GameManager.Instance.IsPlayerRedTurn) || (player == 2 && !GameManager.Instance.IsPlayerRedTurn)))
+            ((player == 1 && GameManager.Instance.IsPlayerRedTurn) && PlayerScript.Instance.RedPlayerInfos.EventUseLeft > 0 || (player == 2 && !GameManager.Instance.IsPlayerRedTurn && PlayerScript.Instance.BluePlayerInfos.EventUseLeft > 0)))
         {
             LaunchEventUnit(2, player == 1 ? true : false, unitList, "Armes perforantes", "Êtes-vous sur de vouloir augmenter d'1 les dégâts de ces deux unités?");
             GameManager.Instance._eventCall += ArmesPerforantes;
-        }
 
+        }
+        else
+        {
+            SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[14]);
+        }
         unitList.Clear();
     }
     #endregion ArmesPerforantes
@@ -1131,6 +1255,7 @@ foreach (GameObject element in TilesManager.Instance.TileList)
 
         //Remove la carte event chez le bon joueur
         RemoveEvents(MYthsAndSteel_Enum.EventCard.Entraînement_rigoureux);
+        EventCardUse();
     }
 
     public void LaunchEntrainementRigoureux()
@@ -1142,10 +1267,14 @@ foreach (GameObject element in TilesManager.Instance.TileList)
         unitList.AddRange(player == 1 ? PlayerScript.Instance.UnitRef.UnitListRedPlayer : PlayerScript.Instance.UnitRef.UnitListBluePlayer);
 
         if((GameManager.Instance.ActualTurnPhase == MYthsAndSteel_Enum.PhaseDeJeu.ActionJ1 || GameManager.Instance.ActualTurnPhase == MYthsAndSteel_Enum.PhaseDeJeu.ActionJ2) &&
-            ((player == 1 && GameManager.Instance.IsPlayerRedTurn) || (player == 2 && !GameManager.Instance.IsPlayerRedTurn)))
+            ((player == 1 && GameManager.Instance.IsPlayerRedTurn && PlayerScript.Instance.RedPlayerInfos.EventUseLeft>0) || (player == 2 && !GameManager.Instance.IsPlayerRedTurn &&  PlayerScript.Instance.BluePlayerInfos.EventUseLeft > 0)))
         {
             LaunchEventUnit(1, player == 1 ? true : false, unitList, "Entraînement rigoureux", "Êtes-vous sur de vouloir donner un bonus de 3 aux chances d'attaques de cette unité?");
             GameManager.Instance._eventCall += EntrainementRigoureux;
+        }
+        else
+        {
+            SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[14]);
         }
 
         unitList.Clear();
@@ -1197,7 +1326,18 @@ foreach (GameObject element in TilesManager.Instance.TileList)
         return 0;
     }
     #endregion Evenement
-void RemovePlayerRessource(MYthsAndSteel_Enum.EventCard eventCardEnum)
+    void EventCardUse()
+    {
+        if (GameManager.Instance.IsPlayerRedTurn)
+        {
+            PlayerScript.Instance.RedPlayerInfos.EventUseLeft --;
+        }
+        else
+        {
+            PlayerScript.Instance.BluePlayerInfos.EventUseLeft --;
+        }
+    }
+    void RemovePlayerRessource(MYthsAndSteel_Enum.EventCard eventCardEnum)
 {
         if (DeterminArmy(eventCardEnum) == 1)
         {
