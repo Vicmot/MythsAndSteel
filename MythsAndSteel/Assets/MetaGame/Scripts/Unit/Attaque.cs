@@ -467,7 +467,7 @@ public class Attaque : MonoSingleton<Attaque>
                 if(Mathf.Abs(X) > Mathf.Abs(Y))
                 {
                     ActualUnit.GetComponent<UnitScript>().Animation.SetInteger("A", 1); //right
-                    ActualUnit.GetComponent<SpriteRenderer>().flipX = true;
+                    ActualUnit.GetComponent<SpriteRenderer>().flipX = false;
                 }
                 else if(Mathf.Abs(X) <= Mathf.Abs(Y))
                 {
@@ -486,7 +486,7 @@ public class Attaque : MonoSingleton<Attaque>
                 if(Mathf.Abs(X) > Mathf.Abs(Y))
                 {
                     ActualUnit.GetComponent<UnitScript>().Animation.SetInteger("A", 1); // left
-                    ActualUnit.GetComponent<SpriteRenderer>().flipX = false;
+                    ActualUnit.GetComponent<SpriteRenderer>().flipX = true;
                 }
                 else if(Mathf.Abs(X) <= Mathf.Abs(Y))
                 {
@@ -509,12 +509,14 @@ public class Attaque : MonoSingleton<Attaque>
     {
         if(AnimToWait.runtimeAnimatorController != null)
         {
-            yield return new WaitForSeconds(AnimToWait.runtimeAnimatorController.animationClips[0].length);
+            yield return new WaitForEndOfFrame();
+            yield return new WaitForSeconds(AnimToWait.GetCurrentAnimatorStateInfo(0).length);
+            
             AnimToWait.SetBool(BoolName, false);
         }
     }
+  
 
-    
     public bool Go = false;
     /// <summary>
     /// Choisit le type d'attaque
