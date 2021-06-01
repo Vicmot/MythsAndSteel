@@ -9,11 +9,19 @@ C'est pour cela qu'il ne faut surtout pas le MODIFIER !!
  */ 
 public class OrgoneManager : MonoSingleton<OrgoneManager>
 {
+
+    public bool DoingOrgoneCharge = false;
     #region Variables
     [Header("PARENT JAUGE D'ORGONE")]
     //Jauge d'orgone joueur rouge
     [SerializeField] private GameObject _redPlayerPanelOrgone = null;
     public GameObject RedPlayerPanelOrgone => _redPlayerPanelOrgone;
+    public GameObject FxOrgoneGauche;
+    public GameObject FxOrgoneDroit;
+    public GameObject ForceFieldDroit;
+    public GameObject ForceFieldGauche;
+    public GameObject BasOrgoneRed;
+    public GameObject BasOrgoneBlue;
 
     //Jauge d'orgone joueur bleu
     [SerializeField] private GameObject _bluePlayerPanelOrgone = null;
@@ -47,11 +55,33 @@ public class OrgoneManager : MonoSingleton<OrgoneManager>
 
     #endregion Variables
 
+    public void CheckZoneOrgone()
+    {
+        if(_bluePlayerZone.GetComponent<ZoneOrgone>()._centerOrgoneArea == _redPlayerZone.GetComponent<ZoneOrgone>()._centerOrgoneArea)
+        {
+            _bluePlayerZone.GetComponent<Animator>().SetBool("SAME", true);
+            _redPlayerZone.GetComponent<Animator>().SetBool("SAME", true);
+        }
+        else
+        {
+            _bluePlayerZone.GetComponent<Animator>().SetBool("SAME", false);
+            _redPlayerZone.GetComponent<Animator>().SetBool("SAME", false);
+        }
+    }
+
+
     private void Start(){
         GameManager.Instance.ManagerSO.GoToOrgoneJ1Phase += ActivateOrgoneArea;
         GameManager.Instance.ManagerSO.GoToOrgoneJ2Phase += ActivateOrgoneArea;
     }
+    private void Update()
+    {
+       
+        ForceFieldGauche.transform.GetChild(0).position = Camera.main.ScreenToWorldPoint(BasOrgoneRed.transform.position);
+        ForceFieldDroit.transform.GetChild(0).position = Camera.main.ScreenToWorldPoint(BasOrgoneBlue.transform.position);
+ 
 
+    }
     public void ReleaseZone(){
         if(GameManager.Instance.IsPlayerRedTurn){
             _redPlayerZone.GetComponent<ZoneOrgone>().ReleaseZone();
@@ -67,11 +97,13 @@ public class OrgoneManager : MonoSingleton<OrgoneManager>
         if(GameManager.Instance.IsPlayerRedTurn && !_redPlayerZone.GetComponent<ZoneOrgone>().HasMoveOrgoneArea && !_redPlayerZone.GetComponent<ZoneOrgone>().IsInValidation)
         {
             _redPlayerZone.GetComponent<ZoneOrgone>().AddOrgoneAtRange();
+            SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[13]);
             _selected = true;
         }
         else if(!GameManager.Instance.IsPlayerRedTurn && !_bluePlayerZone.GetComponent<ZoneOrgone>().HasMoveOrgoneArea && !_bluePlayerZone.GetComponent<ZoneOrgone>().IsInValidation)
         {
             _bluePlayerZone.GetComponent<ZoneOrgone>().AddOrgoneAtRange();
+            SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[13]);
             _selected = true;
         }
     }
@@ -93,8 +125,10 @@ public class OrgoneManager : MonoSingleton<OrgoneManager>
     public void StartOrgoneAnimation(int Player, int LastOrgoneValue, int ActualOrgoneValue)
     {
         StartCoroutine(UpdateOrgoneUI(Player, LastOrgoneValue, ActualOrgoneValue));
+        SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[3]);
+        if(LastOrgoneValue == 4) SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[4]);
     }
-
+    
     public IEnumerator UpdateOrgoneUI(int Player, int LastOrgoneValue, int ActualOrgoneValue)
     {
         if (Player == 1)
@@ -117,15 +151,19 @@ public class OrgoneManager : MonoSingleton<OrgoneManager>
 
     public void ExplosionOrgone(int Player)
     {
-        Debug.Log(Player);
         if(Player == 1)
         {
-            Explodered.SetTrigger("explode");
+           Explodered.SetTrigger("explode");
+            SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[2]);
+            Debug.Log("exoplsionn");
         }
         else
         {
-            Explodeblue.SetTrigger("explode");
+           Explodeblue.SetTrigger("explode");
+            SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[2]);
+            Debug.Log("exoplsionn");
         }
+        
         StartCoroutine(UpdateOrgoneUI(Player, 4, 0));
     }
 
@@ -154,6 +192,7 @@ public class OrgoneManager : MonoSingleton<OrgoneManager>
                         if (!OrgoneManager.Instance.RedPlayerCharge[u].GetBool("Increase"))
                         {
                             OrgoneManager.Instance.RedPlayerCharge[u].SetBool("Increase", true);
+                            SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[3]);
                             yield return new WaitForSeconds(.75f);
                         }
                     }
@@ -167,8 +206,10 @@ public class OrgoneManager : MonoSingleton<OrgoneManager>
                 {
                     for (int u = 4; u >= i; u--)
                     {
+
                         if (i < 0 || i > 4)
                         {
+                            Debug.Log("je suis là");
                             OrgoneRunning1 = false;
                             break;
                         }
@@ -227,26 +268,34 @@ public class OrgoneManager : MonoSingleton<OrgoneManager>
             {
                 for (int i = LastOrgoneValue; i > ActualOrgoneValue; i--)
                 {
-                    if(i < 0 || i > 4)
-                    {
-                        OrgoneRunning2 = false;
-                        break;
-                    }
                     for (int u = 4; u >= i; u--)
                     {
+
+                        if (i < 0 || i > 4)
+                        {
+                            OrgoneRunning2 = false;
+                            break;
+                        }
                         if (OrgoneManager.Instance.BluePlayerCharge[u].GetBool("Increase"))
                         {
                             OrgoneManager.Instance.BluePlayerCharge[u].SetBool("Increase", false);
+
+                       
                             yield return new WaitForSeconds(.5f);
                         }
+
                     }
-                    if(i-1>=0)
-                    { 
-                    OrgoneManager.Instance.BluePlayerCharge[i - 1].SetBool("Increase", false);
-                    yield return new WaitForSeconds(.5f);
+                    if (i - 1 >= 0)
+                    {
+                        OrgoneManager.Instance.BluePlayerCharge[i - 1].SetBool("Increase", false);
+                        yield return new WaitForSeconds(.5f);
                     }
+
                 }
             }
+         
+
+        
             else if (w == 0)
             {
                 Debug.Log("Same value.");
@@ -276,22 +325,27 @@ namespace MythsAndSteel.Orgone{
         /// <returns></returns>
         public static bool CanUseOrgonePower(int cost, int player){
             bool canUse = false;
-
+          
             if(GameManager.Instance.ActualTurnPhase == MYthsAndSteel_Enum.PhaseDeJeu.OrgoneJ1 || GameManager.Instance.ActualTurnPhase == MYthsAndSteel_Enum.PhaseDeJeu.OrgoneJ2){
                 if(GameManager.Instance.IsPlayerRedTurn == (player == 1? true : false)){
-                    if(player == 1){
-                        if(PlayerScript.Instance.RedPlayerInfos.OrgonePowerLeft > 0 && PlayerScript.Instance.RedPlayerInfos.OrgoneValue >= cost){
+              
+                    if (player == 1){
+                       
+                        if (PlayerScript.Instance.RedPlayerInfos.OrgonePowerLeft > 0 && PlayerScript.Instance.RedPlayerInfos.OrgoneValue >= cost){
+                           
                             canUse = true;
                         }
                     }
                     else{
-                        if(PlayerScript.Instance.BluePlayerInfos.OrgonePowerLeft > 0 && PlayerScript.Instance.BluePlayerInfos.OrgoneValue >= cost){
+                        
+                        if (PlayerScript.Instance.BluePlayerInfos.OrgonePowerLeft > 0 && PlayerScript.Instance.BluePlayerInfos.OrgoneValue >= cost){
                             canUse = true;
+                        
                         }
                     }
                 }
             }
-
+            if (!canUse) SoundController.Instance.PlaySound(SoundController.Instance.AudioClips[14]);
             return canUse;
         }
     }
