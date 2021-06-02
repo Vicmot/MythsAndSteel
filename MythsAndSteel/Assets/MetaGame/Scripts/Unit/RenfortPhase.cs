@@ -48,17 +48,26 @@ public class RenfortPhase : MonoSingleton<RenfortPhase>
 
         foreach(GameObject unit in PlayerScript.Instance.UnitRef.UnitListRedPlayer)
         {
-            if(unit.GetComponent<UnitScript>().UnitSO.typeUnite == MYthsAndSteel_Enum.TypeUnite.Leader)
+            foreach  (MYthsAndSteel_Enum.Attributs att in unit.GetComponent<UnitScript>().UnitSO.UnitAttributs)
             {
-                _leaderListRed.Add(unit);
-            }
+                if(att == MYthsAndSteel_Enum.Attributs.AppelDeRenforts)
+                {
+                    _leaderListRed.Add(unit);
+                }
+            }   
+            
+            
+            
         }
 
         foreach(GameObject unit in PlayerScript.Instance.UnitRef.UnitListBluePlayer)
         {
-            if(unit.GetComponent<UnitScript>().UnitSO.typeUnite == MYthsAndSteel_Enum.TypeUnite.Leader)
+            foreach (MYthsAndSteel_Enum.Attributs att in unit.GetComponent<UnitScript>().UnitSO.UnitAttributs)
             {
-                _leaderListBlue.Add(unit);
+                if (att == MYthsAndSteel_Enum.Attributs.AppelDeRenforts)
+                {
+                    _leaderListBlue.Add(unit);
+                }
             }
         }
     }

@@ -226,7 +226,7 @@ public class InputManager : MonoBehaviour
             {
               
                 GameManager.Instance.CliCToChangePhase();
-                //EventSystem.current.SetSelectedGameObject(null);
+                EventSystem.current.SetSelectedGameObject(null);
                 GameManager.Instance._eventCallCancel += CancelSkipPhase;
                 GameManager.Instance._eventCall += SkipPhaseFunc;
                 hasShowPanel = true;
