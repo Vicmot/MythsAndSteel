@@ -17,19 +17,19 @@ MonoBehaviour:
     \xE0 n\xE9ant la plupart des chars. Cet exploit est possible \xE0 la synth\xE9tisation
     passant par l\u2019Hyperchimie."
   typeUnite: 0
-  LifeMax: 0
+  LifeMax: 2
   ShieldMax: 0
-  AttackRange: 0
-  MoveSpeed: 0
-  CreationCost: 0
+  AttackRange: 1
+  MoveSpeed: 3
+  CreationCost: 2
   numberOfUnitToAttack: 0
-  DamageMinimum: 0
-  NumberRangeMin: {x: 0, y: 0}
-  DamageMaximum: 0
-  NumberRangeMax: {x: 0, y: 0}
-  SonAttaque: {fileID: 0}
-  SonDeplacement: {fileID: 0}
-  SonMort: {fileID: 0}
+  DamageMinimum: 1
+  NumberRangeMin: {x: 4, y: 9}
+  DamageMaximum: 2
+  NumberRangeMax: {x: 10, y: 12}
+  SonAttaque: {fileID: 8300000, guid: b50894d6977986f468ca4a1f454d936e, type: 3}
+  SonDeplacement: {fileID: 8300000, guid: d021c76a866619c49a06f80a66437243, type: 3}
+  SonMort: {fileID: 8300000, guid: a8eb69e6a02dc7f4e87ff9de4fe71233, type: 3}
   VoiceLine: {fileID: 0}
   Sprite: {fileID: 0}
   CanAttackEmptyTile: 0

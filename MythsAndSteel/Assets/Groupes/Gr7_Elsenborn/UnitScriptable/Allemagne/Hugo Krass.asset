@@ -22,20 +22,20 @@ MonoBehaviour:
     plus sa Mesali qui le constitue est charg\xE9 en \xE9lectricit\xE9. il devient
     l\u2019avatar de la guerre elle-m\xEAme."
   typeUnite: 4
-  LifeMax: 0
+  LifeMax: 4
   ShieldMax: 0
-  AttackRange: 0
-  MoveSpeed: 0
-  CreationCost: 0
+  AttackRange: 1
+  MoveSpeed: 2
+  CreationCost: 4
   numberOfUnitToAttack: 0
-  DamageMinimum: 0
-  NumberRangeMin: {x: 0, y: 0}
+  DamageMinimum: 1
+  NumberRangeMin: {x: 6, y: 12}
   DamageMaximum: 0
   NumberRangeMax: {x: 0, y: 0}
-  SonAttaque: {fileID: 0}
-  SonDeplacement: {fileID: 0}
-  SonMort: {fileID: 0}
-  VoiceLine: {fileID: 0}
+  SonAttaque: {fileID: 8300000, guid: 6465c61dd228dbf4bac28a9b757e6d13, type: 3}
+  SonDeplacement: {fileID: 8300000, guid: d021c76a866619c49a06f80a66437243, type: 3}
+  SonMort: {fileID: 8300000, guid: a0758a606cbfc2f4c9d9b79bf5b9ac15, type: 3}
+  VoiceLine: {fileID: 8300000, guid: b7c6424d86169914999717464bdd7108, type: 3}
   Sprite: {fileID: 0}
   CanAttackEmptyTile: 0
   UsefullToWin: 0
