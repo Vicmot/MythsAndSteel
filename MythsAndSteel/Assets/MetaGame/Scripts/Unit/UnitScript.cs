@@ -664,8 +664,8 @@ public bool MélodieSinistre = false;
         if (Animation != null)
         {
             
-            Animation.SetBool("Dead", true);
-            yield return new WaitForEndOfFrame();
+            Animation.SetBool("Dead", true); 
+
             yield return new WaitForSeconds(Animation.GetCurrentAnimatorStateInfo(0).length);
         }
 
@@ -803,6 +803,9 @@ public bool MélodieSinistre = false;
     /// </summary>
     public void checkMovementLeft()
     {
+        if(!_isActionDone)
+        {
+
         if ((_unitSO.IsInRedArmy && !hasUseActivation && !_unitStatuts.Contains(MYthsAndSteel_Enum.UnitStatut.Possédé)) || (!_unitSO.IsInRedArmy && _unitStatuts.Contains(MYthsAndSteel_Enum.UnitStatut.Possédé) && !hasUseActivation && !MélodieSinistre)) 
         {
             Debug.Log("bonsoir");
@@ -821,6 +824,7 @@ public bool MélodieSinistre = false;
         if (_moveLeft == 0)
         {
             _isMoveDone = true;
+        }
         }
     }
 

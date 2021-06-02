@@ -439,6 +439,7 @@ public class TileScript : MonoBehaviour
                     {
                         TerrainEffectList.Add(Type);
                     }
+                    Debug.Log(T._terrainName);
                     GameObject Child = Instantiate(T.Child, transform.position, Quaternion.identity);
                     if (Type == MYthsAndSteel_Enum.TerrainType.Ruines || Type == MYthsAndSteel_Enum.TerrainType.Point_de_ressources_vide)
                     {
