@@ -24,7 +24,7 @@ MonoBehaviour:
   AttackRange: 2
   MoveSpeed: 3
   CreationCost: 4
-  numberOfUnitToAttack: 0
+  numberOfUnitToAttack: 1
   DamageMinimum: 1
   NumberRangeMin: {x: 4, y: 8}
   DamageMaximum: 2
@@ -36,5 +36,5 @@ MonoBehaviour:
   Sprite: {fileID: 0}
   CanAttackEmptyTile: 0
   UsefullToWin: 0
-  IsInRedArmy: 1
+  IsInRedArmy: 0
   UnitAttributs: 000000000000000000000000

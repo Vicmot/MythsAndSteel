@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c815bdbd83982254eb2da5fbe95df910, type: 3}
-  m_Name: Bublebop
+  m_Name: Bubblebop
   m_EditorClassIdentifier: 
   UnitName: Bublebop
   Description: "En 1940, alors que les Alli\xE9s lib\xE8rent la France, Les Am\xE9ricains
@@ -27,7 +27,7 @@ MonoBehaviour:
   AttackRange: 1
   MoveSpeed: 2
   CreationCost: 4
-  numberOfUnitToAttack: 0
+  numberOfUnitToAttack: 1
   DamageMinimum: 2
   NumberRangeMin: {x: 4, y: 9}
   DamageMaximum: 3
@@ -40,4 +40,4 @@ MonoBehaviour:
   CanAttackEmptyTile: 0
   UsefullToWin: 0
   IsInRedArmy: 1
-  UnitAttributs: 000000000000000000000000
+  UnitAttributs: 050000000000000000000000
