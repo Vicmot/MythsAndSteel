@@ -31,9 +31,9 @@ MonoBehaviour:
   NumberRangeMax: {x: 0, y: 0}
   SonAttaque: {fileID: 8300000, guid: b50894d6977986f468ca4a1f454d936e, type: 3}
   SonDeplacement: {fileID: 8300000, guid: d021c76a866619c49a06f80a66437243, type: 3}
-  SonMort: {fileID: 8300000, guid: a8eb69e6a02dc7f4e87ff9de4fe71233, type: 3}
+  SonMort: {fileID: 8300000, guid: 4f98db35ad521be46901a8b40777859f, type: 3}
   VoiceLine: {fileID: 0}
-  Sprite: {fileID: 0}
+  Sprite: {fileID: -1805490664289700549, guid: 64156f9daa746f54eb8ced08f01720c8, type: 3}
   CanAttackEmptyTile: 0
   UsefullToWin: 0
   IsInRedArmy: 1
